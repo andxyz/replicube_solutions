@@ -9,10 +9,10 @@
 local a = x^2 + z^2
 if a > 29 then return end
 if abs(y - 3.99 + 2*a^.5) < 1 then
-  if y+4 < 0 then
-    return WHITE
-  end
-  return RED
+	if y+4 < 0 then
+		return WHITE
+	end
+	return RED
 elseif a + (y-5)^2 < 3 then
-  return WHITE
+	return WHITE
 end

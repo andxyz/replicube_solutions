@@ -8,9 +8,9 @@ You can use conditions to decide what value to return
 based on x, y, and z. ]]
 
 if y > 0 then
-  return DARKBLUE
+	return DARKBLUE
 else
-  return ORANGE
+	return ORANGE
 end
 -- 'end' doesn't mean 'end of the file'!
 -- It means 'end of this IF THEN block'

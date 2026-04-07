@@ -19,25 +19,25 @@ local X = x^2
 
 -- faceplate
 if z==0 then
-  if Y<=25 and X<= 9 then
-    if X==1 and (y==2 or y==3) then
-      return 0
-    elseif X==1 and (y==-1 or y==-2) then
-      return 0
-    elseif x==0 and (y==1 or y==-3) then
-      return 0
-    else 
-      return WHITE
-    end
-  end
+	if Y<=25 and X<= 9 then
+		if X==1 and (y==2 or y==3) then
+			return 0
+		elseif X==1 and (y==-1 or y==-2) then
+			return 0
+		elseif x==0 and (y==1 or y==-3) then
+			return 0
+		else 
+			return WHITE
+		end
+	end
 else
-  -- the boxes behind
-  if Y<=16 then
-    if z<=-5 then return GREY end
-    if z==-4 and X<=9 then return GREEN end
-    if X==9 then return GREEN end
-    if Y==16 and X<=9 then return GREEN end
-  end
-  return GREY
+	-- the boxes behind
+	if Y<=16 then
+		if z<=-5 then return GREY end
+		if z==-4 and X<=9 then return GREEN end
+		if X==9 then return GREEN end
+		if Y==16 and X<=9 then return GREEN end
+	end
+	return GREY
 end
 

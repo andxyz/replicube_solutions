@@ -10,5 +10,5 @@
 
 ya = abs(y)-abs(z)-abs(x)+1 > 0
 return ya and (y == 6 or y == -6) and DARKBROWN
-  or ya and y > - 1 and YELLOW
-   or ya and LIGHTBLUE
+	or ya and y > - 1 and YELLOW
+ 	or ya and LIGHTBLUE

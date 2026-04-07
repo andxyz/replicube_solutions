@@ -4,13 +4,13 @@ local az = abs(z)
 -- pipes
 if y == 3 then
   if az < (x + extent + 1) // 6 + 3 then
-    if ax < extent and x % 2 == 0 then
-      if az == 1 then
-        return GREY
-      else
-        return ORANGE
-      end
-    end
+		if ax < extent and x % 2 == 0 then
+    	if az == 1 then
+				return GREY
+			else
+				return ORANGE
+    	end
+		end
   end
 end
 

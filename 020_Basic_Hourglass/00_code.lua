@@ -7,5 +7,5 @@
 -- :)
 
 if x > y and x < -y or x < y and -x < y then
-  return YELLOW
+	return YELLOW
 end

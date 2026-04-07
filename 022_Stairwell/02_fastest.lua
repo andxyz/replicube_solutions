@@ -5,9 +5,9 @@
 if z < 0 then
  if -x == y then return GREY end
 elseif z == 0 then
-  return RED
+	return RED
 elseif z > 0 then
-  if x == y then return GREY end
+	if x == y then return GREY end
 end
 -- code: 25
 -- cycle: 5.537

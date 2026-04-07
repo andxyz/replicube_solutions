@@ -10,7 +10,7 @@ elseif x^2 < 2 and z^2 < 2 and z>=0 and y^2 < 5 then return WHITE
 elseif y==0 and x==0 and z==2 then return YELLOW
 elseif x^2 < 5 and z^2 < 3 and y > -3 then return DARKBROWN
 elseif x == 0 and y == -3 then
-  return EMPTY
+	return EMPTY
 else 
-  return x^2 < 5 and z^2 < 5 and z > -2 and y == -3 and DARKBROWN
+	return x^2 < 5 and z^2 < 5 and z > -2 and y == -3 and DARKBROWN
 end

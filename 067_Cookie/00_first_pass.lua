@@ -11,12 +11,12 @@ with round(), floor(), and ceil().
 -- because the decimal values don't always turn
 -- out to be a 'clean' integer
 --if z == 3 then
---  return d == 4
+--	return d == 4
 --end
 --
 -- rounding the distance ensures it's an integer
 --if z == 0 then
---  return round(d) == 4
+--	return round(d) == 4
 --end
 
 -- 40

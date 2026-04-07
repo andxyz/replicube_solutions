@@ -8,15 +8,15 @@
 
 print(1)
 if z^2 < 2 then
-  if y == -3 then
-    return BROWN
-  elseif y == 3 then
-    return WHITE
-  elseif x == -3 then
-    return WHITE
-  elseif y == 0 then
-    return PEACH
-  end
-  
-  return RED
+	if y == -3 then
+		return BROWN
+	elseif y == 3 then
+		return WHITE
+	elseif x == -3 then
+		return WHITE
+	elseif y == 0 then
+		return PEACH
+	end
+	
+	return RED
 end

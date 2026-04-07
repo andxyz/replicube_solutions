@@ -10,9 +10,9 @@ compare numbers.  Here is a quick list:
 
 -- try changing the comparisons to solve this one! ]]
 if y > 1 then 
-  return RED 
+	return RED 
 elseif y >= -1 then 
-  return YELLOW 
+	return YELLOW 
 else
-  return GREEN  
+  return GREEN	
 end

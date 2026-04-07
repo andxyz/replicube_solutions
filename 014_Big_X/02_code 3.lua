@@ -2,7 +2,7 @@
 
 --test = -3
 --if inrange(x,-3,3) and y == 1 and z == 1 and inrange(y,-3,3) and inrange(z,-3,3) then
---  print(" & " .. (x&test) .. ", | " .. (x|test) .. ", ~ " .. (x~test))
+--	print(" & " .. (x&test) .. ", | " .. (x|test) .. ", ~ " .. (x~test))
 --end
 --
 

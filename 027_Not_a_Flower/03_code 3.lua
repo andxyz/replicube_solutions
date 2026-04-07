@@ -7,7 +7,7 @@
 
 if z^2<3 then
   a = abs(x) + abs(y) + 6
-  if a~=9 then
-    return a
-  end
+	if a~=9 then
+		return a
+	end
 end

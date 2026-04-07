@@ -6,6 +6,6 @@
 -- is NOT EQUAL to another value!
 
 if z^2<3 then
-  v = abs(x) + abs(y)
-  return v == 3 and EMPTY or v + 6 
+	v = abs(x) + abs(y)
+	return v == 3 and EMPTY or v + 6 
 end

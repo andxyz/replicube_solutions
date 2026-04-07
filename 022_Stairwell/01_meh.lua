@@ -3,9 +3,9 @@
 -- I thought was kinda nice.
 
 if z == 0 then
-  return RED
+	return RED
 elseif x == y and z > 0 or -x == y and z < 0 then
-  return GREY
+	return GREY
 end
 -- code:  28
 -- cycle: 5.980
