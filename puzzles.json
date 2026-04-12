@@ -1,0 +1,3195 @@
+{
+  "puzzles": [
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 3.0,
+      "code_size": 2,
+      "code_variants": {
+        "code": "--[[\nYour job is to write code to generate\nan object that matches the one in upper right ---\u003e\n\nyour code should 'return' the color you want\neach voxel to be.\n\nyou can use names (WHITE, RED, YELLOW, GREEN, etc)\nor numbers (1-16) for colors (see the palette below)\n\nTry modifying the code below to match the color in the\nreference ]]\n-- by: andxyz\n\nreturn 7"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "hello.txt",
+      "size": 3,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code 2",
+      "animated": false,
+      "challenge_complete": true,
+      "code_instructions": 4.0,
+      "code_size": 6,
+      "code_variants": {
+        "code": "--[[\nREMEMBER YOU ARE TRYING TO MATCH -----------\u003e\nEach time your code is run, 3 variables will be pre-set\nfor you, identifying the location of the current voxel.\nThese variables are 'x', 'y', and 'z' (without quotes)\n\nYou can use conditions to decide what value to return \nbased on x, y, and z. ]]\n\nif y \u003e 0 then\n\treturn DARKBLUE\nelse\n\treturn ORANGE\nend\n-- 'end' doesn't mean 'end of the file'!\n-- It means 'end of this IF THEN block'",
+        "code 2": "\n-- return y \u003e 0 and DARKBLUE or ORANGE\n\n-- return y \u003e 0 and 12 or 8\n\n-- return (8 - y \u0026 -4) + 8\n\nreturn 11 + y \u0026 -4 -- 4.000, 6\n\n-- 0..01101\n-- 0..01100\n-- 1..11110"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "first_condition.txt",
+      "size": 3,
+      "source": 100,
+      "variant_order": [
+        "code",
+        "code 2"
+      ]
+    },
+    {
+      "active_variant": "code 2",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 4.66667,
+      "code_size": 14,
+      "code_variants": {
+        "code": "--[[\nYou can use many different conditions to\ncompare numbers.  Here is a quick list:\n'if a == b' means 'if a is equal to b'\n'if a \u003c b' means 'if a is less than b'\n'if a \u003c= b' means 'if a is less than or equal to b'\n'if a \u003e b' means 'if a is greater than b'\n'if a \u003e= b' means 'if a is greater than or equal to b'\n'if a ~= b' means 'if a is not equal to b'\n\n-- try changing the comparisons to solve this one! ]]\nif y \u003e 1 then \n\treturn RED \nelseif y \u003e= -1 then \n\treturn YELLOW \nelse\n  return GREEN\t\nend",
+        "code 2": "--return y \u003e 1 and RED or y \u003e= -1 and YELLOW or GREEN\n\n--return y \u003e 1 and 7 or y \u003e -2 and 9 or 11 -- 14\n\n-- 7 9 11\n\n-- 7    00111\n-- 8    01000\n-- 9    01001\n-- 10   01010\n-- 11   01011\n\nreturn ((6+y)\u0026-4)+7"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "change-the-operators.txt",
+      "size": 4,
+      "source": 100,
+      "variant_order": [
+        "code",
+        "code 2"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 5.2449,
+      "code_size": 16,
+      "code_variants": {
+        "code": "if x\u003e-1 and z\u003e-1 then\n\treturn 0\nend\nreturn RED + y"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "empty-space.txt",
+      "size": 3,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code 3",
+      "animated": false,
+      "challenge_complete": true,
+      "code_instructions": 3.69096,
+      "code_size": 14,
+      "code_variants": {
+        "code": "-- prog0lf challenge\nt={5,5,5} return t[x] and t[y] and t[z]\n",
+        "code 2": "--conditions can be combined!\n--Use keywords like 'and' \u0026 'or'\nreturn y\u003e0 and x\u003e0 and z\u003e0 and 5\n",
+        "code 3": "--conditions can be combined!\n--Use keywords like 'and' \u0026 'or'\n\n--return y\u003e0 and x\u003e0 and z\u003e0 and 5\n\nif x~=0 and y~=0 and z~=0 then return x|y|z\u003e0 and 5\tend\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "simple_quadrant.txt",
+      "size": 3,
+      "source": 100,
+      "variant_order": [
+        "code",
+        "code 2",
+        "code 3"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 12.7851,
+      "code_size": 26,
+      "code_variants": {
+        "code": "return (abs(z) \u003c 2 and abs(y) == 2) or (abs(z) \u003c 2 and abs(x) == 2)\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "tic-tac-toe-board.txt",
+      "size": 5,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 9.08642,
+      "code_size": 80,
+      "code_variants": {
+        "code": "if y==0 or x==0 or z==0 then\n\treturn WHITE\nend\n\nif x\u003e1 and y\u003e1 and z\u003e1 then\n\treturn LIGHTGREEN\nend\n\nif x\u003c-1 and y\u003c-1 and z\u003e1 then\n\treturn YELLOW\nend\n\nif x\u003c-1 and y\u003e1 and z\u003c-1 then\n\treturn RED\nend\n\nif x\u003e1 and y\u003c-1 and z\u003c-1 then\n\treturn BLUE\nend"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "colorful-grid.txt",
+      "size": 4,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code 12",
+      "animated": false,
+      "challenge_complete": true,
+      "code_instructions": 6.36,
+      "code_size": 14,
+      "code_variants": {
+        "code": "-- sushi?\nreturn y == 0 and x == 0 and RED \n    or x \u003c 2 and x \u003e -2 and y \u003c 2 and y \u003e -2 and WHITE \n    or GREEN\n--7.280\n",
+        "code 10": "-- sushi?\nlocal X,Y = x^2,y^2\nreturn X+Y==0 and RED\n\tor max(X,Y) == 1 and WHITE\n\tor GREEN\n--12.160",
+        "code 11": "-- sushi?\nif x \u003c 2 and x \u003e -2 and y \u003c 2 and y \u003e -2 then \n\tif y == 0 and x == 0 then\n\t  return RED\n\tend\n\treturn WHITE\nelse \n  return GREEN\nend\n--6.360\n",
+        "code 12": "-- sushi?\nif x*x == 4 or y*y == 4 then return GREEN end\nif y == 0 and x == 0 then return RED end\nreturn WHITE\n\n--6.360\n",
+        "code 2": "-- sushi?\nlocal XY=max(abs(x),abs(y))\nif XY==2 then\n\treturn GREEN\nelseif XY==1 then\n\treturn WHITE\nelse\n\treturn RED \nend\n--12.360",
+        "code 3": "-- sushi?\nr_max = {1,3,9} -- radius_max\nc = {7,1,11} -- color\nfor i = 1,3 do\n\tif x^2+y^2 \u003c r_max[i] then\n\t\treturn c[i]\n\tend\nend\n-- 37.200\n",
+        "code 4": "-- sushi?\nl = {1,3,9}\nc = {7,1,11}\nif x^2+y^2 \u003c l[1] then return c[1] end\nif x^2+y^2 \u003c l[2] then return c[2] end\nif x^2+y^2 \u003c l[3] then return c[3] end\n-- 31.600",
+        "code 5": "-- sushi?\nreturn y == 0 and x == 0 and RED\n \t\tor max(abs(x),abs(y)) == 1 and WHITE \n \t\tor GREEN\n--13.200",
+        "code 6": "-- sushi?\nlocal ta = {[0] = 0, 1,1,2,2,2,2,2,2} -- table\nlocal c = {[0] = 7, 1, 11} -- color\nreturn c[ta[x^2+y^2]] -- lookup_table lookup_color\n-- 23.0",
+        "code 7": "-- sushi?\nt={1,1,1,11,11,[8]=11}\nreturn t[x^2+y^2] or RED\n--16.04",
+        "code 8": "-- sushi?\nt={[0]=7,1,11} return t[floor((x^2+y^2)^.5)]\n--15.000\n",
+        "code 9": "-- sushi?\nreturn max(abs(x), abs(y))*10+7\n--14\n--12.00"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "simple-sushi.txt",
+      "size": 2,
+      "source": 100,
+      "variant_order": [
+        "code",
+        "code 2",
+        "code 3",
+        "code 4",
+        "code 5",
+        "code 6",
+        "code 7",
+        "code 8",
+        "code 9",
+        "code 10",
+        "code 11",
+        "code 12"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 9.87755,
+      "code_size": 21,
+      "code_variants": {
+        "code": "-- Using the 3D View:\n-- Look Around: click and drag left mouse button\n-- Zoom In/Out: mouse wheel or click and drag right mouse button\n\n-- remember, return 0 or 'EMPTY' to make empty space.\nreturn (y \u003e -3 and abs(x) ~= 3 and abs(z) ~= 3) and 0 or BROWN"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "basic_cup.txt",
+      "size": 3,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 5.0,
+      "code_size": 25,
+      "code_variants": {
+        "code": "-- don't forget you can put conditions\n-- INSIDE other conditions!\n\t\nif y \u003e 0 then\n\treturn (x \u003c 1) and ORANGE or GREEN\nelse\n\treturn (z \u003e 0) and BLUE or RED\nend"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "nested_if.txt",
+      "size": 3,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 11.6747,
+      "code_size": 47,
+      "code_variants": {
+        "code": "color = EMPTY\n\nif x == -y then\n\tcolor = YELLOW\nelseif x == y then\n\tcolor = PINK\nend\n\nif z \u003c 0 and color \u003e 0 then\n \tcolor = color + 1\nend\n\nif z == 0 then\n\tcolor = BLACK\nend\n\nreturn color\n",
+        "code 2": "if z == 0 then\n    return 3\nend\n\nif abs(x) == abs(y) then\n--    return 10 - (sign(x-y)+1) * 4 - sign(z) * 0.5\n    return 10 - (abs(sign(x-y))+1) * 4 - sign(z) * 0.5\nend"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "x-wall.txt",
+      "size": 5,
+      "source": 100,
+      "variant_order": [
+        "code",
+        "code 2"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": true,
+      "code_instructions": 5.0,
+      "code_size": 6,
+      "code_variants": {
+        "code": "return x + y == 0"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "simple_stairs.txt",
+      "size": 3,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 3.16327,
+      "code_size": 10,
+      "code_variants": {
+        "code": "return x == y and y == z and GREEN"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "simple_diagonal.txt",
+      "size": 3,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code 3",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 6.8688,
+      "code_size": 18,
+      "code_variants": {
+        "code": "if abs(x) == abs(y) and abs(y) == abs(z) then \n\treturn BLACK\nend",
+        "code 2": "return x^2 == y^2 and y^2 == z^2 and BLACK",
+        "code 3": "--return x^2 == y^2 and y^2 == z^2 and BLACK\n\n--test = -3\n--if inrange(x,-3,3) and y == 1 and z == 1 and inrange(y,-3,3) and inrange(z,-3,3) then\n--\tprint(\" \u0026 \" .. (x\u0026test) .. \", | \" .. (x|test) .. \", ~ \" .. (x~test))\n--end\n--\n\n-- return max(x, max(y, z)) == min(x, min(y, z)) and 3\n\nreturn abs(x) == abs(y) and abs(y) == abs(z) and 3\n\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "full_diagonal.txt",
+      "size": 3,
+      "source": 100,
+      "variant_order": [
+        "code",
+        "code 2",
+        "code 3"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 4.0,
+      "code_size": 7,
+      "code_variants": {
+        "code": "return (x+1)%2"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "hello_modulo.txt",
+      "size": 6,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": true,
+      "code_instructions": 3.896,
+      "code_size": 20,
+      "code_variants": {
+        "code": "-- pretty sure this is related to\n-- '%' modulo... basically we want to know if\n-- x is 'even', and z is 'even'...\n\n--if x % 2 and y == 0 then\n--\tif (x % 2) ~= (z % 2) then\n--\t\treturn BLACK\n--\telse\n--\t\treturn WHITE\n--\tend\n--end\n\nreturn \ny == 0 and (x % 2) ~= (z % 2) and BLACK or \ny == 0 and WHITE"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "checkerboard.txt",
+      "size": 2,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 3.28571,
+      "code_size": 10,
+      "code_variants": {
+        "code": "-- remember, colors are just numbers!\n\n--if z == 0 then\n--\treturn x+10+y\n--end\n\nreturn z == 0 and x+10+y\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "angled_rainbow.txt",
+      "size": 3,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code 3",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 6.1895,
+      "code_size": 24,
+      "code_variants": {
+        "code": "-- cute table :)\n\nif y\u003c2 then\n\tif y == 1 then\n\t\treturn 15\n\telse\n\t\tlocal t={[-2]=15,[2]=15}\n\t\treturn t[x] and t[z]\n\tend\nend\n",
+        "code 2": "-- cute table :)\n--if y\u003e1 then return end\n\nreturn abs(x*z)==4 and y\u003c1 and BROWN or y==1 and BROWN\n",
+        "code 3": "-- cute table :)\nreturn y == extent and RED \n\n--\n--if y\u003c2 then\n--\tif y == 1 or x^2+z^2 == 8 then\n--\t\treturn 15\n--\tend\n--end\n--"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "simple_table.txt",
+      "size": 3,
+      "source": 100,
+      "variant_order": [
+        "code",
+        "code 2",
+        "code 3"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 5.80175,
+      "code_size": 39,
+      "code_variants": {
+        "code": "-- This one makes me hungry :)\n\n-- Notes:\n-- 'return' stops the code and returns\n-- the value without running the code that comes after.\n\n-- sometimes that's annoying, sometimes it's useful!\n\nprint(1)\nif z^2 \u003c 2 then\n\tif y == -3 then\n\t\treturn BROWN\n\telseif y == 3 then\n\t\treturn WHITE\n\telseif x == -3 then\n\t\treturn WHITE\n\telseif y == 0 then\n\t\treturn PEACH\n\tend\n\t\n\treturn RED\nend\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "strawberry_cake_slice.txt",
+      "size": 3,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code 3",
+      "animated": false,
+      "challenge_complete": true,
+      "code_instructions": 5.97531,
+      "code_size": 10,
+      "code_variants": {
+        "code": "-- First try at making an hourglass shape.\n\n-- Notes:\n-- don't forget you can use inequalities\n-- like \u003c, \u003e, \u003c=, \u003e= not just ==\n\n-- :)\n\nif x \u003e y and x \u003c -y or x \u003c y and -x \u003c y then\n\treturn YELLOW\nend\n",
+        "code 2": "-- First try at making an hourglass shape.\n\n-- Notes:\n-- don't forget you can use inequalities\n-- like \u003c, \u003e, \u003c=, \u003e= not just ==\n\n-- :)\n\nax = x^2\nif ax \u003c y then return YELLOW end\nif -ax \u003e y then return YELLOW end\n",
+        "code 3": "-- First try at making an hourglass shape.\n\n-- Notes:\n-- don't forget you can use inequalities\n-- like \u003c, \u003e, \u003c=, \u003e= not just ==\n\n-- :)\n\nreturn (x \u003e y and x \u003c -y or x \u003c y and -x \u003c y) and YELLOW\n\n\n",
+        "code 4": "-- First try at making an hourglass shape.\n\n-- Notes:\n-- don't forget you can use inequalities\n-- like \u003c, \u003e, \u003c=, \u003e= not just ==\n\n-- :)\n\nreturn (x^2 \u003c y^2 or -x^2 \u003e y^2) and YELLOW",
+        "code 5": "return x^2 \u003c y^2 and YELLOW\n",
+        "code 6": "return x^2 \u003c y^2 and YELLOW\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "basic_hourglass.txt",
+      "size": 4,
+      "source": 100,
+      "variant_order": [
+        "code",
+        "code 2",
+        "code 3",
+        "code 4",
+        "code 5",
+        "code 6"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 14.758,
+      "code_size": 101,
+      "code_variants": {
+        "code": "-- look at this CUTE little duck!\n-- I tried making it with the minimum amount of\n-- voxels that still communicated 'duck'\nif abs(x) == 1 and (y == -1 or y == -2) and z == -1 then\n\treturn ORANGE\nend\n\nif (z \u003e -3 and z \u003c 2) then\n\tif x == 0 and y \u003e -1 and z == 1 then\n\t\treturn GREEN\n\telseif abs(x) \u003c 2 and y == 0 or x == 0 and (y \u003e -1 and y \u003c 2) then\n\t\treturn BROWN\n\telseif x == 0 and y == -1 then\n\t\treturn GREY\n\tend\nend\n\nreturn x == 0 and y == 2 and z == 2 and YELLOW"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "mini-duck.txt",
+      "size": 3,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "smallest",
+      "animated": false,
+      "challenge_complete": true,
+      "code_instructions": 5.53719,
+      "code_size": 16,
+      "code_variants": {
+        "fastest": "-- This was sort of a fire-escape idea at first,\n-- but then I decided to add some symmetry which\n-- I thought was kinda nice.\n\nif z \u003c 0 then\n if -x == y then return GREY end\nelseif z == 0 then\n\treturn RED\nelseif z \u003e 0 then\n\tif x == y then return GREY end\nend\n-- code: 25\n-- cycle: 5.537\n",
+        "meh": "-- This was sort of a fire-escape idea at first,\n-- but then I decided to add some symmetry which\n-- I thought was kinda nice.\n\nif z == 0 then\n\treturn RED\nelseif x == y and z \u003e 0 or -x == y and z \u003c 0 then\n\treturn GREY\nend\n-- code:  28\n-- cycle: 5.980",
+        "smallest": "-- This was sort of a fire-escape idea at first,\n-- but then I decided to add some symmetry which\n-- I thought was kinda nice.\n\nreturn z == 0 and RED or x * sign(z) == y and GREY\n\n-- code:  16\n-- cycle: 11.901\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "reverse-stairs.txt",
+      "size": 5,
+      "source": 100,
+      "variant_order": [
+        "smallest",
+        "meh",
+        "fastest"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 10.379,
+      "code_size": 65,
+      "code_variants": {
+        "code": "-- Chairs and Tables are fun because they\n-- are so symmetrical.\n\n-- Notes:\n-- look for symmetry and use abs()!\nif y \u003c 3 then\n\tif abs(x) \u003c 2 then\n\t\tif abs(z) \u003c 2 and y == -1 then\n\t\t\treturn ORANGE\n\t\telseif abs(x) == 1 and (z == -1 or z == 1 and y \u003c -1) then\n\t\t\treturn ORANGE\n\t\telseif x == 0 and y == 2 and z == -1 then\n\t\t\treturn ORANGE\n\t\tend\n\tend\nend\n\n\t\t"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "chair.txt",
+      "size": 3,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code 4",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 4.81422,
+      "code_size": 77,
+      "code_variants": {
+        "code": "if y^2 \u003e 1 then return EMPTY\nelseif y == 0 and (z == 0 or z^2 == 16) then\n\treturn YELLOW -- sticks\nelseif z^2\u003c26 and y^2\u003c2 then -- riceballs\n\tyes = (z+1)%4\u003c3 and (x-1)%4\u003c3\n\tif yes then\n\t\treturn x\u003c-4 and PINK\n\t\t\t\tor x\u003c0 and x^2\u003c10 and WHITE\n\t\t\t\tor x^2\u003c10 and LIGHTGREEN \n\tend\nend",
+        "code 2": "-- remove empty space\nif y\u003c-1 or 1\u003cy then return end\n\n-- draw dango\nif y^2 \u003e 1 then return EMPTY\nelseif y == 0 and (z == 0 or z^2 == 16) then\n\treturn YELLOW -- sticks\nelseif z^2\u003c26 and y^2\u003c2 then -- riceballs\n\tyes = (z+1)%4\u003c3 and (x-1)%4\u003c3\n\tif yes then\n\t\treturn x\u003c-4 and PINK\n\t\t\t\tor x\u003c0 and x^2\u003c10 and WHITE\n\t\t\t\tor x^2\u003c10 and LIGHTGREEN \n\tend\nend\n-- 6.724\n-- 102\n",
+        "code 3": "-- remove empty space\nif y\u003c-1 or 1\u003cy then return end\n\n-- draw dango\nlocal Z = z^2\nif y == 0 and (z == 0 or Z == 16) then\n\treturn YELLOW -- sticks\nelseif Z\u003c=25 then -- riceballs\n\tif (z+1)%4\u003c3 and (x-1)%4\u003c3 then\n\t\tlocal X = x^2\n\t\treturn x\u003c-4 and PINK\n\t\t\t\tor x\u003c0 and X\u003c=9 and WHITE\n\t\t\t\tor X\u003c=9 and LIGHTGREEN \n\tend\nend\n\n-- cycles: 5.497\n-- codesize: 88\n",
+        "code 4": "if y\u003c=1 and y\u003e=-1 then\n\tif z\u003c0 then z=-z end\n\tif z\u003c=5 and z~=2 then\n\t\tif y==0 and (z==4 or z==0) then return 9 end\n\t\tif x\u003c=3 then\n\t\t\tif x\u003e=1 then return 10\n\t\t\telseif x\u003c=-5 then return 5\n\t\t\telseif x~=0 and x~=-4 then return 1\n\t\t\tend\n\t\tend\n\tend\nend"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "dango.weekly",
+      "size": 7,
+      "source": 400,
+      "variant_order": [
+        "code",
+        "code 2",
+        "code 3",
+        "code 4"
+      ]
+    },
+    {
+      "active_variant": "code 2",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 7.0,
+      "code_size": 11,
+      "code_variants": {
+        "code": "\n--return x*y*z//12==1\n\nreturn x*y*z//24==1",
+        "code 2": "if x == -3 and y == 3 and z == 5 then\n\tprint(x*y*z//12)\n\tprint(x*y*z/12)\n\tprint(btoi(x*y*z/12==1))\n\tprint(btoi(x*y*z/24==1))\n\tif 0 then\n\t\tprint(\"zero is true\")\n\telseif 1 then\n\t\tprint(\"one is true\")\n\tend\nend\n\nreturn x*y*z//24==1\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "scalar-field.weekly",
+      "size": 16,
+      "source": 400,
+      "variant_order": [
+        "code",
+        "code 2"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "return 1"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "recursive-helix.weekly",
+      "size": 13,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "return 1"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "cobalt.weekly",
+      "size": 8,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- Inky heard we're doing ghosts, but got squished on the way here, so we're going to have to get Clyde instead\n\nreturn z==4 and inrange(y, 0, 1) and inrange(abs(x), 2, 3) and (y == 0 and abs(x) == 2 and BLACK or WHITE) or\n\t\t\t(y+4\u003ecos(x)*cos(z)*2 and y \u003c 0 or x^2+y^2+z^2\u003c29) and LIGHTBLUE\n\t\t\t\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n-- obligatory :3"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "clyde.weekly",
+      "size": 5,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- The Trophy image from Replifest Summer 2025.\n-- Thanks to everyone who participated!"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "rf-trophy.weekly",
+      "size": 5,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- be careful it's sharp!\nreturn (y-x)\u003e0"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "handsaw.weekly",
+      "size": 7,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- a very square evergreen tree :P\n-- max can be used to make square shapes of a desired size.\nd = max(abs(x),abs(z))\n\nif (4-y) \u003e= d then\n\treturn d+1\nend"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "evergreen.weekly",
+      "size": 5,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- you can modify x, y, and z if you want!\n-- if you modify them only in certain areas, you can\n-- easily do things like mirror, flip the coordinates!\nif z \u003e 0 then\n\tx = -x\nend\n\n\nif abs(z)==4 then\n\treturn x+5\nend"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "big-n.weekly",
+      "size": 4,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- shifting over a part\nshifted_x = x-4\n\nif abs(shifted_x)\u003c2 and abs(y)\u003c2 and abs(z)\u003c2 then\n\treturn RED\nend\n\n-- not shifted part\nif abs(x)\u003c2 and abs(y)\u003c2 and abs(z)\u003c2 then\n\treturn YELLOW\nend"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "hairbrush.weekly",
+      "size": 9,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "ay = abs(y)\n\nif x+ay+z == 14 then\n\tif y \u003e 0 then\n\t\treturn RED\n\telse\n\t\treturn ORANGE\n\tend\nend"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "rainbow-vortex.weekly",
+      "size": 6,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- Checker Cube\n--\n-- Fill Inside 11x11x11, Dividers, and Edges all BLACK\nif (x \u003e -6 and x \u003c 6) and (y \u003e -6 and y \u003c 6) and (z \u003e -6 and z \u003c 6) then return BLACK end\nif (x == 2 or x == -2) or (y == 2 or y == -2) or (z == 2 or z ==-2) then return BLACK end\nif btoi(x == 6 or x == -6)+btoi(y == 6 or y == -6)+btoi(z == 6 or z == -6) \u003e= 2 then return BLACK end\n\n-- Starting Position\nif x == 6 then return RED end\nif x == -6 then return ORANGE end\nif y == 6 then return WHITE end\nif y == -6 then return YELLOW end\nif z == 6 then return GREEN end\nif z == -6 then return BLUE end"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "checker-cube.weekly",
+      "size": 6,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- rough friction can cause various accidents\n-- so keep your balls clean, lubricated, and properly sealed \n\n-- or you can borrow mine first\n\nreturn (abs(x)-5)^2+y^2+z^2\u003c8 and 2"
+      },
+      "completed": false,
+      "fps": 7,
+      "frames": 4,
+      "id": "rusty-bearing.weekly",
+      "size": 15,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "return 3\u003e\u003e(btoi(x^2+y^2+z^2\u003e2*t))%2"
+      },
+      "completed": false,
+      "fps": 1,
+      "frames": 2,
+      "id": "hyper-checker-cube.weekly",
+      "size": 7,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "if min(y,z) \u003c= -4 then\n\treturn WHITE\nend"
+      },
+      "completed": false,
+      "fps": 8,
+      "frames": 24,
+      "id": "pong-computer.weekly",
+      "size": 5,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": ""
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "cube-sword.weekly",
+      "size": 16,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "return"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "folded-chain.weekly",
+      "size": 5,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "return 1"
+      },
+      "completed": false,
+      "fps": 4,
+      "frames": 9,
+      "id": "fibionacci-tower.weekly",
+      "size": 14,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- This code uses a trigonometric approach to find the distance to a torus. \n-- Instead of the standard vector-based Signed Distance Function (SDF), \n-- it uses an angle to \"track\" the point's position around the ring.\n--\n-- Here is the breakdown of how these specific variables interact:\n-- ## Geometric Variable Meanings\n-- In this specific snippet, the variables are building a 3D vector \n-- that points from the nearest part of the torus \"ring\" to your current point (x, y, z)\n\n-- * dsm (Small Radius): The thickness of the torus tube (the \"dough\")\n-- * dbr (Big Radius): The distance from the center of the hole to the middle of the tube\nlocal dsm = 3 -- smallradius, tube radius\nlocal dbr = 7 -- bigradius, from the center of the hole to the middle of the tube\n\n-- * da (Angle): The horizontal angle (in radians)\n-- of the point (x, z) relative to the center of the torus\n-- * cx, cz (Center Coordinates): The closest point on the major ring to your current position\n-- * sin(da) * dbr and cos(da) * dbr map the angle back onto a circle of radius dbr\nlocal da = atan(x,z)\nlocal cx = sin(da)*dbr\nlocal cz = cos(da)*dbr\n\n-- * dx, dy, dz (Delta/Difference): The distance vector from \n-- the ring's center line to the point (x, y, z)\nlocal dx = x - cx\nlocal dy = y\nlocal dz = z - cz\n\n-- * d (Distance): The length of that delta vector.\n-- This tells you how far the point is from the center of the \"dough.\"\nlocal d = floor(sqrt(dx^2+dy^2+dz^2))\n\n-- Threshold check, if \"d\" is below dsmall we are inside the toroid\nif d \u003c= dsm then\n\treturn y\u003e=1 and d==dsm and PINK or YELLOW\nend\n"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "__free_edit__",
+      "size": 3,
+      "source": 200,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 12.0554,
+      "code_size": 136,
+      "code_variants": {
+        "code": "\nif abs(x) \u003c 2 and y \u003e -2 then\n\tif z \u003c 3 then\n\t\tif y == 3 and z == 1 and abs(x) == 1 then\n\t\t\treturn BROWN -- ears\n\t\telseif z == -2 and y == 1 and x == 0 then\n\t\t\treturn EMPTY -- tail curl\n\t\telseif x == 0 and abs(z) \u003e 1 and y \u003e 0 and y \u003c 3 then\n\t\t\treturn ORANGE -- tail and forehead\n\t\telseif z \u003c 3 and y == 3 or max(z-1, -y) \u003c 0 then\n\t\t\treturn EMPTY -- sculpt back\n\t\telse\n\t\t return BROWN -- body\n\t\tend\n\telse\n\t\treturn z == 3 and y == 1 and ORANGE -- snout\n\tend\nelseif (z == -3 or z == 2) and abs(x) == 1 then\n\treturn y == -3 and ORANGE or y == -2 and BROWN -- legs\nend\n\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "doggo.txt",
+      "size": 3,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 19.7233,
+      "code_size": 42,
+      "code_variants": {
+        "code": "-- much better hourglass!\n\n-- Notes:\n-- it can be helpful to visualize\n-- values by returning them and looking at them\n-- as colors.\n\n-- adding and subtracting coordinates\n-- can make lots of interesting slopes\n\nya = abs(y)-abs(z)-abs(x)+1 \u003e 0\nreturn ya and (y == 6 or y == -6) and DARKBROWN\n\tor ya and y \u003e - 1 and YELLOW\n \tor ya and LIGHTBLUE\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "fancy_hourglass.txt",
+      "size": 6,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code 2",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 16.4171,
+      "code_size": 33,
+      "code_variants": {
+        "code": "-- good luck!\n\nyes = (y^2 - x^2 - z^2 + 8 + t*12)//36 == 0\n\nreturn yes and y%11 + 4 \n\n",
+        "code 2": "-- good luck!\nyes = (y^2 - x^2 - z^2 + (t+1)*13)//36 == 0\n\nreturn yes and y%11 + 4 \n"
+      },
+      "completed": true,
+      "fps": 6,
+      "frames": 10,
+      "id": "rainbow-wormhole.vox",
+      "size": 10,
+      "source": 200,
+      "variant_order": [
+        "code",
+        "code 2"
+      ]
+    },
+    {
+      "active_variant": "fastest",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 12.48,
+      "code_size": 79,
+      "code_variants": {
+        "code": "-- More food!  This time I went for a\n-- 'blocky strawberry' look :)\n\n-- Notes:\n-- remember you can peek inside objects\n-- by dragging the red, green, and blue\n-- arrowheads.\n-- the inside 3x3x3 of this cute strawberry is all\n-- color 4.\n\nif y == 2 then\n\treturn y^2 - x^2 - z^2 + 1 \u003e 0 and GREEN or RED\nelseif abs(x) \u003c 2 and abs(y) \u003c 2 and abs(z) \u003c 2 then\n\treturn PEACH\nelseif x^2 + y^2 + z^2 == 6 and x == y then\n\treturn PEACH\nelseif z == 0 and y == 0 then\n\treturn PEACH\nelseif y == -2 and (x == 0 and z == -1 or x == 1 and z == 1) then\n\treturn PEACH\nelse\n\treturn RED\nend",
+        "fastest": "-- More food!  This time I went for a\n-- 'blocky strawberry' look :)\n\n-- 79\n-- 12.480\nif y == 2 then\n\treturn x^2 + z^2 \u003c 5 and GREEN or RED -- top\nelseif x^2 + y^2 + z^2 \u003c 4 then\n\treturn PEACH -- inner-belly-of-the-beast\nelseif y == 0 and z == 0 \n\t  or x == 0 and z == -1 \n\t\tor x == 1 and z == 1 then\n\treturn PEACH -- dots\nelse\n\treturn x == y and y^2 == 1 and PEACH or RED -- dice 2 dots\nend\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "strawberry.txt",
+      "size": 2,
+      "source": 100,
+      "variant_order": [
+        "code",
+        "fastest"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": true,
+      "code_instructions": 6.44315,
+      "code_size": 23,
+      "code_variants": {
+        "code": "-- not exactly a flower, but I\n-- liked the pattern once I made it.\n\n-- Notes:\n-- you can use '~=' to check if a value\n-- is NOT EQUAL to another value!\n\nv = abs(x) + abs(y) \nreturn \nz^2\u003c2 and v~=3 and v+6\n",
+        "code 2": "-- not exactly a flower, but I\n-- liked the pattern once I made it.\n\n-- Notes:\n-- you can use '~=' to check if a value\n-- is NOT EQUAL to another value!\nif z^2\u003c3 then\n\tv = abs(x) + abs(y) + 6\n\treturn v~=9 and v\nend\n",
+        "code 3": "-- not exactly a flower, but I\n-- liked the pattern once I made it.\n\n-- Notes:\n-- you can use '~=' to check if a value\n-- is NOT EQUAL to another value!\n\nif z^2\u003c3 then\n  a = abs(x) + abs(y) + 6\n\tif a~=9 then\n\t\treturn a\n\tend\nend\n",
+        "code 4": "-- not exactly a flower, but I\n-- liked the pattern once I made it.\n\n-- Notes:\n-- you can use '~=' to check if a value\n-- is NOT EQUAL to another value!\n\nif z^2\u003c3 then\n\tv = abs(x) + abs(y)\n\treturn v == 3 and EMPTY or v + 6 \nend\n",
+        "code 5": "-- not exactly a flower, but I\n-- liked the pattern once I made it.\n\n-- Notes:\n-- you can use '~=' to check if a value\n-- is NOT EQUAL to another value!\n\nif z^2\u003c3 then \n  v = abs(x) + abs(y)\n\tif v~=3 then\n\t\treturn v+6\n\tend\nend",
+        "code 6": "-- not exactly a flower, but I\n-- liked the pattern once I made it.\n\n-- Notes:\n-- you can use '~=' to check if a value\n-- is NOT EQUAL to another value!\n\nif z^2\u003c3 then\n\tif x\u003e=0 and y\u003e=0 then\n\t\tc = x + y\n\t\treturn c~=3 and c + 6\n\tend\n  xx = ~x + 1\n\tyy = y\n\tif xx\u003e0 and yy\u003e0  then\n\t\tc = xx+yy\n\t\treturn c~=3 and c + 6\n\tend\n\txx = x\n\tyy = ~y + 1\n\tif xx\u003e0 and yy\u003e0 then\n\t\tc = xx+yy\n\t\treturn c~=3 and c + 6\n\tend\n\txx = ~x + 1\n\tyy = ~y + 1\n\tif xx\u003e=0 and yy\u003e=0 then\n\t\tc = xx+yy\n\t\treturn c~=3 and c + 6\n\tend\nend",
+        "code 7": "-- not exactly a flower, but I\n-- liked the pattern once I made it.\n\n-- Notes:\n-- you can use '~=' to check if a value\n-- is NOT EQUAL to another value!\n\nif z\u003c=1 and z\u003e=-1 then \n\tif x \u003c 0 then x=-x end\n\tif y \u003c 0 then y=-y end\n  v = x + y\n\tif v~=3 then\n\t\treturn v+6\n\tend\nend\n-- cycles: 7.300",
+        "code 8": "-- not exactly a flower, but I\n-- liked the pattern once I made it.\n\n-- Notes:\n-- you can use '~=' to check if a value\n-- is NOT EQUAL to another value!\n\nif z\u003c=1 and z\u003e=-1 then \n\tif x \u003c 0 then x=-x end\n\tif y \u003c 0 then y=-y end\n\tif x + y ~=3 then\n\t\treturn x + y + 6\n\tend\nend\n-- cycles: 6.443",
+        "code 9": "-- not exactly a flower, but I\n-- liked the pattern once I made it.\n\n-- Notes:\n-- you can use '~=' to check if a value\n-- is NOT EQUAL to another value!\n\nif z\u003e=-1 and z\u003c=1 then \n\tif y \u003c 0 then y=-y end\n\tif x \u003c 0 then x=-x end\n\t\n\tif x + y ~=3 then\n\t\treturn x + y + 6\n\tend\nend\n-- cycles: 6.443"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "not_flower.txt",
+      "size": 3,
+      "source": 100,
+      "variant_order": [
+        "code",
+        "code 2",
+        "code 4",
+        "code 3",
+        "code 5",
+        "code 6",
+        "code 7",
+        "code 8",
+        "code 9"
+      ]
+    },
+    {
+      "active_variant": "code 2",
+      "animated": false,
+      "challenge_complete": true,
+      "code_instructions": 6.78152,
+      "code_size": 77,
+      "code_variants": {
+        "code": "-- Start of a little domestic scene\n-- (could use some furniture tho)\n\n-- Notes:\n-- multiple techniques at once!\n\nif y \u003e -6 then -- compute above floor\n\tif z == 6 and abs(x) \u003c 4 and abs(y) \u003c 4 then -- paint inside window frame\n\t  v = x^2 + y^2\n\t\treturn (v%3 ~= 1 and v~=0 and v \u003c 9) \n\t\t\t\t\t\t  and EMPTY \n\t\t\t\t\t  \tor BROWN\n\telseif x == -6 or z == 6 then -- paint walls\n\t\treturn WHITE\n\tend \nelse -- compute the floor\n\treturn (x+z)%2 == 0 and DARKBLUE \n\t\t  or LIGHTBLUE\nend\n",
+        "code 2": "-- Start of a little domestic scene\n-- (could use some furniture tho)\n\n-- Notes:\n-- multiple techniques at once!\nc = 0\nif y \u003e -6 then -- compute above floor\n\tif z == 6 and abs(x) \u003c 4 and abs(y) \u003c 4 then -- paint inside window frame\n\t  v = x^2 + y^2\n\t\tc = (v%3 ~= 1 and v~=0 and v \u003c 9) \n\t\t\t\t\t\t  and EMPTY \n\t\t\t\t\t  \tor BROWN\n\telseif x == -6 or z == 6 then -- paint walls\n\t\tc = WHITE\n\tend \nelse -- compute the floor\n\tc = (x+z)%2 == 0 and DARKBLUE \n\t\t  or LIGHTBLUE\nend\nreturn c\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "tiled_room.txt",
+      "size": 6,
+      "source": 100,
+      "variant_order": [
+        "code",
+        "code 2"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "---Unseen blade strikes swift\n---Bamboo remains unmoving\n---Until it falls down\n\ndx =t\ndy =t+1\n\nxx = (x - dx)\nyy = (y + dy)\nzz = z\n\nif xx^2+zz^2 \u003c 8 and xx^2+zz^2 ~= 0 then \n\treturn 13-yy \u003c y and EMPTY\n\t\t\tor xx-yy\u003ey and xx^2+zz^2 \u003c 4 and YELLOW \n\t\t\tor xx-yy\u003ey and y%7 == 2 and GREEN \n\t\t\tor xx-yy\u003ey and LIGHTGREEN\nend",
+        "code 2": "---Unseen blade strikes swift\n---Bamboo remains unmoving\n---Until it falls down\n\nif x^2+z^2\u003c8 and \n   z^2+x^2~=0 then \n\tif z^2+x^2\u003c4 then \n\t\treturn 9\n\telseif y%7==2 then \n\t\treturn 11\n\telse\n\t\treturn 10\n\tend\nend\n"
+      },
+      "completed": false,
+      "fps": 5,
+      "frames": 12,
+      "id": "bamboo-slice.weekly",
+      "size": 13,
+      "source": 400,
+      "variant_order": [
+        "code",
+        "code 2"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "return 1"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 30,
+      "id": "running-tap.weekly",
+      "size": 6,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "return 1"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "fuzzy-fox.weekly",
+      "size": 5,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- obligatory corner sun :3\nreturn y \u003c z/4 or x == 4 and z == 4 and y == 4-t and YELLOW"
+      },
+      "completed": false,
+      "fps": 1,
+      "frames": 2,
+      "id": "summer-fun.weekly",
+      "size": 4,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "faster",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 7.16267,
+      "code_size": 60,
+      "code_variants": {
+        "faster": "if y==-7 then\n\treturn (x+1)//3 + (z+1)//3\u00261 == 1 and DARKBLUE or GREY\nelseif y\u003c5 and z^2\u003c2 then\n\treturn (y%4==1 or y-1\u00264==abs(x)) and BLACK or RED\nend\n",
+        "first_pass": "if y\u003c5 and y~=-7 and z^2\u003c2 then\n\treturn (y%4==1 or y-1\u00264==abs(x)) and BLACK or RED\nelseif y==-7 then\n\treturn (x+1)//3 + (z+1)//3\u00261 == 1 and DARKBLUE or GREY\nend\n\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "brick.txt",
+      "size": 7,
+      "source": 100,
+      "variant_order": [
+        "first_pass",
+        "faster"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 16.4171,
+      "code_size": 33,
+      "code_variants": {
+        "code": "\n\nyes = inrange((y^2 - x^2 - z^2 + 8 + t*12),4,36)\n\nreturn yes and y%11 + 4"
+      },
+      "completed": true,
+      "fps": 8,
+      "frames": 10,
+      "id": "dl-8533.vox",
+      "size": 10,
+      "source": 300,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "first_pass",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 6.96359,
+      "code_size": 136,
+      "code_variants": {
+        "first_pass": "-- I'm really proud of this one.\n-- I had one of these and played it for years.\n\n-- Notes:\n-- min() can be used to make cross shapes\n-- like the d-pad.\n\nif z^2 \u003c 2 and x^2 \u003c 17 then\n\t-- screen\n\tif (y-3)^2 \u003c 5 then\n\t\tif x^2 == 9 and z == 1 then\n\t\t\t-- grey bars\n\t\t\treturn GREY\n\t\telseif x^2\u003c5 and z \u003e -1 then\n\t\t\t-- recessed green screen\n\t\t\treturn z == 0 and GREEN or z == 1 and EMPTY\n\t\tend\n\telseif y - x \u003c -8 then\n\t\t-- chip off the corner\n\t\treturn EMPTY\n\tend\n\n\treturn WHITE -- body of gameboy\nelseif z==2 then --\n\tif (x+2)^2 \u003c 2 and \n\t\t (y+2)^2 \u003c 2 and \n\t\t min(abs(x+2),abs(y+2)) == 0 then\n\t\t-- the dpad\n\t\treturn BLACK\n\telseif x == 1 and y == -3 or x == 3 and y == -2 then\n\t\t-- buttons\n\t\treturn RED\n\tend\nend\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "gameboy.txt",
+      "size": 6,
+      "source": 100,
+      "variant_order": [
+        "first_pass"
+      ]
+    },
+    {
+      "active_variant": "faster",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 7.83673,
+      "code_size": 59,
+      "code_variants": {
+        "faster": "-- This one turned out very CUTE IMO\n-- ur cute\n\n-- camera body\nif z^2\u003c2 then\n\t-- dadbod or red-shutter-button or top-twista \n\treturn y~=3 and GREY or x==-2 and z==0 and RED or x~3\u003e0 and GREY\n-- front lens via Lorentz transformations\nelseif z\u003e1 then\n\tv = x^2 + (y+1)^2\n\treturn v \u003c 3 or v \u003c 8 and BLACK\nend\n",
+        "first_pass": "-- This one turned out very CUTE IMO\n\n-- camera body\nif z^2\u003c2 then\n\tif y==3 then\n\t\t-- button \n\t\tif x==-2 and z==0 then return RED end\n\t\t-- twista\n\t\tif (x-1)^2\u003c2 then return GREY end\n\telse\n\t\t-- dadbod\n\t\treturn GREY\n\tend\nend\n-- lens\nif z\u003e1 then\n\tv = x^2 + (y+1)^2\n\tif v \u003c 8 then\n\t\treturn v \u003c 3 and WHITE or BLACK \n\tend\nend\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "camera.txt",
+      "size": 3,
+      "source": 100,
+      "variant_order": [
+        "first_pass",
+        "faster"
+      ]
+    },
+    {
+      "active_variant": "first_pass",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 9.52667,
+      "code_size": 163,
+      "code_variants": {
+        "first_pass": "-- Food again, surprise surprise :)\n\n-- Notes:\n-- Modulo (%) is your friend for infrequently\n-- repeating patterns :)\n\nif y^2 \u003c 16 and z^2 \u003c 5 then\n\t-- slice top taco\n\tif y == 3 then return EMPTY end\n\tif z^2 \u003e 1 and ~x^2 \u003c -(y-6)^2 then return EMPTY end\t\n\t-- slice top ingredients\n\tif ~x^2 \u003c -(y-7)^2 then return EMPTY end\n\t-- inner stuff  \n\tif z^2 \u003c 2 then\n\t\t-- tomato\n\t\tif y == 2 then \n\t\t  if z == 1 and (x-3)%6==1 then\n\t\t\t\treturn RED\n\t\t\telseif z == -1 and (x-1)%6==1 then\n\t\t\t\treturn RED\n\t\t\telseif z == 0 and x == 0 then\n\t\t\t\treturn RED\n\t\t\tend\n\t\t\treturn EMPTY\n\t\tend\n\t\t-- lettuce cheese meat\n\t\tif y == 1 then return (x+z)%2==0 and LIGHTGREEN or GREEN end\n\t\tif y == 0 then return ORANGE end\n\t\tif y == -1 or y == -2 then return DARKBROWN end\n\tend\n\t-- the remaining taco shell\n\treturn YELLOW\nend\n\n\n\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "taco.txt",
+      "size": 5,
+      "source": 100,
+      "variant_order": [
+        "first_pass"
+      ]
+    },
+    {
+      "active_variant": "first_pass",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 9.70782,
+      "code_size": 66,
+      "code_variants": {
+        "first_pass": "-- Kinda tricky to communicate 'building'\n-- in just a few voxels, but I think having the\n-- windows lit up helped.\n\n-- Notes:\n-- make sure to peak inside, it helps\n-- to see how the blue edges were made.\n\n-- tower body\nif y\u003c3 and x^2 + z^2 \u003c 9 then\n\tif x^2 == z^2 then return DARKBLUE end\n\tif y%2 == 1 then return YELLOW end\n\treturn DARKBLUE\nend \n-- peak\nif y\u003e2 and x^2 + z^2 \u003c ((y-2)~3)^2 then \n--\tif x == 0 and z ==0 then \n--\tprint(\"y = \" .. y)\n--\tprint((y-2)~3) end\n\treturn DARKBLUE\nend\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "cute_building.txt",
+      "size": 4,
+      "source": 100,
+      "variant_order": [
+        "first_pass"
+      ]
+    },
+    {
+      "active_variant": "first_pass",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 6.08866,
+      "code_size": 59,
+      "code_variants": {
+        "first_pass": "-- YUMMY!\nlocal X,Z=x*x,z*z\nif z==0 then\n\tif x==0 and y\u003c0 then\n\t\treturn PEACH\n\telseif X\u003c2 and y\u003c4 and y\u003e-2 then\n\t\treturn WHITE\n\tend\nend\nif Z\u003c2 and X\u003c5 and y\u003c5 and y\u003e-3 then\n\treturn ORANGE\nend\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "creamsicle.txt",
+      "size": 5,
+      "source": 100,
+      "variant_order": [
+        "first_pass"
+      ]
+    },
+    {
+      "active_variant": "faster",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 3.61157,
+      "code_size": 67,
+      "code_variants": {
+        "faster": "-- it's X's turn :)\nif z == 0 then\n\tlocal X,Y=x*x,y*y\n\tif Y==4 or X==4 then return WHITE end\n\tif X\u003c=1 and X==Y then return RED end\n\tif x\u003e0 and X\u003e=9 and Y\u003e=9 and (x+y)%2 == 1 then return GREEN end\nend\n-- ok your turn\n-- if x\u003e0 and x^2\u003e8 and y^2\u003c4 and (x+y)%2 == 0 then return RED end\n",
+        "first_pass": "-- it's X's turn :)\nc = EMPTY\nif z == 0 then\n\tif y^2==4 or x^2==4 then c = WHITE end\n\tif x^2\u003c2 and x^2 == y^2 then c = RED end\n\tif x\u003e0 and x^2\u003e8 and y^2\u003e8 and (x+y)%2 == 1 then c = GREEN end\nend\nreturn c"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "tic-tac-toe-game.txt",
+      "size": 5,
+      "source": 100,
+      "variant_order": [
+        "first_pass",
+        "faster"
+      ]
+    },
+    {
+      "active_variant": "first_pass",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 16.4257,
+      "code_size": 111,
+      "code_variants": {
+        "first_pass": "-- OK not the most accurate Penguin ever,\n-- but still CUTE\n\n-- Notes:\n-- you might need to peek inside to get\n-- the internal colors correct on this one.\n\nif x^2 == 1 and y == 1 and z == 1 then return BLACK\nelseif x^2 \u003c 2 and z^2 \u003c 2 and z\u003e=0 and y^2 \u003c 5 then return WHITE\nelseif y==0 and x==0 and z==2 then return YELLOW\nelseif x^2 \u003c 5 and z^2 \u003c 3 and y \u003e -3 then return DARKBROWN\nelseif x == 0 and y == -3 then\n\treturn EMPTY\nelse \n\treturn x^2 \u003c 5 and z^2 \u003c 5 and z \u003e -2 and y == -3 and DARKBROWN\nend\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "penguin_i_guess.txt",
+      "size": 3,
+      "source": 100,
+      "variant_order": [
+        "first_pass"
+      ]
+    },
+    {
+      "active_variant": "code 3",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 13.68,
+      "code_size": 67,
+      "code_variants": {
+        "code": "if max(x^2+y^2, x^2+z^2, y^2+z^2) == 8 then \n\treturn BLACK \nelseif max(x^2, y^2, z^2) == 4 then\n\treturn y == 2 and WHITE  or y == -2 and YELLOW \n \t    or z == 2 and ORANGE or z == -2 and RED\n  \t  or x == 2 and GREEN  or x == -2 and LIGHTBLUE\nend -- original solve\n",
+        "code 2": "if x^2+y^2+z^2 \u003e 7 then \n\treturn BLACK\nelseif x^2 == 4 or y^2 == 4 or z^2 == 4 then\n\treturn y == 2 or y == -2 and YELLOW \n \t    or z == 2 and ORANGE or z == -2 and RED\n  \t  or x == 2 and GREEN  or x == -2 and LIGHTBLUE\nend -- 13.680\n",
+        "code 3": "if x^2+y^2+z^2 \u003e 7 then \n\treturn BLACK\nelseif x^2+y^2+z^2 \u003e 3 then\n\treturn y == 2 or y == -2 and YELLOW \n \t    or z == 2 and ORANGE or z == -2 and RED\n  \t  or x == 2 and GREEN  or x == -2 and LIGHTBLUE\nend -- 67\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "puzzle_cube.txt",
+      "size": 2,
+      "source": 100,
+      "variant_order": [
+        "code",
+        "code 2",
+        "code 3"
+      ]
+    },
+    {
+      "active_variant": "code 3",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 21.2058,
+      "code_size": 75,
+      "code_variants": {
+        "code": "xx = {x,x+3,x-3,x-3,x+3,x+0,x+0}\nyy = {y,y-3,y+3,y+0,y+0,y-3,y+3}\nzz = {z,z+0,z+0,z+3,z-3,z+3,z-3}\nfor i = 1,7 do\n\tif max(xx[i]^2, yy[i]^2, zz[i]^2) == 1 and min(xx[i], yy[i], zz[i]) + max(xx[i], yy[i], zz[i]) == 0 then\n\t\treturn i == 1 and ORANGE or YELLOW\n\tend\nend -- 154",
+        "code 2": "xx = {x,x+3,x-3,x-3,x+3,x+0,x+0}\nyy = {y,y-3,y+3,y+0,y+0,y-3,y+3}\nzz = {z,z+0,z+0,z+3,z-3,z+3,z-3}\n\n-- negative space (trick for speed)\nif x + y-5  + z \u003e -y-z-x or x + y+5 + z \u003c -y-z-x then\n--  return RED\n--\treturn EMPTY\n\treturn -- this is faster than returning empty, lol\nend\n\n-- cube babies\nfor i = 1,7 do\n\tif max(xx[i]^2, yy[i]^2, zz[i]^2) == 1 \n\t  and min(xx[i], yy[i], zz[i]) + max(xx[i], yy[i], zz[i]) == 0 then\n\t\treturn i == 1 and ORANGE or YELLOW\n\tend\nend -- 82.145\n",
+        "code 3": "xx = {x,x+3,x-3,x-3,x+3,x+0,x+0}\nyy = {y,y-3,y+3,y+0,y+0,y-3,y+3}\nzz = {z,z+0,z+0,z+3,z-3,z+3,z-3}\n\n-- negative space (trick for speed)\n\n--if x + y-5  + z \u003e -y-z-x or x + y+5 + z \u003c -y-z-x then\n----  return RED\n----\treturn EMPTY\n--\treturn -- this is faster than returning empty, lol\n--end\n\nif not inrange(x+y+z,-2,2) then return EMPTY end\n\n-- cube babies\nfor i = 1,7 do\n\tif max(xx[i]^2, yy[i]^2, zz[i]^2) == 1 \n\t  and min(xx[i], yy[i], zz[i]) + max(xx[i], yy[i], zz[i]) == 0 then\n\t\treturn i == 1 and ORANGE or YELLOW\n\tend\nend -- 82.145\n",
+        "code 4": "-- by: theDerelict\n\nq={x%3,y%3,z%3} sort(q)\nreturn q[2]~=0 and \n       (x+y+z)^2\u003c2 and \n       (x+1)//3+(y+1)//3+(z+1)//3==0 and \n       YELLOW-btoi(x^2+y^2+z^2\u003c8)\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "hexagon-steps.weekly",
+      "size": 4,
+      "source": 400,
+      "variant_order": [
+        "code",
+        "code 2",
+        "code 3",
+        "code 4"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 22.6173,
+      "code_size": 114,
+      "code_variants": {
+        "code": "c = EMPTY\n\n-- bottom and monitor\nif y == -extent then c = PINK end\nif z \u003c -extent + 3 then c = PINK end\n\n-- screen\nif z == -extent + 2 then\n\tif x^2 == 9 and inrange(y,0,2) or x == -1 and y == 2 then c = WHITE\n\telseif \n\t x^2\u003c16 and\n   y\u003e-2 and \n\t y~=extent then c = DARKBLUE end\nend\n\n-- keyboard\nif y == -extent + 1 and \n   x^2 \u003c 16 and \n\t (z+2)^2 \u003e 3 and \n\t z^2 \u003c 16 \n\t then c = LIGHTBLUE end\n\nreturn c"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "cute_computer.txt",
+      "size": 4,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "first_pass",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 5.96708,
+      "code_size": 42,
+      "code_variants": {
+        "first_pass": "-- IF YOU TRAIN BY THROWING A\n-- SQUARE FOOTBALL, WHEN YOU\n-- SWITCH BACK TO A REGULATION\n-- BALL, YOU CAN THROW FOR MILES!\n\n-- inside ball\nif z^2\u003c8 and y^2\u003c8 then\n\t-- white lines \n\tif y==2 and z^2\u003c2 and x^2\u003c5 and x%2==0 then \n\t\treturn WHITE \n\tend\n\t\n\t-- body\n\treturn BROWN\nend\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "football.txt",
+      "size": 4,
+      "source": 100,
+      "variant_order": [
+        "first_pass"
+      ]
+    },
+    {
+      "active_variant": "fastest",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 10.264,
+      "code_size": 32,
+      "code_variants": {
+        "fastest": "-- SQUARE BALLS BOUNCE VERY\n-- ERRATICALLY WHICH REALLY\n-- HELPS TRAIN REFLEXES!\n\nlocal X=x^2\nlocal Z=z^2\nif X + Z == 8 or y + X == 6 or y - Z == -6 \n\tthen return WHITE\nend\nreturn LIGHTGREEN\n-- 36\n-- 10.264\n",
+        "first_pass": "-- SQUARE BALLS BOUNCE VERY\n-- ERRATICALLY WHICH REALLY\n-- HELPS TRAIN REFLEXES!\n\nif x^2 + z^2 == 8 or \n\t y + x^2 == 6 or\n   y - z^2 == -6 \n  then return WHITE\nend\nreturn LIGHTGREEN\n-- 32\n-- 11.896\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "tennis_ball.txt",
+      "size": 2,
+      "source": 100,
+      "variant_order": [
+        "first_pass",
+        "fastest"
+      ]
+    },
+    {
+      "active_variant": "research",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 5.43802,
+      "code_size": 36,
+      "code_variants": {
+        "first_pass": "-- THIS TAKES THE CONCEPT OF\n-- A WEIGHTED BAT TO THE\n-- EXTREME!\n\nif x^2\u003c2 and y^2\u003c2 then\n\tif inrange(z,-4,-2) and x^2+y^2 \u003e 0 then\n\t\treturn EMPTY\n\tend\n\treturn ORANGE\nend\n",
+        "research": "-- THIS TAKES THE CONCEPT OF\n-- A WEIGHTED BAT TO THE\n-- EXTREME!\n\nif x^2\u003c2 and y^2\u003c2 then\n\treturn inrange(z,-4,-2) and x^2+y^2 \u003e 0 and EMPTY or ORANGE\nend\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "baseball_bat.txt",
+      "size": 5,
+      "source": 100,
+      "variant_order": [
+        "first_pass",
+        "research"
+      ]
+    },
+    {
+      "active_variant": "first_pass",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 9.40525,
+      "code_size": 43,
+      "code_variants": {
+        "first_pass": "-- FOR THIS TO WORK YOU REALLY\n-- NEED A SQUARE HOOP AS WELL\n\nif x==0 or y==0 then return BLACK\nelseif z^2==9 and y%2==0 then return BLACK\nelseif y^2 + x^2 \u003e 17 then return BLACK\nend\nreturn BROWN"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "basketball.txt",
+      "size": 3,
+      "source": 100,
+      "variant_order": [
+        "first_pass"
+      ]
+    },
+    {
+      "active_variant": "first_pass",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 7.34222,
+      "code_size": 115,
+      "code_variants": {
+        "first_pass": "-- REALLY QUITE HEAVY WHEN MADE\n-- SOLID LIKE THIS\n\n-- empty space\nif y\u003e3 then return end\n\nlocal X=x^2\nlocal Z=z^2\nif y\u003c0 then -- legs\n\tif X\u003e=4 and X\u003c=9 and Z\u003e=16 and Z\u003c=25 then\n\t\treturn BLACK\n\telse\n\t\treturn\n\tend\t\nelseif X\u003c=25 then -- tabletop\n\tif y==3 and X\u003c=16 and Z\u003c=36 then\n\t\tif X\u003c=9 and Z\u003c=25 then return end\n\t\treturn GREEN\n\telseif y==2 and X\u003c=9 and Z\u003c=25 then\n\t\tif z%5==0 and X==9 then return 0 end\n\t\treturn GREEN\n\tend\n\treturn DARKBROWN\nend\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "pool-table.txt",
+      "size": 7,
+      "source": 100,
+      "variant_order": [
+        "first_pass"
+      ]
+    },
+    {
+      "active_variant": "faster",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 13.5171,
+      "code_size": 148,
+      "code_variants": {
+        "faster": "--13.431\n--\n-- TO GO WITH THE SQUARE\n-- BASKETBALL.\n\n-- EMPTY space\nif (z+2)|(y+1)\u003e0 then return end\n-- The backetball net\nif z==-3 then\n\tif max(x^2, (y-1)^2) == 4 then return WHITE end\n\treturn y\u003e-extent and GREY \nend\nif y==-extent+2 then\n\tif z==-2 and x^2\u003c=1 then return RED end\n\tif max(x^2,(z-1)^2) == 4 then return RED end\nend\nif y==-extent+1 then\n\tlocal v=(x*x+(z-1)^2) \n\tif v == 4 or v == 8 then return WHITE end\nend\nif y==-extent and x*x+(z-1)^2==5 then return WHITE end\n",
+        "first_pass": "-- TO GO WITH THE SQUARE\n-- BASKETBALL.\n\n-- EMPTY space\nif (z+2)|(y+1)\u003e0 then return end\n-- The backetball net\nif z==-3 then\n\tif max(x^2, (y-1)^2) == 4 then return WHITE end\n\treturn y\u003e-extent and GREY \nend\nif y==-extent+2 then\n\tlocal X=x^2\n\tif z==-2 and X\u003c=1 then return RED end\n\tif max(X,(z-1)^2) == 4 then return RED end\nend\nif y==-extent+1 then\n\tlocal v=(x*x+(z-1)^2) \n\tif v == 4 or v == 8 then return WHITE end\nend\nif y==-extent and x*x+(z-1)^2==5 then return WHITE end\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "basketball_hoop.txt",
+      "size": 4,
+      "source": 100,
+      "variant_order": [
+        "first_pass",
+        "faster"
+      ]
+    },
+    {
+      "active_variant": "first_pass",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 9.89511,
+      "code_size": 67,
+      "code_variants": {
+        "first_pass": "-- DOUBLES AS A FORTUNE-TELLING\n-- DEVICE HAHA\n\n-- hmmm... I wonder what else we can do to speed it up\nlocal X = x^2\nlocal Z = z^2\nlocal c = X + y^2 + Z\nif c \u003e= 64 then return end -- empty space\nif c \u003c= 63 then \n\tif y ~= 7 then return BLACK end -- the ball\n\tif Z\u003c2 and X\u003c9 then -- inside figure8\n\t\tif X==1 and z==0 then return WHITE end \n\t\treturn BLACK \n\tend\n\treturn WHITE -- surrounding white\nend\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "8ball.txt",
+      "size": 7,
+      "source": 100,
+      "variant_order": [
+        "first_pass"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 10.2128,
+      "code_size": 46,
+      "code_variants": {
+        "code": "-- Connect the left and right ends of the x-axis,\n-- then do the same for the y, z axes,\n-- and it's frame!\nif x == 0 or y == 0 or z == 0 then return end\nlocal v = x^2+y^2+z^2 \nreturn (v==6 or v==11) and LIGHTBLUE or v==3 and WHITE"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "framework.weekly",
+      "size": 3,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "return abs(x) \u003e= t and max(abs(x)-t, abs(y), abs(z)) == 2"
+      },
+      "completed": false,
+      "fps": 6,
+      "frames": 12,
+      "id": "box-bisection.weekly",
+      "size": 4,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "return 1"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "sushi-board.weekly",
+      "size": 4,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "return y==sign(x)"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "balance.weekly",
+      "size": 9,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "l = {abs(x), abs(y), abs(z)}\nsort(l)\nreturn l[2]==l[3] and l[2]"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "entangled.weekly",
+      "size": 3,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "return 1"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "rook.weekly",
+      "size": 5,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "return 1"
+      },
+      "completed": false,
+      "fps": 14,
+      "frames": 7,
+      "id": "eggs-and-bacon.weekly",
+      "size": 4,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- The iconic \"go that way\" indicators from the\n-- hit indie game Parking Garage Rally Circuit :)\n"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "pgrc-arrow.weekly",
+      "size": 8,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "return round(sqrt(x^2+z^2))"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "traffic-cone.weekly",
+      "size": 5,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "return 1"
+      },
+      "completed": false,
+      "fps": 1,
+      "frames": 32,
+      "id": "funni-curve.weekly",
+      "size": 8,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- HELLO"
+      },
+      "completed": false,
+      "fps": 2,
+      "frames": 5,
+      "id": "hello-anim.weekly",
+      "size": 4,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- You can usually break down a complex\n-- looking shape into a combination of\n-- multiple simpler shapes!\n\nif x==0 or y==0 then\n\tif x==4 or y==4 then\n\t\treturn BLACK\n\telse\n\t\treturn WHITE\n\tend\nend"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "multi-arrow.weekly",
+      "size": 4,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- Greetings from Tokyo!"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "tokyo-tower.weekly",
+      "size": 4,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- this looks like a nice place for a fountain!\nif y==-extent then\n\treturn GREEN\nelseif y==-extent+1 and (x+z)%4==0 and (x-z)%4==0 then\n\treturn LIGHTGREEN\nend"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "pagoda.weekly",
+      "size": 8,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- how can I make a 'canoe\" shape? hmmm...\n-- intersecting shapes perhaps?\nreturn y == -2 and BLUE"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "canoe.weekly",
+      "size": 9,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- this looks like a great spot for a cabin!\nsnow = WHITE\nif y == -extent then\n\treturn snow\nend"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "mountain-cabin.weekly",
+      "size": 5,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "--[[\nThis shape is a fractal similar to the Menger Sponge, but\nis actually an approximation as a true one has an irrational\nscaling factor!\n]]\n\nreturn (x+y+z) % 2 + 10"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "cross-menger.weekly",
+      "size": 16,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- Did you know...\n-- The leader of a herd of elephants is \n-- the oldest female! \n-- A very large example of a matriarchal family!"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "elephant.weekly",
+      "size": 4,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "return 1"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "spiral-cube.weekly",
+      "size": 2,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "return y == round(cos(x*pi/4))"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "weave.weekly",
+      "size": 5,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "first_pass",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 8.85131,
+      "code_size": 90,
+      "code_variants": {
+        "first_pass": "-- cool little truck for a game idea\n-- that I have about being a rabbit and\n-- hopping across a busy road, trying\n-- not to get squished!\n\n-- I'm still working on the back story tho.\n-- WHY does the rabbit need to cross so many\n-- busy roads?\n\nif x^2 \u003c 5 then\n\tif y==-3 then return x^2 + z^2 == 8 and BLACK -- wheels\n\telseif z \u003e 2 and y == -1 and x^2 == 4 then return YELLOW -- lights\n\telseif z \u003e 1 and (y==2 or y==1) then return GREY -- windshield\n\telseif z \u003e 0 then return WHITE -- truck body\n\telseif z==-3 and y==-1 and x^2 == 4 then return RED -- brake lights\n\telseif z \u003c 1 then return GREEN end -- dumper\nend\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "mini_truck.txt",
+      "size": 3,
+      "source": 100,
+      "variant_order": [
+        "first_pass"
+      ]
+    },
+    {
+      "active_variant": "first_pass",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 11.6221,
+      "code_size": 123,
+      "code_variants": {
+        "first_pass": "-- what about a metroidvania / adventure game,\n-- but you play as a dolphin underwater?\n-- that would be amazing!\n\n-- you could meet all sorts of friends and\n-- foes like this cool octopus here.\n\nif y\u003e-2 then\n\tlocal X = x^2\n\tlocal Z = z^2\n\t-- cone\n\tif y\u003c1 or y==5 then \n\t\tif X+Z \u003c 1/11*(y-6)^2 then return RED end\n\tend\n\t-- head\n\tif y\u003e0 then\n\t\tif y==2 and z == 2 and X==1 then return BLACK\n\t\telseif X + Z + (y-2)^2 \u003c 8 then return RED end\n\tend\nelseif y == -2 then\n\tlocal X = x^2\n\tlocal Z = z^2\n  if X == Z and X + Z \u003c= 32 then \n\t\treturn RED\n\telseif z==0 or x==0 then\n\t\treturn RED \n\tend\nelseif y\u003c-2 then return DARKBLUE -- water\nend"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "octopus.txt",
+      "size": 5,
+      "source": 100,
+      "variant_order": [
+        "first_pass"
+      ]
+    },
+    {
+      "active_variant": "faster",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 12.2112,
+      "code_size": 56,
+      "code_variants": {
+        "faster": "-- OK get this idea: essentially a tacital\n-- turn-based RPG, but instead of the standard\n-- fantasy setting, it's a WW2-era military \n-- battle!\n\n--empty space\nif y\u003c-3 or y\u003e5 then return end\n\n-- barrel\nlocal Z = z^2\n-- poormans sphere translated by y-4\nif Z + (y-4)^2 \u003c 3 then \n\tif x \u003e -2 then return GREEN\n\telseif x \u003c -3 then return end\nend\n-- body and tread\n-- cartesian form equation of ellipse: x^2/a^2 + y^2/b^2 == 1\nif x^2/25 + y^2/11 \u003c= 1 then\n\tif Z \u003c= 16 then \n\t\treturn y \u003e -2 and GREEN \n\tend\n\treturn BLACK\nend\n-- codesize: 75\n-- cycles: 12.211",
+        "first_pass": "-- OK get this idea: essentially a tacital\n-- turn-based RPG, but instead of the standard\n-- fantasy setting, it's a WW2-era military \n-- battle!\n\n-- barrel\nlocal Z = z^2\nif Z + (y-4)^2 \u003c 3 then \n\tif x \u003e -2 then return GREEN\n\telseif x \u003c -3 then return end\nend\n-- body and tread\nif x^2/25 + y^2/11 \u003c= 1 then\n\tif Z \u003c= 16 then \n\t\treturn y \u003e -2 and GREEN \n\tend\n\treturn BLACK\nend\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "wide_tank.txt",
+      "size": 6,
+      "source": 100,
+      "variant_order": [
+        "first_pass",
+        "faster"
+      ]
+    },
+    {
+      "active_variant": "faster",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 12.1707,
+      "code_size": 52,
+      "code_variants": {
+        "faster": "-- This is not just any winter hat. It's\n-- actually a sentient hat that decides which\n-- dormitory 'kids' are sorted into in a school\n-- for gifted reindeer children that have\n-- the magical ability to fly!\n\n-- is_cone = abs(y - 399/100 + 2*(x^2 + z^2)^.5) \u003c 1\n\nlocal a = x^2 + z^2\n-- empty space\nif a \u003e= 30 then return end \n\n-- the hat\nif abs(y - 3.99 + 2*a^.5) \u003e 1 then -- outside cone\n\tif a + (y-5)^2 \u003c 3 then return WHITE end -- ball ontop\nelse \n\t-- inside cone\n\tif y\u003c-4 then return WHITE end -- bottom trim\n\treturn RED -- rest of the hat\nend\n",
+        "first_pass": "-- This is not just any winter hat. It's\n-- actually a sentient hat that decides which\n-- dormitory 'kids' are sorted into in a school\n-- for gifted reindeer children that have\n-- the magical ability to fly!\n\n-- is_cone = abs(y - 399/100 + 2*(x^2 + z^2)^.5) \u003c 1\n\nlocal a = x^2 + z^2\nif a \u003e= 30 then return end\nif abs(y - 3.99 + 2*a^.5) \u003c= 1 then\n\tif y+4 \u003c 0 then\n\t\treturn WHITE\n\tend\n\treturn RED\nelseif a + (y-5)^2 \u003c 3 then\n\treturn WHITE\nend\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "winter-hat.txt",
+      "size": 6,
+      "source": 100,
+      "variant_order": [
+        "first_pass",
+        "faster"
+      ]
+    },
+    {
+      "active_variant": "first_pass",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 7.95084,
+      "code_size": 160,
+      "code_variants": {
+        "first_pass": "-- I want to make something with a 'power\n-- source' theme.\n\n-- how about this: a robot that requires\n-- electricity to move. it's head is it's\n-- power source, and it can throw it's head\n-- around to power things and solve puzzles,\n-- but it's body can't last long without it's\n-- head?\n\n-- could be a fun idea for a puzzle platformer.\n\n-- empty space\nif z\u003e0 then return end\nif z\u003e-4 and z~=0 and y^2\u003c=9 and x^2\u003c=4 then return end\n\nlocal Y = y^2\nlocal X = x^2\n\n-- faceplate\nif z==0 then\n\tif Y\u003c=25 and X\u003c= 9 then\n\t\tif X==1 and (y==2 or y==3) then\n\t\t\treturn 0\n\t\telseif X==1 and (y==-1 or y==-2) then\n\t\t\treturn 0\n\t\telseif x==0 and (y==1 or y==-3) then\n\t\t\treturn 0\n\t\telse \n\t\t\treturn WHITE\n\t\tend\n\tend\nelse\n\t-- the boxes behind\n\tif Y\u003c=16 then\n\t\tif z\u003c=-5 then return GREY end\n\t\tif z==-4 and X\u003c=9 then return GREEN end\n\t\tif X==9 then return GREEN end\n\t\tif Y==16 and X\u003c=9 then return GREEN end\n\tend\n\treturn GREY\nend\n\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "outlet.txt",
+      "size": 6,
+      "source": 100,
+      "variant_order": [
+        "first_pass"
+      ]
+    },
+    {
+      "active_variant": "faster",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 13.008,
+      "code_size": 114,
+      "code_variants": {
+        "faster": "-- 130\n-- cycles/voxel: 13.008\n\n-- Dice are universal. \n-- Dice are simple.\n-- I want to make an entire roguelike\n-- about going through dungeons, but\n-- only using dice for all your attacks\n-- and abilities.\n\n-- an attempt at quick interior\n--if x^2+y^2+z^2\u003c4 then return WHITE end\n\nif     y == -2 and x^2+z^2\u003c4 and x%2-z%2 == 0 then return BLACK\nelseif z == -2 and x^2+y^2\u003c4 and x%2 == 1 then return BLACK\nelseif x == -2 and z==y and y^2+z^2\u003c4 then return BLACK\nelseif x == 2  and y^2+z^2==2 then return BLACK\nelseif y == 2  and x==-z and x^2+z^2==2 then return BLACK\nelseif z == 2  and x^2+y^2==0 then return BLACK end\n\nreturn WHITE",
+        "first_pass": "-- codesize: 114\n\n-- Dice are universal. \n-- Dice are simple.\n-- I want to make an entire roguelike\n-- about going through dungeons, but\n-- only using dice for all your attacks\n-- and abilities.\nXY=x^2+y^2\nXZ=x^2+z^2\nYZ=y^2+z^2\nreturn \ny==-2 and XZ\u003c4 and x%2-z%2==0 and BLACK or\nz==-2 and XY\u003c4 and x%2==1 and BLACK or\nx==-2 and z==y and YZ\u003c4 and BLACK or\nx==2  and YZ==2 and BLACK or\ny==2  and x==-z and XZ==2 and BLACK or\nz==2  and XY==0 and BLACK or WHITE\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "d6.txt",
+      "size": 2,
+      "source": 100,
+      "variant_order": [
+        "first_pass",
+        "faster"
+      ]
+    },
+    {
+      "active_variant": "fastest",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 8.92763,
+      "code_size": 225,
+      "code_variants": {
+        "fastest": "--225\n--8.928\n-- This is a rare one that isn't based\n-- on a game idea.\n\n-- I just really like the somewhat forgotten\n-- 3DO console.  It had a really cool design\n-- and was also the console that Crystal\n-- Dynamics got it's start on.\n\nif y\u003e=3 or y\u003c=-3 then return -- get out early\nelse\n\t-- check interior escape hatches\n\tlocal X,Z=x^2,z^2\n\tif (X\u003c=9 and Z==36 or Z\u003c=9 and X==36) then return end -- xbox reliefs\n\t-- focus on interior\n\tif max(X,Z)\u003c=16 then \n\t\tif y==1 then return end -- open air above interior chips\n\t\tif y == 0 then\n\t\t\t-- do chip stuff\n\t\t\tif x\u003e=-3 and x\u003c=-2 and z\u003e=-3 and z\u003c=-2 then return BLACK end -- black chip\n\t\t\tif x\u003e=0 and x\u003c= 3 and z\u003e=-3 and z\u003c=-2 then return (x%2~z%2)+7 end -- red chip\n\t\t\tif (z==0 and X\u003c=1) or (z\u003e0 and X\u003c=4) then return GREY end\n\t\t\treturn EMPTY\n\t\tend\n\t\tif y==-1 then return GREEN end\n\tend\n\t-- back ports\n\tif y==-1 and z==-5 then\n\t\tif x==-3 then return WHITE end\n\t\tif x==-2 then return RED end\n\t\tif x==-1 then return YELLOW end\t\n\t\tif x\u003e=1 and x\u003c=2 then return BLACK end\n\tend\n\t-- racing stripes\n\tif z==6 and y == 0 then return YELLOW end\n\t-- front slot\n\tif y==1 and z==5 and X\u003c=4 then return end\n\t\n\t-- everything else in here is grey\n\treturn GREY --body\nend\n\n-- return abs(y)\u003c=2 and y^2+z^2*2-x^2 - 52 \u003c 9 \n-- and x^2*2+y^2-z^2 - 47\u003c16 and GREY",
+        "first_pass": "-- This is a rare one that isn't based\n-- on a game idea.\n\n-- I just really like the somewhat forgotten\n-- 3DO console.  It had a really cool design\n-- and was also the console that Crystal\n-- Dynamics got it's start on.\n\nY=y^2\nif Y\u003e=9 then return -- get out early\nelse\n\t-- check interior escape hatches\n\tlocal X,Z=x^2,z^2\n\tif (X\u003c=9 and Z==36 or Z\u003c=9 and X==36) then return end\n\tif max(abs(x),abs(z))\u003c=4 then \n\t\tif y==1 then return end\n\t\tif y == 0 then \n\t\t\t-- do chip stuff\n\t\t\tif x\u003e=-3 and x\u003c=-2 and z\u003e=-3 and z\u003c=-2 then return BLACK end -- black chip\n\t\t\tif x\u003e=0 and x\u003c= 3 and z\u003e=-3 and z\u003c=-2 then return (x%2~z%2)+7 end -- red chip\n\t\t\tif (z==0 and X\u003c=1) or (z\u003e0 and X\u003c=4) then return GREY end\n\t\t\treturn EMPTY\n\t\tend\n\t\tif y==-1 then return GREEN end\n\tend\n\t-- back ports\n\tif y==-1 and z==-5 then\n\t\tif x==-3 then return WHITE end\n\t\tif x==-2 then return RED end\n\t\tif x==-1 then return YELLOW end\t\n\t\tif x\u003e=1 and x\u003c=2 then return BLACK end\n\tend\n\t-- racing stripes\n\tif z==6 and y == 0 then return YELLOW end\n\t-- slot\n\tif y==1 and z==5 and X\u003c=4 then return end\n\t\n\treturn GREY --body\nend\n\n-- return abs(y)\u003c=2 and y^2+z^2*2-x^2 - 52 \u003c 9 and x^2*2+y^2-z^2 - 47\u003c16 and GREY"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "3do.txt",
+      "size": 6,
+      "source": 100,
+      "variant_order": [
+        "first_pass",
+        "fastest"
+      ]
+    },
+    {
+      "active_variant": "smallest",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 9.11541,
+      "code_size": 47,
+      "code_variants": {
+        "code": "-- vector length \nfunction length(vx,vy,vz)\n\treturn vx * vx + vy * vy + vz * vz\nend\n\n-- min function with blending (k modifies smoothness)\nfunction smoothMin(a,b,k)\n\tk = k * 2.0\n\ti = b - a\n\treturn 0.5 * (a + b - sqrt(i*i+k*k))\nend\n\n-- signed distance function returns the distance any point is \n-- from a shape of specified parameters\nfunction signedDistanceSphere(px,py,pz, size)\n\treturn length(px,py,pz) - size\nend\n\n-- distance functions can be used with min to allow for multiple objects to be drawn\nreturn smoothMin(\nsignedDistanceSphere(x + 16,y,z,50), \nsignedDistanceSphere(x - 16,y,z,50), \n40) \u003c 0 and (x+1)%15",
+        "code 2": "-- this is so slow on my pc I cannot optimize, lol\n\n-- cut out deadspace\nif y\u003e9 or z\u003e9 then return end\n\n-- excluding space between spheres doesnt add speed :(\n-- local X = abs(x)\n-- if t\u003c6 or t\u003e25 then\n-- \tif t\u003c6 and X \u003c 8 - t then return\n-- \telseif t\u003e25 and X \u003c (26-t) then return end\n-- end\n\n-- min function with blending (k modifies smoothness)\n-- minSmoothBlend\nfunction sb(a,b,k)\n\treturn (a + b - ((b - a)^2+(k * 2)^2)^0.5)/2\nend\n\nreturn sb(\n\t\t\t\t(x+16-1*t)^2 + y^2 + z^2 - 50, \n\t\t\t\t(x-16+1*t)^2 + y^2 + z^2 - 50, \n\t\t\t\t40) \u003c 0 and abs(x)%16+1",
+        "code 3": "-- Pushing the \"run code\" button is hilarious to me\n-- my system absolutely chugs\n\n-- empty space\nif y\u003c-9 or y\u003e9 or z\u003c-9 or z\u003e9 then return end\n-- maths\nlocal a = (x+16-t)^2 + y^2 + z^2 - 50\nlocal b = (x-16+t)^2 + y^2 + z^2 - 50\nreturn (a + b - ((b - a)^2+6400)^.5)/2 \u003c 0 and abs(x)+1\n\n-- codesize: 94 (my lowest is 75)\n-- cycles: 12.249\n\n-- matlab.mathworks.com\n-- !1Aifx\u003c-9thenreturnend!",
+        "code 4": "-- empty space\nif y\u003c-9 or y\u003e9 or z\u003c-9 or z\u003e9 then return end\n-- math\nlocal T=(t-16)^2 \nreturn T+x^2+y^2+z^2 \u003c 2*(400+x^2*T)^.5 + 50 and abs(x)+1\n-- 67\n-- 10.497",
+        "fastest": "-- size: 71\n-- c/v:  9.115\n\n-- ##empty_space\nlocal YZ= y^2 + z^2\nif YZ\u003e89 then return end\n\n-- ##maths\nlocal X = x^2\nlocal T = (t-16)^2\nif T + X + YZ \u003c 50 + 2*(X*T + 4e2)^.5 then\n\tif x\u003e0 then\n\t\treturn x+1\n\telse\n\t\treturn 1-x\n\tend\nend\n\n-- I personally struggled to make the eq'n more simplified, ended up using free matlab online\n-- they give 20hours/month free for hobbists\n-- matlab.mathworks.com\n-- https://www.mathworks.com/help/symbolic/sym.simplify.html\n-- first I declare all my \"symbolics\"\n-- then we define some values and our eqn, then we ask it to simplify\n-- syms a b c x y z t\n-- a = (x + 16 - t)^2 + y^2 + z^2 - 50\n-- b = (x - 16 + t)^2 + y^2 + z^2 - 50\n-- eqn = (a + b - sqrt((b - a)^2+6400))/2 \u003c 0\n-- simplify(eqn,\"All\",true)\n--\n-- hooray! the matlabs simplify() func completed and then gave me this answer as a choice, 1 of 4 simlifications\n-- x^2 + t^2 - 2*(t^2*x^2 - 32*t*x^2 + 256*x^2 + 400)^(1/2) - 32*t + y^2 + z^2 + 256 \u003c 50\n--\n-- We can simplify further!:\n-- eqn2 = t^2*x^2 - 32*t*x^2 + 256*x^2 + 400\n-- collect(eqn2,\"All\",true)\n-- (t^2 - 32*t + 256)*x^2 + 400\n-- eqn3 = t^2 - 32*t + 256\n-- simplify(eqn3)\n-- (t - 16)^2\n-- Below we now try to put it all together:\n--\n-- x^2 + t^2 - 2*(t^2*x^2 - 32*t*x^2 + 256*x^2 + 400)^(1/2) - 32*t + y^2 + z^2 + 256 \u003c 50\n-- x^2 + t^2 - 32*t + 256 + y^2 + z^2  \u003c 50 + 2*(t^2*x^2 - 32*t*x^2 + 256*x^2 + 400)^(1/2)\n-- x^2 + t^2 - 32*t + 256 + y^2 + z^2  \u003c 50 + 2*((t^2 - 32*t + 256)*x^2 + 400)^(1/2)\n-- x^2 + (t-16)^2 + y^2 + z^2  \u003c 50 + 2*(x^2*(t-16)^2 + 400)^.5\n-- substitute for T,X,Y,Z\n-- T + X + YZ \u003c 50 + 2*(X*T + 400)^.5\n\n",
+        "small_and_cool": "T = (t-16)^2\nreturn T + x^2 + y^2 + z^2 - 2*sqrt(x^2*T+4e2) \u003c 50 and abs(x)+1\n-- 44\n-- 22.376\n",
+        "smallest": "T = t - 16\nreturn T^2 + x^2 + y^2 + z^2 - 2*sqrt((x*T)^2 + 4e2) \u003c 50 and abs(x)+1\n-- 44"
+      },
+      "completed": true,
+      "fps": 30,
+      "frames": 32,
+      "id": "sdf-smooth.weekly",
+      "size": 16,
+      "source": 400,
+      "variant_order": [
+        "code",
+        "code 2",
+        "code 3",
+        "code 4",
+        "fastest",
+        "smallest",
+        "small_and_cool"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "return max(x,y,z) == -min(x,y,z)"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "3d-spiral.weekly",
+      "size": 2,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "faster",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 3.50714,
+      "code_size": 68,
+      "code_variants": {
+        "faster": "-- LOTS OF WIND RESISTENCE.\n-- REALLY BEEFS UP THE ARMS!\n\n-- EMPTYSPACE\nif z ~= 0 then return end\nif x^2 \u003e 9 then return end\n-- RACQUET\nif y\u003e-2 then\n\tif x^2 == 9 then return RED end\n\tif y == -1 or y==5 then return RED end\n\tif x%2 + y%2 \u003e 0 then return WHITE end \nend\n-- HANDLE\nif x == 0 then\n\tif y\u003c-3 then return BLACK end\n\tif y\u003c-1 then return RED end\nend\n",
+        "first_pass": "-- LOTS OF WIND RESISTENCE.\n-- REALLY BEEFS UP THE ARMS!\n\n-- EMPTYSPACE\nif z ~= 0 then return end\nif x^2 \u003e 9 then return end\n-- RACQUET\nlocal b = max(abs(x),abs(y-2))\nif b \u003c= 3 then\n \tif b == 3 then return RED end \n\tif x^2 == 1 then return WHITE\n\telseif y%2 == 1 then return WHITE end\nend\nif x == 0 then\n\tif y\u003c-3 then return BLACK end\n\tif y\u003c-1 then return RED end\nend\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "tennis_raquet.txt",
+      "size": 5,
+      "source": 100,
+      "variant_order": [
+        "first_pass",
+        "faster"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- The fractal that once existed\n-- in ancient Greece!\nif y\u003c=-9 then\n\treturn 2-y|11\nend"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "fractal-polis.weekly",
+      "size": 13,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "return abs(x) ~= 2 and abs(y) ~= 2 and abs(z) ~= 2 and PINK + (y+1)//4\n\n-- sometimes removing parts is more difficult than adding them :3"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "ate-my-cubes.weekly",
+      "size": 5,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- the powers of 2 are all you need\n\n-- circling the cube for good luck\nreturn (16-x*y-y*z-x*z)/(256-max(x,y,z)*2)\n"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "space-hedgehog.weekly",
+      "size": 16,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "if y \u003c= -3 then\n\treturn x == z\nend"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 9,
+      "id": "hole-in-one.weekly",
+      "size": 4,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- Be sure to check inside the cup - the cream isn't fully mixed in!"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "coffee.weekly",
+      "size": 8,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- The original home console system!"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "2600.weekly",
+      "size": 4,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "ax = abs(x)\nay = abs(y)\naz = abs(z)\n\ntop = max(ax,az)\n\nif top == 2 then\n\treturn RED\nelseif top \u003c 2 then\n\treturn WHITE\nend"
+      },
+      "completed": false,
+      "fps": 3,
+      "frames": 4,
+      "id": "blender.weekly",
+      "size": 4,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "first_pass",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 7.32785,
+      "code_size": 79,
+      "code_variants": {
+        "first_pass": "-- SQUARE BOWLING BALL ENDS UP\n-- MORE LIKE SHUFFLEBOARD\nif y\u003e0 then return end\nif y==-4 and x*x\u003c=9 then return YELLOW end\n\nif (x+z)%2==1 and abs(x)\u003c-z then\n\tif y==-1 then return RED end\n\tif y\u003c=0 then return WHITE end\nend\n\nif x\u003e=1 and x\u003c=2 and y\u003c-1 and z\u003e=2 and z\u003c=3 then return BLACK end\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "bowling.txt",
+      "size": 4,
+      "source": 100,
+      "variant_order": [
+        "first_pass"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "return PURPLE\n"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "keyboard.txt",
+      "size": 6,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- They Might Be Giants main 2 members\n-- are John Linnel and John Flansburg.\n\n-- Flansburg plays the guitar and is the more\n-- outgoing performer of the two, often writing\n-- more performance-oriented songs. \n\n-- Great example:\n--'Youth Culture Killed My Dog' from their\n-- self-titled debut album\n\nreturn 1"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "guitar.txt",
+      "size": 8,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- TMBG have released 23 studio albums since their\n-- debut in 1986.  Every album has multiple\n-- incredible songs on it.\n\n-- picking one at random, give this a listen:\n-- 'Erase' from the 2015 album 'Glean'\nif z^2\u003c=1 and y\u003e-3 and floor(sqrt(x*x + y*y)) == 6 then \n\treturn PEACH \nend"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "headphones.txt",
+      "size": 8,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "first_pass",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 23.9625,
+      "code_size": 142,
+      "code_variants": {
+        "first_pass": "local ax = abs(x)\nlocal az = abs(z)\n\n-- pipes\nif y == 3 then\n  if az \u003c (x + extent + 1) // 6 + 3 then\n\t\tif ax \u003c extent and x % 2 == 0 then\n    \tif az == 1 then\n\t\t\t\treturn GREY\n\t\t\telse\n\t\t\t\treturn ORANGE\n    \tend\n\t\tend\n  end\nend\n\n-- base\nif inrange(y, 0, 2) and ax \u003c extent - 1 and az \u003c= 1 then\n  return BLACK\nend\n\n-- support-legs\nif ax == extent - 2 and y \u003c 0 then\n  if y \u003e -extent then\n    if z == 0 then return BLACK end -- legs\n  else\n    if az \u003c 4 then return BLACK end -- feet\n  end\nend\n\nif ax == 2 and y == 6 and inrange(z, -3, 0) then\n  if z == 0 then return BLACK end\n  return YELLOW -- drumsticks\nend\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "xylophone.txt",
+      "size": 8,
+      "source": 100,
+      "variant_order": [
+        "first_pass"
+      ]
+    },
+    {
+      "active_variant": "try_new_approach",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 10.1788,
+      "code_size": 206,
+      "code_variants": {
+        "first_pass": "-- codesize: 206\n-- poormans rotations\nZ=z^2\nX1=x-2\nX2=x+2\nY1=y-t+2\nY2=y+2\nif t\u003e=5 then\n\tif t\u003c=8 then\n\t  X1=x-6+t\n\t  X2=x+6-t\n\t\tY1=y-2\n\t\tY2=y+2\n\telseif t\u003c=12 then\n\t\tX1=x+2\n\t\tX2=x-2\n\t\tY1=y+t-10\n\t\tY2=y+2\n\telseif t\u003c=16 then \n\t\tX1=x+2\n\t\tX2=x-2\n\t\tY1=y+2\n\t\tY2=y+14-t\n\telseif t\u003c=20 then \n\t\tX1=x+18-t\n\t\tX2=x+t-18\n\t\tY1=y+2\n\t\tY2=y+-2\n\telseif t\u003c=23 then \n\t\tX1=x-2\n\t\tX2=x+2\n\t\tY1=y+2\n\t\tY2=y+t-22\n\tend\nend\n\nreturn X1^2+Y1^2+Z \u003c 4 and YELLOW\n or X2^2+Y2^2+Z \u003c 4 and LIGHTGREEN\n",
+        "go_for_speed": "-- 233\n-- 10.179\n\n-- empty space\nif z\u003c-1 or z\u003e1 or y\u003c-3 or x\u003c-3 or y\u003e3 or x\u003e3 then return end\n\n-- bad maths\n-- I couldnt get the cycle maths, I have failed you Anch, lol\n\nlocal X1, X2, Y1, Y2 = x-2, x+2, y-t+2, y+2\nif t\u003e=5 then\n\tif t\u003c=8 then X1, X2, Y1 = x-6+t, x+6-t, y-2\n\telseif t\u003c=12 then X1, X2, Y1 = x+2, x-2, y+t-10\n\telseif t\u003c=16 then X1, X2, Y1, Y2 = x+2, x-2, y+2, y+14-t\n\telseif t\u003c=20 then X1, X2, Y1, Y2 = x+18-t, x+t-18, y+2, y+-2\n\telseif t\u003c=23 then Y1, Y2 = y+2, y+t-22\n\tend\nend\n\nreturn X1^2+Y1^2+z^2 \u003c 4 and YELLOW\n or X2^2+Y2^2+z^2 \u003c 4 and LIGHTGREEN\n",
+        "looking_for_cycles": "--296\n--12.097 but failing\n-- empty space\nlocal Z = z^2 if Z\u003e1 or x^2\u003e9 or y^2\u003e9 then return end \n\nlocal T=-4*(t//5)+t%20\n-- maths\nlocal X1, X2, Y1, Y2 = 0, 0, 0, 0\nif t\u003c=4 then       X1, X2, Y1, Y2 = 0, x+2,       y-t+2, y+2\nelseif t \u003c= 8 then X1, X2, Y1, Y2 = 6-t, x+6-t,   y-2,   y+2\nelseif t\u003c=12 then X1, X2, Y1, Y2 =  4, x-2,       y+t-10, y+2\nelseif t\u003c=16 then X1, X2, Y1, Y2 =  4, x-2,       y+2,  y+14-t\nelseif t\u003c=20 then X1, X2, Y1, Y2 =  20-t, x+t-18, y+2,  y+-2\nelseif t\u003c=23 then X1, X2, Y1, Y2 =  0, x+2,       y+2,  y+t-22\nend\n\nif x==0 and y==0 and z==0 then\n\tprint(\"T= \" .. T)\n\tprint(T)\nend\n\nreturn (x-2+X1)^2+Y1^2+Z \u003c= 3 and YELLOW\nor X2^2+Y2^2+Z \u003c= 3 and LIGHTGREEN\n",
+        "second_pass": "local T, Z = t%24, z^2\nlocal X1, X2, Y1, Y2 = 0, 0, 0, 0\n\nif t\u003c=4 then\n\tX1, X2 =  -2,  2\n\tY1, Y2 =  2-t, 2\nelseif t \u003c= 8 then\n\tX1, X2 = t-6, 6-t\n\tY1, Y2 =  -2, 2\nelseif t\u003c=12 then\n\tX1, X2 =    2, -2 \n\tY1, Y2 = t-10, 2\nelseif t\u003c=16 then\n  X1, X2 =   2, -2\n\tY1, Y2 =   2, 14-t\nelseif t\u003c=20 then\n\tX1, X2 = 18-T, T-18\n\tY1, Y2 = 2,    -2\nelseif t\u003c=23 then\n\tX1, X2 = -2, 2 \n\tY1, Y2 =  2, t-22\nend\n\nif x==2 and y == -2 and z == 0 then \n print(\"X1= \" .. X1 .. \",Y1= \" .. Y1) \n print(\"X2= \" .. X2 .. \",Y2= \" .. Y2) \nend\n\nreturn (x+X1)^2+(y+Y1)^2+Z\u003c4 and YELLOW\n or (x+X2)^2+(y+Y2)^2+Z\u003c4 and LIGHTGREEN",
+        "try_new_approach": "--264\n--17.534\n-- empty space\nif z\u003c-1 or z\u003e1 or y\u003c-3 or x\u003c-3 or y\u003e3 or x\u003e3 then return end\n\n--t = t%12\n\nlocal X,XX,Y,YY=0,0,0,0\n\n--function pprint(xx,yy,zz,var)\n--\tif x==xx and y==yy and z==zz then print(var) end\n--end\n\nif inrange(t,0,4) then\n\tX =  0\n\tY =  0 - t%6\n\tXX=  0\n\tyy=  0\nelseif inrange(t,5,8) then\n\tX = -4 + (t%12)\n\tY = -4\n\tXX=  4 - (t%12)\n\tYY=  0\nelseif inrange(t,9,12) then\n\tX =  4\n\tY = -4 + (t%8)\n\tXX= -4\n\tYY=  0\nelseif inrange(t,13,16) then\n\tX =  4 \n\tY =  0\n\tXX= -4\n\tYY= - (t%6)\nelseif inrange(t,17,20) then\n\tX = 4 - (t%8)\n\tY = 0\n\tXX= -4 + (t%8)\n\tYY= -4\nelseif inrange(t,21,23) then\n\tX = 0\n\tY = 0\n\tXX= 0\n\tYY= -4 + t%4\nend\n\nreturn\n(x-2+X)^2+(y+2+Y)^2+z^2 \u003c= 3 and YELLOW or\n(x+2+XX)^2+(y+2+YY)^2+z^2 \u003c= 3 and LIGHTGREEN\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 24,
+      "id": "cube-swap.weekly",
+      "size": 4,
+      "source": 400,
+      "variant_order": [
+        "first_pass",
+        "second_pass",
+        "looking_for_cycles",
+        "go_for_speed",
+        "try_new_approach"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 37.3937,
+      "code_size": 146,
+      "code_variants": {
+        "code": "-- This would be like some sort of physics\n-- puzzle, where players take turns removing\n-- pieces of a tower, trying not to be the\n-- one that causes it to topple over.\n\n-- might be better as a physical game\n-- than a videogame? hmmm\n\nif y == -4 then \n  return 2\nend\n\nlocal yy,d = (y+4)%4, 2\na = ((x==d and abs(z)\u003c=d+1) and 1 or 0)  * (yy==0 and 1 or 0)\nb = ((z==-d and abs(x)\u003c=d+1) and 1 or 0) * (yy==1 and 1 or 0)\nc = ((x==-d and abs(z)\u003c=d+1) and 1 or 0) * (yy==2 and 1 or 0)\nd = ((z==d and abs(x)\u003c=d+1) and 1 or 0)  * (yy==3 and 1 or 0)\n\nreturn (a+b+c+d)*15\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "impossible_tower.txt",
+      "size": 4,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 23.8309,
+      "code_size": 157,
+      "code_variants": {
+        "code": "-- assassin game where blending in\n-- and not being noticed is just as\n-- important as actually doing\n-- the deed.\n\n-- there could be so many fun disguises!\n\nlocal ax = abs(x)\nlocal eyez = abs(y - 2)\n\nlocal c = 0\n\nif z == 1 then\n  local fd = max(abs(abs(x) - 2), eyez)\n  if fd == 1 then c = 3 end\n  if fd == 0 then c = 1 end\n  if x == 0 and eyez == 0 then c = 3 end\nend\n\nif abs(x) == 3 and z \u003c 2 then\n  local fv = 0 - step(-2, z)\n  if y - fv == 2 then c = 3 end\nend\n\nlocal nt = z + y + ax\nif nt \u003c 3 and y \u003e -2 and z \u003e 0 then c = 9 end\n\nif y \u003c -1 and z == 1 then\n  c = 3\n  if abs(x) == 3 and y == -3 then c = 0 end\nend\n\nreturn c\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "groucho.txt",
+      "size": 3,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "first_pass",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 8.66392,
+      "code_size": 135,
+      "code_variants": {
+        "first_pass": "-- bed of choice for getting \n-- beefbrain in hypnospace outlaw\n\n-- empty space\nif y\u003e2 then return end\n\n-- floor\nif y==-4 then return DARKBROWN end\n\n-- bed\nif x==-4 then \n\tif z^2==9 and y \u003c 1 then return ORANGE -- small posts\n\telseif z^2\u003c9 and (y==-1 or y ==-2) then return ORANGE end -- small bedframe\nelseif x==4 then\n\tif z^2==9 and y \u003c 3 then return ORANGE -- tall posts\n\telseif z^2\u003c9 and y^2\u003c=4 and y~= 2 then return ORANGE end -- tall bedframe\nelseif (y==-1 or y ==-2) and x^2\u003c=9 and z^2\u003c=9 then \n\treturn x%2 + 5 -- sheets\nelseif y == 0 and (z^2==1 or z^2==4) and (x==2 or x==3) then \n\treturn WHITE  -- pillows\nend\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "bed.txt",
+      "size": 4,
+      "source": 100,
+      "variant_order": [
+        "first_pass"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- no game idea here, I just wanted\n-- to make a sofa lol\n\nreturn 1"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "sofa.txt",
+      "size": 4,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- dogfighting game, but simplified\n-- into 2D, with a focus on game feel\n-- and arcade thrills!\nreturn 1"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "biplane.txt",
+      "size": 7,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "first_pass",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 47.0424,
+      "code_size": 252,
+      "code_variants": {
+        "first_pass": "-- slice-of-life school sim combined\n-- with a fantasy RPG?\n\n-- desk?\nif y == -1 then return 15 end\n\nlocal ZZZ=z*z\nif (y == -2 or y==-7) and ZZZ\u003c=36 then return 15 end\n\nif abs(x)==extent and ZZZ\u003c=36 and inrange(y,-extent,-3) then\n\treturn 15\nend\n\n-- book?\nif inrange(x,-6,0) and inrange(y,0,1) and inrange(z,-4,4) then\n\tif x==-6 then \n\t\treturn z%2==0 and 3 \n\tend\n\treturn 1 + btoi(z%3==2)*13\nend\n\n-- pencil?\nif y==0 and x==3 and inrange(z,-5,5) then\n\tif z==5 then return 3 end\n\tif z==4 then return 9 end\n\tif z==-4 then return 2 end\n\tif z==-5 then return 7 end\n\treturn 8\nend\n\n-- eraser?\nez = abs(y+z)\nif ez\u003c=1 and inrange(y,0,1) and inrange(x,5,6) then\n\treturn 5\nend\n\n-- book2?\nbx = x + 2\nby = y + 5\nbz = z - 1\nbb = max(-bx-2,abs(by))\nif bx-2\u003c3 and abs(bz)\u003c5 then\n\tif bb ==1 then return 11 end\n\tif bb==0 and x\u003c2 then return 1 end\nend\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "school-desk.txt",
+      "size": 7,
+      "source": 100,
+      "variant_order": [
+        "first_pass"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- good luck!\nreturn 1"
+      },
+      "completed": false,
+      "fps": 8,
+      "frames": 31,
+      "id": "with-distance.vox",
+      "size": 12,
+      "source": 200,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- . --- . --- . --- . --- . --\nreturn"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "dotted-lattice.weekly",
+      "size": 6,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- Inside is so melty!\nreturn 1"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "soft-boiled-egg.weekly",
+      "size": 3,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "fastest",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 5.28507,
+      "code_size": 90,
+      "code_variants": {
+        "fail1": "-- 3D Koch IFS Fold Function\nlocal function kochIFS(x, y, z, iterations)\n    local scale = 3.0\n    \n    for i = 1, iterations do\n        -- 1. Folding: Symmetry across the planes (x=y, y=z, z=x)\n        -- This mirrors the point into the primary \"chamber\"\n        if x \u003c y then x, y = y, x end\n        if y \u003c z then y, z = z, y end\n        if x \u003c y then x, y = y, x end\n        \n        -- 2. IFS Transformation: Scale and Translate\n        -- Scale the point up and shift it back to create the spike detail\n        x = x * scale - (scale - 1.0)\n        y = y * scale\n        z = z * scale\n        \n        -- Optional: Add rotation here to create variation (e.g. Menger Sponge style)\n    end\n    \n    return x, y, z\nend\n\n--return x+y+z==0 and kochIFS(x, y, z, 1) and 5\n--return x+y+z==0 and 14 \u003e max(x-y,y-z,z-x) ",
+        "fail2": "-- Voxel Shader Function\n-- px, py, pz: current voxel coordinates\n-- Returns: distance to the fractal surface (negative = inside, positive = outside)\nfunction voxel_shader(px, py, pz)\n    local x, y, z = px, py, pz\n    local iterations = 4\n\t  local scale = 1.0\n    local iter_scale = 1.1\n    local offset = 2.0\n    \n    for i = 1, iterations do\n        -- 1. The max(x-y, y-z, z-x) tetrahedral fold\n        -- This mirrors the voxel coordinate into the fundamental domain\n        if x \u003c y then x, y = y, x end\n        if x \u003c z then x, z = z, x end\n        if y \u003c z then y, z = z, y end\n\n        -- 2. Scaling and Translation (The Koch \"Expansion\")\n        -- This stretches space and shifts it to create the 4 smaller tetrahedra\n        x = x * iter_scale - offset * (iter_scale - 1.0)\n        y = y * iter_scale - offset * (iter_scale - 1.0)\n        z = z * iter_scale\n        \n        -- Accumulate scale to normalize the distance at the end\n        scale = scale * iter_scale\n        \n        -- 3. Additional Koch-specific fold on the Z-plane\n        local z_limit = 0.5 * offset * (iter_scale - 1.0)\n        if z \u003e z_limit then\n            z = z - offset * (iter_scale - 1.0)\n        end\n    end\n\n    -- Return the signed distance to the base shape (a sphere/tetrahedron)\n    -- We divide by 'scale' so the voxel engine knows the true distance\n    local dist = (sqrt(x*x + y*y + z*z) - 1.5) / scale\n    return dist\nend\n--Use code with caution.\n--How to use this in a Voxel Loop:\n--If you are generating a volume manually in Lua, \n--you would wrap the shader like this:lua\n--local size = 64\n--for x = -size, size do\n--    for y = -size, size do\n--        for z = -size, size do\n--            -- Normalize coordinates to a -1.0 to 1.0 range\n--            local d = voxel_shader(x/size, y/size, z/size)\n--            \n--            if d \u003c 0 then\n--                set_voxel(x, y, z, \"snowflake_material\")\n--            end\n--        end\n--    end\n--end\n\n--return x+y+z==0 and voxel_shader(x/13,y/13,z/13) \u003c 0 and 1",
+        "fail3": "local PI = 3.14159265\n-- Koch Snowflake Shader for x + y + z = 0 plane\n-- Returns 1 for \"solid\" and 0 for \"empty\"\nfunction koch_voxel_shader(x, y, z, iterations, thickness)\n    -- 1. Project (x,y,z) onto the plane x + y + z = 0\n    -- Normal vector of the plane is n = (1, 1, 1) normalized\n    local inv_sqrt3 = 0.57735026919\n    local dist_to_plane = (x + y + z) * inv_sqrt3\n    \n    -- Check voxel thickness along the plane's normal\n    if abs(dist_to_plane) \u003e (thickness or 0.1) then \n        return 0 \n    end\n\n    -- Project 3D point to the plane surface\n    local px = x - dist_to_plane * inv_sqrt3\n    local py = y - dist_to_plane * inv_sqrt3\n    local pz = z - dist_to_plane * inv_sqrt3\n\n    -- 2. Define 2D basis vectors (u, v) on the x + y + z = 0 plane\n    -- u-axis: (1, -1, 0) normalized\n    -- v-axis: n cross u\n    local ux, uy, uz = 0.70710678, -0.70710678, 0\n    local vx, vy, vz = 0.40824829, 0.40824829, -0.81649658\n\n    local u = px * ux + py * uy + pz * uz\n    local v = px * vx + py * vy + pz * vz\n\n    -- 3. Snowflake Fold Logic\n    -- Reflect to take advantage of 6-fold symmetry\n    local r = sqrt(u*u + v*v)\n    local angle = atan(v, u)\n    angle = (angle + PI/6) % (PI/3) - PI/6\n    u, v = cos(angle) * r, sin(angle) * r\n\n    -- Koch iteration (manual segment folding)\n    local side = 4.0 -- Base triangle size\n    u = u - side * 0.5\n    \n    -- Fold iterations\n    for i = 1, (iterations or 5) do\n        -- Plane-reflection: Fold across the 60-degree line\n        -- Normal: (sin(60), -cos(60))\n        local nx, ny = 0.8660254, -0.5\n        local dot = u * nx + v * ny\n        if dot \u003e 0 then\n            u = u - 2 * dot * nx\n            v = v - 2 * dot * ny\n        end\n        \n        -- Scale and shift for the next fractal level\n        u = u * 0.5 - side\n        v = v * 0.5\n    end\n\n    -- Return 1 if the point is inside the boundary\n    return (u \u003c 0) and 1 or 0\nend\n\n--return koch_voxel_shader(x, y, z, 7, 2) == 1 and 5\n--return x+y+z==0 and 14 \u003e max(x-y,y-z,z-x) and 1\n",
+        "faster1": "-- 5.471\n-- 90\n--local ya = x+y+z==0\nif x+y+z==0 then\nlocal XYZ = x^2+y^2+z^2\n-- local C = {[194]=3,[234]=3,[248]=3,[266]=3} -- color table lookup trick\nreturn\n-- plane 1\n14 \u003e max(x-y, y-z, z-x) and 1 or\n-- plane 2\n14 \u003e max(y-x, x-z, z-y) and 2\n--and inrange(x^2+y^2+z^2,194,266) and 3 or \n-- the 4 dots for the black triangles\n-- or C[XYZ]\nor XYZ==194 and 3\nor XYZ==234 and 3\nor XYZ==248 and 3\nor XYZ==266 and 3\n--11^2+3^2+8^2  194\n--12^2+3^2+9^2  234\n--12^2+2^2+10^2 248\n--13^2+4^2+9^2  266\nend\n",
+        "faster2": "-- 5.443\n-- 102\n--local ya = x+y+z==0\nif x+y+z==0 then\n\tlocal XYZ = x^2+y^2+z^2\n\t-- local C = {[194]=3,[234]=3,[248]=3,[266]=3} -- color table lookup trick\n\tif 14 \u003e max(x-y, y-z, z-x) then return 1 -- plane 1\n\telseif 14 \u003e max(y-x, x-z, z-y) then return 2 -- plane 2\n\telse\n\t\tif XYZ==194 then return 3 end\n\t\tif XYZ==234 then return 3 end\n\t\tif XYZ==248 then return 3 end\n\t\tif XYZ==266 then return 3 end\n\t\t-- the 4 dots for the black triangles\n\t\t-- or C[XYZ]\n\t\t--11^2+3^2+8^2  194\n\t\t--12^2+3^2+9^2  234\n\t\t--12^2+2^2+10^2 248\n\t\t--13^2+4^2+9^2  266\n\tend\nend\n",
+        "faster3": "-- 5.443\n-- 102\n--local ya = x+y+z==0\n--if ya then\nif x+y+z==0 then\n\tlocal XYZ = x^2+y^2+z^2\n\tif 14 \u003e max(x-y, y-z, z-x) then return 1 -- plane 1\n\telseif 14 \u003e max(y-x, x-z, z-y) then return 2 -- plane 2\n\telse\n\t\t-- return ({[194]=3,[234]=3,[248]=3,[266]=3})[XYZ] -- color table lookup trick\n\t\tif XYZ==194 then return 3 end\n\t\tif XYZ==234 then return 3 end\n\t\tif XYZ==248 then return 3 end\n\t\tif XYZ==266 then return 3 end\n\t\t-- the 4 dots for the black triangles\n\t\t-- or \n\t\t--11^2+3^2+8^2  194\n\t\t--12^2+3^2+9^2  234\n\t\t--12^2+2^2+10^2 248\n\t\t--13^2+4^2+9^2  266\n\tend\nend\n",
+        "fastest": "-- c/v:  5.285\n-- size: 100\n--[[ \nNote: I found \"14 \u003e\" by accident when working with koch fractal shader \n\tsolutions using functions in other workbooks, once I realized I could get \n\tboth planes with \"14 \u003e\" \n\tso then... I simply brute forced the small black triangles\n]]\nif x+y+z==0 then\n\t-- The 2 large equilateral triangle planes:\n--\tif 14 \u003e max(x-y, y-z, z-x) then return 1 end -- plane 1\n--\tif 14 \u003e max(y-x, x-z, z-y) then return 2 end -- plane 2\n\tlocal a = x-y\n\tlocal b = y-z\n\tlocal c = z-x\n\tif a\u003c 14 and b\u003c 14 and c\u003c 14 then return 1 end\n\tif a\u003e-14 and b\u003e-14 and c\u003e-14 then return 2 end\n\t\n\tlocal XYZ = x^2+y^2+z^2\n\tif XYZ==266 or XYZ==248 or XYZ==234 or XYZ==194 then\n\t\treturn BLACK -- The 4 black dots  \n\tend\nend\n\n-- local ya = x+y+z==0 -- not worth the variable\n-- if ya then\n--\n-- Calculating the 4 dots for the black triangles:\n--\n-- return ({[194]=3,[234]=3,[248]=3,[266]=3})[XYZ] -- color table lookup trick\n-- any obvious bitwise tricks?\n-- 194 =  11000010_2\n-- 234 =  11101010_2\n-- 248 =  11111000_2\n-- 266 = 100001010_2\n--\n--  Creates a bitwise shift-and-mask hash in lua5.4.8\n--\tif 1 \u003c\u003c (x^2+y^2+z^2 \u003e\u003e 1 \u0026 63) \u0026 1161928712451522592 \u003e 0 then\n--\t\treturn BLACK\n--\tend\n--\n-- Creates a bitwise shift-and-mask hash in lua5.4.8\n-- save space using a string to integer trick\n--\tif 1 \u003c\u003c (x^2+y^2+z^2 \u003e\u003e 1 \u0026 63) \u0026 \n--\t\t\ttointeger(\"11\"..\"61\"..\"92\"..\"87\"..\"12\"..\"45\"..\"15\"..\"22\"..\"59\"..\"2\") \u003e 0 then\n--\t\treturn BLACK\n--\tend\n--\n-- Calculated the dots x^2+y^2+z^2 = ?? ahead of time by hand\n-- 11^2+3^2+8^2  194\n-- 12^2+3^2+9^2  234\n-- 12^2+2^2+10^2 248\n-- 13^2+4^2+9^2  266\n",
+        "first_working_soln": "-- 21.747\n-- 231\n--function kochFold(x,y,z,offset)\nfunction kf(x,y,z,of)\n\tif x\u003cy then x,y = y,x end\n\tif y\u003cz then y,z = z,y end\n\tif x\u003cy then x,y = y,x end\n\treturn x,y,z\nend\n\n--function koch_iter(x,y,z,offset,distance)\nfunction ki(x,y,z,d)\n\t-- 1 fold\n  x,y,z = kf(x,y,z,of)\n\t-- 3 scale\n\tx,y,z= 1.2*x,1.2*y,1.2*z\n\t-- distance estimate\n  return max(x-y, y-z, z-x) + d\nend\n\nlocal ya = (x+y+z)==0\nlocal XYZ = x^2+y^2+z^2\nreturn \nya and 14 \u003e max(x-y, y-z, z-x)     and 1 or\nya and 13 \u003e ki(x,y,z,-3)  and 2\n--(x+y+z)==0 and x^2+y^2+z^2==194 and 3\n--(x+y+z)==0 and inrange(x^2+y^2+z^2,194,266) and 3 or \nor ya and XYZ==194 and 3\nor ya and XYZ==234 and 3\nor ya and XYZ==248 and 3\nor ya and XYZ==266 and 3\n--11^2+ 3^2+8^2 194\n--12^2+3^2+9^2 234\n--12^2+2^2+10^2 248\n--13^2+4^2+9^2 266",
+        "road_to_fast": "-- 17.240\n-- 106\nlocal ya = x+y+z==0\nlocal XYZ = x^2+y^2+z^2\nlocal C = {[194]=3,[234]=3,[248]=3,[266]=3}\nif ya then\nreturn\n14 \u003e max(x-y, y-z, z-x) and 1 or\n14 \u003e max(y-x, x-z, z-y) and 2\n--and inrange(x^2+y^2+z^2,194,266) and 3 or \nor C[XYZ]\nor C[XYZ]\nor C[XYZ]\nor C[XYZ]\n--11^2+ 3^2+8^2 194\n--12^2+3^2+9^2 234\n--12^2+2^2+10^2 248\n--13^2+4^2+9^2 266\nend"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "koch-snowflake.weekly",
+      "size": 13,
+      "source": 400,
+      "variant_order": [
+        "first_working_soln",
+        "fail1",
+        "fail2",
+        "fail3",
+        "road_to_fast",
+        "faster1",
+        "faster2",
+        "faster3",
+        "fastest"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "return 1"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "money-stack.weekly",
+      "size": 5,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- don't forget the coin box inside,\n-- those quarters won't collect themselves!\n\nreturn ({8, 10, 14})[y + z] or 1"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "arcade.weekly",
+      "size": 6,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- be sure to check the core!\n\nreturn 1"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "planet-xenon.weekly",
+      "size": 8,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "\nreturn z/-.4\u003eabs(x+4)"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "beach.weekly",
+      "size": 6,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "--Cross sections are very important on this one!\n\nif x^2+y^2+z^2\u003c48 and x^2+y^2+z^2\u003e35 then return 1 end"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "observatory.weekly",
+      "size": 7,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- basically the shape is the surface\n-- of two quarter-circles connected with\n-- a straight line...\nd = round(sqrt((x-4)^2 + y^2))\nif d \u003c 5 then\n\treturn EMPTY\nelseif d == 5 then\n\treturn WHITE\nelse\n\treturn BLUE\nend"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "half-pipe.weekly",
+      "size": 11,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "first_pass",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 4.31687,
+      "code_size": 43,
+      "code_variants": {
+        "first_pass": "--[[ \nremember, the definition of a circle is just 'all \npoints that are a distance of r (radius) away from \nthe origin'. So, to make a circle, we need to know \nthe _distance_ for the given voxel from some origin \n(center point), and if that distance is a certain value,\nor in a certain range, it lies on a circle.\n\nso, how do you calculate distance? That's where Pythagoras\ncomes back!  Imagine we are currently at the voxel x=4 and y=3\nand we want to know our distance from the origin:\n\t\t\t\t* \u003c- voxel at (4,3)\n\t\t\t/ |\nC=?  /  | y=3\n\t\t/   | \n\t+-----+\n\t x=4\n\nThis is basically a 'right triangle', which means:\nx^2 + y^2 = C^2 (x squared plus y squared = c squared)\n(4)^2 + (3)^2 = C^2\n 16 + 9 = C^2\n 25 = C^2\n sqrt(25) = C\n 5 = C\n\nin this simple example the distance is 5.\n\ntry playing with the numbers below to see how it works\noutputing a number as a color helps you visualize patterns\nnicely!\n--]]\nif z==0 then\n\tlocal c = round((x^2 + y^2)^.5)\n\tif c \u003c= 3 then \n\t\tif x==y then return RED end\n\t\treturn WHITE\n\telseif c \u003c= 4 then return RED end\nend"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "no_sign.txt",
+      "size": 4,
+      "source": 100,
+      "variant_order": [
+        "first_pass"
+      ]
+    },
+    {
+      "active_variant": "first_pass",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 18.2487,
+      "code_size": 36,
+      "code_variants": {
+        "first_pass": "--[[\nThe formula for distance is essentially the same for a \ncircle (2D) and a sphere (3D), just with the addition of the\nz coordinate:\n\nRadius = sqrt(x^2 + y^2 + z^2)\n--]]\nlocal d = round(sqrt(x^2 + y^2 + z^2))\nreturn d\u003c=1 and 7 or d\u003c=4 and 8 or d\u003c=5 and 10"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "green_planet.txt",
+      "size": 5,
+      "source": 100,
+      "variant_order": [
+        "first_pass"
+      ]
+    },
+    {
+      "active_variant": "first_pass",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 17.2675,
+      "code_size": 40,
+      "code_variants": {
+        "first_pass": "--[[\neach voxel is at a nice integer location, but \ndistance is often a decimal number. You can\ntest against decimal values in your code,\nor you can also convert a decimal to an integer\nwith round(), floor(), and ceil().\n--]]\n--local d = sqrt(x^2 + z^2)\n\n-- notice how this doesn't make a full circle\n-- because the decimal values don't always turn\n-- out to be a 'clean' integer\n--if z == 3 then\n--\treturn d == 4\n--end\n--\n-- rounding the distance ensures it's an integer\n--if z == 0 then\n--\treturn round(d) == 4\n--end\n\n-- 40\n-- 17.267\nlocal d = round(sqrt(x^2 + z^2))\nif y^2\u003c=1 then return d \u003c= 3 end\nif y^2\u003c=9 then return d \u003c= 4 and BLACK end\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "cookie.txt",
+      "size": 4,
+      "source": 100,
+      "variant_order": [
+        "first_pass"
+      ]
+    },
+    {
+      "active_variant": "first_pass",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 11.0082,
+      "code_size": 103,
+      "code_variants": {
+        "first_pass": "-- this is a tasty burger!\n-- look out for the signature grill marks :)\n\n-- empty space\nif y\u003e3 or y\u003c-2 then return end\nlocal c = round(sqrt(x^2+z^2)) -- circle\nif c\u003e=6 then return end\n\nif c\u003c6 then \n-- patty\nif y==-1 then\n\treturn x%4==-z%4 and BROWN or DARKBROWN \nend\n\n-- bottom bun + boring layers\nif y^2\u003c=4 then\n\treturn y^2==4 and ORANGE or YELLOW+y\nend\nend\n\n-- topbun\nif y==3 and c\u003c5 then\n\tif x%2==0 then\n\t\treturn z%4==0 and PEACH or ORANGE\n\telse\n\t\treturn z^2==4 and PEACH or ORANGE\n\tend\n\treturn ORANGE\nend\n-- 118-- this is a tasty burger!\n-- look out for the signature grill marks :)\n\n-- empty space\nif y\u003e3 or y\u003c-2 then return end\nlocal c = round(sqrt(x^2+z^2)) -- circle\nif c\u003e=6 then return end\n\nif c\u003c6 then \n-- patty\nif y==-1 then\n\treturn x%4==-z%4 and BROWN or DARKBROWN \nend\n\n-- bottom bun + boring layers\nif y^2\u003c=4 then\n\treturn y^2==4 and ORANGE or YELLOW+y\nend\nend\n\n-- topbun\nif y==3 and c\u003c5 then\n\tif x%2==0 then\n\t\treturn z%4==0 and PEACH or ORANGE\n\telse\n\t\treturn z^2==4 and PEACH or ORANGE\n\tend\n\treturn ORANGE\nend\n-- 118\n-- 11.008\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "burger.txt",
+      "size": 6,
+      "source": 100,
+      "variant_order": [
+        "first_pass"
+      ]
+    },
+    {
+      "active_variant": "second_attempt",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 29.6017,
+      "code_size": 84,
+      "code_variants": {
+        "first_attempt": "--[[\n\nequation for a torus (donut):\nr^2 = (sqrt(x^2+z^2) - R)^2 + y^2\nlittle r = radius of the 'tube'\nbig R = radius of the 'ring'\n\nsqrt(x^2+z^2) - R  \u003c-- this is essentially the distance\nfrom the 'ring' on the XZ plane.\n\nremember, when visualizing values as colors, negative\nvalues will all appear as empty space, because any\nnumber \u003c= 0 becomes an empty voxel.\n--]]\nlocal r_tube = 4\nlocal r_ring = 7\nlocal ring_dist = sqrt(x^2+z^2) - r_ring\nlocal ring_dist = sqrt(x^2+z^2) - r_ring\n\n--r^2 = (sqrt(x^2+z^2) - R)^2 + y^2\nif ring_dist^2 + y^2 - r_tube^2 \u003c 0 then \n--\treturn abs(ring_dist)\n\treturn y\u003e0 and PINK or YELLOW\nend\n",
+        "second_attempt": "-- This code uses a trigonometric approach to find the distance to a torus. \n-- Instead of the standard vector-based Signed Distance Function (SDF), \n-- it uses an angle to \"track\" the point's position around the ring.\n--\n-- Here is the breakdown of how these specific variables interact:\n-- ## Geometric Variable Meanings\n-- In this specific snippet, the variables are building a 3D vector \n-- that points from the nearest part of the torus \"ring\" to your current point (x, y, z)\n\n-- * dsm (Small Radius): The thickness of the torus tube (the \"dough\")\n-- * dbr (Big Radius): The distance from the center of the hole to the middle of the tube\nlocal dsm = 3 -- smallradius, tube radius\nlocal dbr = 7 -- bigradius, from the center of the hole to the middle of the tube\n\n-- * da (Angle): The horizontal angle (in radians)\n-- of the point (x, z) relative to the center of the torus\n-- * cx, cz (Center Coordinates): The closest point on the major ring to your current position\n-- * sin(da) * dbr and cos(da) * dbr map the angle back onto a circle of radius dbr\nlocal da = atan(x,z)\nlocal cx = sin(da)*dbr\nlocal cz = cos(da)*dbr\n\n-- * dx, dy, dz (Delta/Difference): The distance vector from \n-- the ring's center line to the point (x, y, z)\nlocal dx = x - cx\nlocal dy = y\nlocal dz = z - cz\n\n-- * d (Distance): The length of that delta vector.\n-- This tells you how far the point is from the center of the \"dough.\"\nlocal d = floor(sqrt(dx^2+dy^2+dz^2))\n\n-- Threshold check, if \"d\" is below dsmall we are inside the toroid\nif d \u003c= dsm then\n\treturn y\u003e=1 and d==dsm and PINK or YELLOW\nend\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "donut.txt",
+      "size": 10,
+      "source": 100,
+      "variant_order": [
+        "first_attempt",
+        "second_attempt"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- watermelon = portion of a sphere\n-- plate = circle\nlocal X,Y,Z = x^2,y^2,z^2\n\n-- plate\nif y==-7 and Z+X\u003c=48 then return WHITE end\n\n-- water melon\nif abs(z)\u003c-y+1 then \n\n\treturn round(X+Y+Z)\u003c=36 and GREEN\nend\n\n\n"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "watermelon.txt",
+      "size": 7,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- pipe can be broken up into sections...\n-- hint: cut a donut in half, and then\n-- attach cylinders to it.\nreturn 1"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "u-pipe.txt",
+      "size": 8,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "return 6/10*atan(x-1,y)+3"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "pinwheel.weekly",
+      "size": 6,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "d = x^2+z^2\ndiagonal = abs(x+z)\n\nif d \u003c= 20 and (diagonal ~= 0 or x \u003c= -1) then\n\tif y == -2 then\n\t\treturn LIGHTGREEN\n\telseif y == -1 then\n\t\treturn diagonal\n\tend\nend"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "lily.weekly",
+      "size": 5,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "first_pass",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 8.63067,
+      "code_size": 112,
+      "code_variants": {
+        "first_pass": "-- cut1\nif x==0 then  \n\tif t\u003e=6 then return 0 end\n\tif y+t\u003e=3 then return 0 end\nend\n-- cut2\nif z==0 and x+t\u003e=9 then return 0 end\n-- cut3\nif y==0 and z+t\u003e=15 then return 0 end\n\n-- color\nif t\u003c=10 then\n\tif t\u003c=4 then\n\t\treturn ORANGE\n\telseif t\u003c=7\tthen\n\t\treturn PEACH\n\telse -- if t\u003c=10 then\n\t\tif x \u003c 0 then return PEACH else return GREY end\n\tend\nelse\n\tif t\u003c=13 then\n\t\treturn GREY\n\telseif t\u003c=16 then\n\t\tif z \u003e 0 then return WHITE else return GREY end\n\telseif t==17 then\n\t\treturn WHITE\n\tend\nend\n\n-- Arthur is a banana silly pants underwear funny guy.\n-- Benji wears super cool warm socks, and he loves Arthur.\n"
+      },
+      "completed": true,
+      "fps": 6,
+      "frames": 18,
+      "id": "slice-and-dice.weekly",
+      "size": 2,
+      "source": 400,
+      "variant_order": [
+        "first_pass"
+      ]
+    },
+    {
+      "active_variant": "faster",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 5.37631,
+      "code_size": 206,
+      "code_variants": {
+        "faster": "--206\n--5.376\n\n-- empty space\nlocal Y=y^2\nif z\u003c=-2 or z\u003e=1 then return end\nif Y\u003e36 then return end\n\n-- the sign\nif Y\u003c=36 then \n\tif x\u003c=2 and y\u003c0 then return end -- empty bot-left corner\n\t\n\tif z==0 then\n\t\t-- signs\n\t\tlocal YY=(y-3)^2\n\t\tlocal XX=(x-6)^2\n\t\tif (x+6)^2+YY\u003c=7 then return t\u003c=1 and LIGHTGREEN or BLACK end --sign num1\n\t\tif (x)^2+YY\u003c=7 then return (t==2 or t==5) and YELLOW or BLACK end --sign num2\n\t\tif XX+YY\u003c=7 then return (t\u003e=3 and t~=5) and RED or BLACK end --sign num3\n\t\tif XX+(y+3)^2\u003c=7 then --sign num4\n\t\t\tif (t==3 or t==4) then \n\t\t\t\tif y==-3 then return LIGHTGREEN end\n\t\t\t\tif x==6 and (y==-1 or y==-5) then return LIGHTGREEN end\n\t\t\t\tif x==7 and (y==-2 or y==-4) then return LIGHTGREEN end\n\t\t\t\treturn BLACK\n\t\t\telse\n\t\t\t\treturn BLACK\n\t\t\tend\n\t\tend\n\tend\n\t\n\t-- we are inside metalsign, return the color\n\treturn WHITE \nend\n",
+        "first_pass": "--250\n--5.532\n\n-- The turning light appears with the red light.\n-- You can proceed in the direction of the arrow.\n-- t = 0,1 LIGHTGREEN\n--     2   YELLOW\n--     3,4 RED + RIGHT ARROW\n--     5   YELLOW\n--     6,7 RED\n\nlocal Y=y^2\nif z\u003c=-2 or z\u003e=1 then return end\nif Y\u003e36 then return end\n\nif Y\u003c=36 then \n\tif x\u003c=2 and y\u003c0 then return end -- missing sign pieces\n\t\n\tif z==0 then\n\t\t-- sign color function\n\t\tfunction color(sn,t) \n\t\t\tif sn==1 and t\u003c=1 then return LIGHTGREEN end\n\t\t\tif sn==2 and (t==2 or t==5) then return YELLOW end\n\t\t\tif sn==3 and (t\u003e=3 and t~=5) then return RED end\n\t\t\treturn BLACK\n\t\tend\n\t\t-- signs\n\t\tlocal YY=(y-3)^2\n\t\tlocal MAGIC=BROWN\n\t\tif (x+6)^2+YY\u003c=7 then return color(1,t) end --sign num1\n\t\tif (x)^2+YY\u003c=7 then return color(2,t) end --sign num2\n\t\tif (x-6)^2+YY\u003c=7 then return color(3,t) end --sign num3\n\t\tif (x-6)^2+(y+3)^2\u003c=7 then --sign num4\n\t\t\tif (t==3 or t==4) then \n\t\t\t\tif y==-3 then return LIGHTGREEN end\n\t\t\t\tif x==6 and (y==-1 or y==-5) then return LIGHTGREEN end\n\t\t\t\tif x==7 and (y==-2 or y==-4) then return LIGHTGREEN end\n\t\t\t\treturn BLACK\n\t\t\telse\n\t\t\t\treturn BLACK\n\t\t\tend\n\t\tend\n\tend\n\t\n\t-- we are inside metalsign, return the color\n\treturn WHITE \nend\n"
+      },
+      "completed": true,
+      "fps": 1,
+      "frames": 8,
+      "id": "japan-traffic-light.weekly",
+      "size": 9,
+      "source": 400,
+      "variant_order": [
+        "first_pass",
+        "faster"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "return 1"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "record.weekly",
+      "size": 6,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "fastest",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 8.04437,
+      "code_size": 152,
+      "code_variants": {
+        "faster": "--200\n--11.602\n-- exclude empty space\nif x|z\u003e0 or y^2\u003e=16 then return end\n\n-- exclude inner hollow of spirals\nlocal mx = max(x*x,z*z)\nif y==-3 and mx \u003e= 4 then return YELLOW -- hardcode bottom to avoid spiral math\nelseif y==-2 and (mx==9 or mx==16 or mx == 25 or mx==36 or mx == 49) then return\nelseif y==-1 and (mx==9 or mx == 49) then return\nelseif y==0 and (mx==9 or mx == 25 or mx == 49) then return\nelseif y==1 and (mx==9 or mx==16 or mx == 25 or mx == 49) then return\nelseif y==2 and (mx == 49) then return\nelseif y ==3 and (mx \u003c= 49) then return\nelseif y ==3 and (mx == 64) then return YELLOW end -- hardcode top to avoid spiral math\n\n-- Removing the function and doing everything \"inline\"\n-- Threshold check (0 or less is \"inside\" the shape)\nif max(abs(max(abs(x) - 5, abs(z) - 5)) - 3, abs(y) - 4) \u003c= 0 then\n\treturn YELLOW -- Solid Voxel\nend\n\n--\n--function fastSquareTorus(x, y, z, innerR, thickness, height)\n--    local d2d = abs(max(abs(x) - innerR, abs(y) - innerR)) - thickness\n--    return max(d2d, abs(z) - height)\n--end\n--\n--local innerRadius = 5\n--local thickness = 3\n--local height = 4\n--\n---- Threshold check (0 or less is \"inside\" the shape)\n--if fastSquareTorus(x, z, y, innerRadius, thickness, height) \u003c= 0 then\n--\treturn YELLOW -- Solid Voxel\n--else\n--\treturn -- Empty Voxel\n--end\n",
+        "faster_still": "--163\n--9.020\n-- Exclude empty space\nif x|z\u003e0 or y*y\u003e=16 then return end\n-- poormans max() function\nlocal X,Z=x*x,z*z\nlocal mx = X\u003eZ and X or Z \n-- Exclude timbit hole\nif mx \u003c= 3 then return end\n-- Exclude the different inner hollows, per each layer\n-- note: the more we exclude the faster we go\nif y==3 and (mx\u003c=49) then return\nelseif y==-2 and (mx==9 or mx==16 or mx==25 or mx==36 or mx==49) then return\nelseif y== 1 and (mx==9 or mx==16 or mx==25 or mx==49) then return\nelseif y== 0 and (mx==9 or mx==25 or mx==49) then return\nelseif y==-1 and (mx==9 or mx==49) then return\nelseif y== 2 and (mx==49) then return\nend\n-- .: !!??voxel cronuts mustn't be real??!!\n-- .:   we are one with the squar'd croissanted toroid\n-- .:   bless'ed are the cheesemakers!!!\n-- .:   we must be be as crispy as a croissant!!!\nreturn YELLOW -- wait, what? no chocolate?\n",
+        "faster_yet": "--164\n--8.338\n-- Exclude empty space\n-- note: order matters, the more we exclude the faster we go\nif y*y\u003e=16 then return\nelseif x|z\u003e0 then return end\n-- poormans max() function, for fun\nlocal X,Z=x*x,z*z\nlocal mx = X\u003eZ and X or Z \n-- Exclude the different inner hollows, per each layer\n-- note: order matters, the more we exclude the faster we go\nif y==3 and (mx\u003c=49) then return\nelseif y==-2 and (mx==9 or mx==16 or mx==25 or mx==36 or mx==49) then return\nelseif y== 1 and (mx==9 or mx==16 or mx==25 or mx==49) then return\nelseif y== 0 and (mx==9 or mx==25 or mx==49) then return\nelseif y==-1 and (mx==9 or mx==49) then return\nelseif mx \u003c= 3 then return -- Exclude timbit hole\nelseif y== 2 and (mx==49) then return\nend\n-- .: !!??voxel cronuts mustn't be real??!!\n-- .:   we are one with the squar'd croissanted toroid\n-- .:   bless'ed are the cheesemakers!!!\n-- .:   we must be be as crispy as a croissant!!!\nreturn YELLOW -- wait, what? no chocolate?\n",
+        "fastest": "--154\n--8.044\n-- Exclude empty space\n-- note: order matters, the more we exclude the faster we go\nif y\u003e3 or y\u003c-3 then return\nelseif x|z\u003e0 then return end\n-- poormans mx = max(x*x,z*z), for fun\nlocal mx = max(x*x,z*z) \n-- Exclude the different inner hollows, per each layer\n-- note: order matters, the more we exclude the faster we go\nif y==3 and mx\u003c=49 then return\nelseif y==-2 and (mx==9 or mx==16 or mx==25 or mx==36 or mx==49) then return\nelseif y== 1 and (mx==9 or mx==16 or mx==25 or mx==49) then return\nelseif y== 0 and (mx==9 or mx==25 or mx==49) then return\nelseif y==-1 and (mx==9 or mx==49) then return\nelseif mx\u003c=3 then return -- Exclude timbit hole\nelseif y== 2 and mx==49 then return\nend\n-- .: !!??voxel cronuts mustn't be real??!!\n-- .:   we are one with the squar'd croissanted toroid\n-- .:   bless'ed are the cheesemakers!!!\n-- .:   we must be as crispy as a croissant!!!\nreturn YELLOW -- wait, what? no chocolate?\n",
+        "research1": "-- If it existed in reality,\n-- it would be crispy as a croissant!\n\nfunction spiralNr(xx, yy)\n  local X = xx^2\n  local Y = yy^2\n  local m = max(X, Y)\n   \n\tlocal se = (yy \u003c xx) and 1 or 0\n  local sw = (yy \u003c= -xx) and 1 or 0\n    \n  local common = -2 * se + 4 * se * sw\n\t\n  return 4 * m + (common - 1) * xx - (common + 1) * yy\nend\n\nreturn spiralNr(y,z)\n\n--if x|z\u003e0 or y^2\u003e=16 then return end\n--\n--local A=0\n--local B=1\n--\n--if x\u003c0 then\n--\tif sqrt(y^2+z^2) == A + B * atan(z,y) then\n--\t\treturn YELLOW \n--\tend\n--end\n--\n--if x % 2 == 0 and y \u003e= x and z \u003e= x then return 7 \n--elseif z % 2 == 0 and \n--elseif y % 2 == 1 and x \u003e y and z \u003e= y then return 9 end",
+        "research2": "-- empty space\n-- if x|z\u003e0 or y^2\u003e=16 then return end\n\nlocal abs_x, abs_y = abs(x-5), abs(y)\nlocal ring_radius = max(abs_x, abs_y)\n\nif z==-x then return RED end\nif z==x then return ORANGE end\n   \nif z\u003c0 and z\u003e-8 then\n\tif ring_radius == 1 then return BLUE end\n\tif ring_radius == 2 then return GREEN end\n\tif ring_radius == 3 then return YELLOW end\nend\n",
+        "research3": "-- exclude empty space\nif x|z\u003e0 or y^2\u003e=16 then return end\n\nlocal mx = max(x*x,z*z)\nif y==-2 and (mx==9 or mx==16 or mx == 25 or mx==36 or mx == 49) then return end\nif y==-1 and (mx==9 or mx == 49) then return end\nif y==0 and (mx==9 or mx == 25 or mx == 49) then return end\nif y==1 and (mx==9 or mx==16 or mx == 25 or mx == 49) then return end\nif y==2 and (mx == 49) then return end\nif y ==3 and (mx \u003c= 49) then return end\n\nfunction fastSquareTorus(x, y, z, innerR, thickness, height)\n    local d2d = abs(max(abs(x) - innerR, abs(y) - innerR)) - thickness\n    return max(d2d, abs(z) - height)\nend\n\nlocal innerRadius = 5\nlocal thickness = 3\nlocal height = 4\n\n-- Threshold check (0 or less is \"inside\" the shape)\nif fastSquareTorus(x, z, y, innerRadius, thickness, height) \u003c= 0 then\n\treturn YELLOW -- Solid Voxel\nelse\n\treturn -- Empty Voxel\nend\n\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "spiral-donut.weekly",
+      "size": 8,
+      "source": 400,
+      "variant_order": [
+        "research1",
+        "research2",
+        "research3",
+        "faster",
+        "faster_still",
+        "faster_yet",
+        "fastest"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- don't forget the bubbles;\n-- nobody wants their soda flat!\nif x^2 + z^2 \u003c 5^2 then\n\treturn WHITE\nend\n"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "cola.weekly",
+      "size": 6,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "return 1"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "block-stack.weekly",
+      "size": 5,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- Try not to get your feet wet!\n\n-- By adjusting the frequency and amplitude of a sine wave,\n-- you can create a variety of effects.\n-- This one makes a nice meandering stream.\nif y == -extent then\n\treturn abs(x + sin(z/2) * 2)\nend"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "bridge.weekly",
+      "size": 7,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "return 1"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "rhombicuboctahedron.weekly",
+      "size": 6,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- Golf this! ^^\nreturn y \u003c= -5 and 10 - y"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "golf-this.weekly",
+      "size": 6,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "return 1"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "plus-fractal.weekly",
+      "size": 13,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "return max(y+7, RED)"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "lantern.weekly",
+      "size": 6,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "--Stop me if you've heard this one before...\nif y==-4 then return z^2==1 and 9 or 3 end"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "chicken.weekly",
+      "size": 4,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "if t \u003c= 6 and y \u003e= 2 then\n\tx = x-t\nelseif inrange(t, 12, 18) and y \u003c= -2 then\n\tx = x+t\nend\n\nreturn ((x+1)//3)%2"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 24,
+      "id": "shifting-checkerboard.weekly",
+      "size": 4,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "return z == 0 and (x \u003c 20 and y \u003e -20) and ((x == -11 or y == -9) and BLACK or WHITE)"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "red-blue-yellow.weekly",
+      "size": 20,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- a function is helpful here!\nfunction balloon(px, py, pz, color)\n\tx_local = x - px\n\ty_local = y - py\n\tz_local = z - pz\n\n\tif round(sqrt(x_local^2 + y_local^2 + z_local^2)) == 2 then\n\t\treturn color\n\tend\nend\n\n-- you shouldn't need to change these numbers\nreturn balloon( 0, 0,  2, 10)\n    or balloon(-3, 5, -2,  5)\n    or balloon( 4, 2, -3, 14)"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "balloons.weekly",
+      "size": 8,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "return x+y+z == 0 and t%6+7"
+      },
+      "completed": false,
+      "fps": 8,
+      "frames": 12,
+      "id": "color-wheel.weekly",
+      "size": 5,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- Min-max operations are fun!\n-- Also, have you checked out the \"btoi\" function?\n-- It returns \"1\" if the argument is true,\n-- and 0 if the argument is false ;)\n\nreturn min(x,y,z) == -t+max(x,y,z)\n-- P.S: consider stopping at frame 3\n-- to see how the color mixing works"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 10,
+      "id": "axial-mixer.weekly",
+      "size": 6,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "return"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "simple-swirl.weekly",
+      "size": 4,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- good luck!\nreturn 1"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "strange-cube.vox",
+      "size": 3,
+      "source": 200,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "--[[ Ever heard of the Trammel of Archimedes?\n\tLook up a video! In this simplified version,\n\tThe GREY dot stays halfway between the BLUE \n\tand GREEN dots. BLUE and GREEN only ever move\n\tin straight lines, but GREY makes a circle!\n\t\n\tThis model helps to visualize\n\thow sin() and cos() connect circles to \n\toscillating (wave-like) behavior.\n\t\n\tThe GREEN voxel shows how the height of the\n\twhite voxel changes over time (modeled by sin(t))\n\t\n\tThe BLUE voxel shows the horizontal component of\n\tthe white voxel over time (modeled by cos(t))\n\t\n\tRemember that the default period of sin(t) and cos(t)\n\tis 2*pi, so to change the wave pattern to match the\n\tduration of the animation, multiply the input by 2*pi,\n\tthen divide the input by the number of frames.\n\t\n\tBONUS: Could you 'dress up' this model to look like\n\ta real life Trammel of Archimedes? Share your work\n\ton Cubenet- I'd love to see it!\n]]"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 16,
+      "id": "ellipsograph.weekly",
+      "size": 8,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    }
+  ]
+}
