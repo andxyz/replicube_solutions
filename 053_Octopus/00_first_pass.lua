@@ -18,8 +18,8 @@ if y>-2 then
 		elseif X + Z + (y-2)^2 < 8 then return RED end
 	end
 elseif y == -2 then
-	local X = x^2
-	local Z = z^2
+	local X = x*x
+	local Z = z*z
   if X == Z and X + Z <= 32 then 
 		return RED
 	elseif z==0 or x==0 then
