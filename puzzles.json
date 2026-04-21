@@ -402,18 +402,17 @@
       ]
     },
     {
-      "active_variant": "code 3",
+      "active_variant": "code 5",
       "animated": false,
       "challenge_complete": true,
       "code_instructions": 5.97531,
       "code_size": 10,
       "code_variants": {
-        "code": "-- First try at making an hourglass shape.\n\n-- Notes:\n-- don't forget you can use inequalities\n-- like \u003c, \u003e, \u003c=, \u003e= not just ==\n\n-- :)\n\nif x \u003e y and x \u003c -y or x \u003c y and -x \u003c y then\n\treturn YELLOW\nend\n",
+        "code": "-- First try at making an hourglass shape.\n\n-- Notes:\n-- don't forget you can use inequalities\n-- like \u003c, \u003e, \u003c=, \u003e= not just ==\n\n-- :)\n \nif x \u003e y and x \u003c -y or x \u003c y and -x \u003c y then\n\treturn YELLOW\nend\n",
         "code 2": "-- First try at making an hourglass shape.\n\n-- Notes:\n-- don't forget you can use inequalities\n-- like \u003c, \u003e, \u003c=, \u003e= not just ==\n\n-- :)\n\nax = x^2\nif ax \u003c y then return YELLOW end\nif -ax \u003e y then return YELLOW end\n",
-        "code 3": "-- First try at making an hourglass shape.\n\n-- Notes:\n-- don't forget you can use inequalities\n-- like \u003c, \u003e, \u003c=, \u003e= not just ==\n\n-- :)\n\nreturn (x \u003e y and x \u003c -y or x \u003c y and -x \u003c y) and YELLOW\n\n\n",
+        "code 3": "-- First try at making an hourglass shape.\n\n-- Notes:\n-- don't forget you can use inequalities\n-- like \u003c, \u003e, \u003c=, \u003e= not just ==\n\n-- :)\n\nreturn (x \u003e y and x \u003c -y or x \u003c y and -x \u003c y) and YELLOW\n",
         "code 4": "-- First try at making an hourglass shape.\n\n-- Notes:\n-- don't forget you can use inequalities\n-- like \u003c, \u003e, \u003c=, \u003e= not just ==\n\n-- :)\n\nreturn (x^2 \u003c y^2 or -x^2 \u003e y^2) and YELLOW",
-        "code 5": "return x^2 \u003c y^2 and YELLOW\n",
-        "code 6": "return x^2 \u003c y^2 and YELLOW\n"
+        "code 5": "return x^2 \u003c y^2 and YELLOW\n"
       },
       "completed": true,
       "fps": 12,
@@ -426,8 +425,7 @@
         "code 2",
         "code 3",
         "code 4",
-        "code 5",
-        "code 6"
+        "code 5"
       ]
     },
     {
@@ -492,7 +490,7 @@
       ]
     },
     {
-      "active_variant": "code 4",
+      "active_variant": "code",
       "animated": false,
       "challenge_complete": false,
       "code_instructions": 4.81422,
@@ -848,7 +846,7 @@
       "code_instructions": 0.0,
       "code_size": 0,
       "code_variants": {
-        "donut": "-- This code uses a trigonometric approach to find the distance to a torus. \n-- Instead of the standard vector-based Signed Distance Function (SDF), \n-- it uses an angle to \"track\" the point's position around the ring.\n--\n-- Here is the breakdown of how these specific variables interact:\n-- ## Geometric Variable Meanings\n-- In this specific snippet, the variables are building a 3D vector \n-- that points from the nearest part of the torus \"ring\" to your current point (x, y, z)\n\n-- * dsm (Small Radius): The thickness of the torus tube (the \"dough\")\n-- * dbr (Big Radius): The distance from the center of the hole to the middle of the tube\nlocal dsm = round(extent/3) -- smallradius, tube radius\nlocal dbr = extent-round(extent/3) -- bigradius, from the center of the hole to the middle of the tube\n\n-- * da (Angle): The horizontal angle (in radians)\n-- of the point (x, z) relative to the center of the torus\n-- * cx, cz (Center Coordinates): The closest point on the major ring to your current position\n-- * sin(da) * dbr and cos(da) * dbr map the angle back onto a circle of radius dbr\nlocal da = atan(x,z)\nlocal cx = sin(da)*dbr\nlocal cz = cos(da)*dbr\n\n-- * dx, dy, dz (Delta/Difference): The distance vector from \n-- the ring's center line to the point (x, y, z)\nlocal dx = x - cx\nlocal dy = y\nlocal dz = z - cz\n\n-- * d (Distance): The length of that delta vector.\n-- This tells you how far the point is from the center of the \"dough.\"\nlocal d = floor(sqrt(dx^2+dy^2+dz^2))\n\n-- Threshold check, if \"d\" is below dsmall we are inside the toroid\nif d \u003c= dsm then\n\treturn y\u003e=1 and d==dsm and PINK or YELLOW\nend\n"
+        "donut": "local X,Y,Z=x*x,y*y,z*z\n--\n--322\n--340.502\n--\n--float sdBox( vec3 p, vec3 b )\n--{\n--  vec3 q = abs(p) - b;\n--  return length(max(q,0.0)) + min(max(q.x,max(q.y,q.z)),0.0);\n--}\nfunction sdMengerBox(px, py, pz, size, holeWidth)\n    -- Distance to the base Cube\n    local adx = abs(px) - size\n    local ady = abs(py) - size\n    local adz = abs(pz) - size\n    local dBox = max(adx, ady, adz)\n\n    -- Define the cross-shaped holes (3 intersecting prisms)\n    -- hole through X-Y (Z-axis opening)\n    local hZ = max(abs(px) - holeWidth, abs(py) - holeWidth)\n    -- hole through Y-Z (X-axis opening)\n    local hX = max(abs(py) - holeWidth, abs(pz) - holeWidth)\n    -- hole through Z-X (Y-axis opening)\n    local hY = max(abs(pz) - holeWidth, abs(px) - holeWidth)\n\n    -- subtract the holes from the box\n    -- in SDFs, subtracting is, max(shape, -hole)\n    local crossHoles = min(hZ, hX, hY)\n    \n    return max(dBox, -crossHoles)\nend\n\nlocal mbox0=sdMengerBox(x, y, z, 13.5, 4.5)\nlocal mbox1=sdMengerBox(x, y, z, 4.5, 1.5)\nlocal mbox2=sdMengerBox(abs(x)-9, y, z, 4.5, 1.5)\nlocal mbox3=sdMengerBox(x, abs(y)-9, z, 4.5, 1.5)\nlocal mbox4=sdMengerBox(x, y, abs(z)-9, 4.5, 1.5)\n\nif min(mbox0,mbox1,mbox2,mbox3,mbox4)\u003c=0 then return end\n\nlocal xM = abs(x)%3\nlocal XX = xM==2 and 1 or xM\nlocal yM = abs(y)%3\nlocal YY = yM==2 and 1 or yM\nlocal zM = abs(z)%3\nlocal ZZ = zM==2 and 1 or zM\n\nif XX+YY+ZZ \u003c=1 then\n\treturn X\u003c25 and Y\u003c25 and Z\u003c25 and WHITE or GREY\nend\n"
       },
       "completed": false,
       "fps": 12,
@@ -976,14 +974,14 @@
       ]
     },
     {
-      "active_variant": "code 2",
+      "active_variant": "faster",
       "animated": false,
       "challenge_complete": true,
       "code_instructions": 6.78152,
       "code_size": 77,
       "code_variants": {
-        "code": "-- Start of a little domestic scene\n-- (could use some furniture tho)\n\n-- Notes:\n-- multiple techniques at once!\n\nif y \u003e -6 then -- compute above floor\n\tif z == 6 and abs(x) \u003c 4 and abs(y) \u003c 4 then -- paint inside window frame\n\t  v = x^2 + y^2\n\t\treturn (v%3 ~= 1 and v~=0 and v \u003c 9) \n\t\t\t\t\t\t  and EMPTY \n\t\t\t\t\t  \tor BROWN\n\telseif x == -6 or z == 6 then -- paint walls\n\t\treturn WHITE\n\tend \nelse -- compute the floor\n\treturn (x+z)%2 == 0 and DARKBLUE \n\t\t  or LIGHTBLUE\nend\n",
-        "code 2": "-- Start of a little domestic scene\n-- (could use some furniture tho)\n\n-- Notes:\n-- multiple techniques at once!\nc = 0\nif y \u003e -6 then -- compute above floor\n\tif z == 6 and abs(x) \u003c 4 and abs(y) \u003c 4 then -- paint inside window frame\n\t  v = x^2 + y^2\n\t\tc = (v%3 ~= 1 and v~=0 and v \u003c 9) \n\t\t\t\t\t\t  and EMPTY \n\t\t\t\t\t  \tor BROWN\n\telseif x == -6 or z == 6 then -- paint walls\n\t\tc = WHITE\n\tend \nelse -- compute the floor\n\tc = (x+z)%2 == 0 and DARKBLUE \n\t\t  or LIGHTBLUE\nend\nreturn c\n"
+        "faster": "-- Start of a little domestic scene\n-- (could use some furniture tho)\n\n-- Notes:\n-- multiple techniques at once!\nc = 0\nif y \u003e -6 then -- compute above floor\n\tif z == 6 and abs(x) \u003c 4 and abs(y) \u003c 4 then -- paint inside window frame\n\t  v = x^2 + y^2\n\t\tc = (v%3 ~= 1 and v~=0 and v \u003c 9) \n\t\t\t\t\t\t  and EMPTY \n\t\t\t\t\t  \tor BROWN\n\telseif x == -6 or z == 6 then -- paint walls\n\t\tc = WHITE\n\tend \nelse -- compute the floor\n\tc = (x+z)%2 == 0 and DARKBLUE \n\t\t  or LIGHTBLUE\nend\nreturn c\n",
+        "first_attempt": "-- Start of a little domestic scene\n-- (could use some furniture tho)\n\n-- Notes:\n-- multiple techniques at once!\n\nif y \u003e -6 then -- compute above floor\n\tif z == 6 and abs(x) \u003c 4 and abs(y) \u003c 4 then -- paint inside window frame\n\t  v = x^2 + y^2\n\t\treturn (v%3 ~= 1 and v~=0 and v \u003c 9) \n\t\t\t\t\t\t  and EMPTY \n\t\t\t\t\t  \tor BROWN\n\telseif x == -6 or z == 6 then -- paint walls\n\t\treturn WHITE\n\tend \nelse -- compute the floor\n\treturn (x+z)%2 == 0 and DARKBLUE \n\t\t  or LIGHTBLUE\nend\n"
       },
       "completed": true,
       "fps": 12,
@@ -992,8 +990,8 @@
       "size": 6,
       "source": 100,
       "variant_order": [
-        "code",
-        "code 2"
+        "first_attempt",
+        "faster"
       ]
     },
     {
@@ -1075,14 +1073,16 @@
       ]
     },
     {
-      "active_variant": "faster",
+      "active_variant": "fastest",
       "animated": false,
       "challenge_complete": false,
-      "code_instructions": 7.16267,
+      "code_instructions": 6.06133,
       "code_size": 60,
       "code_variants": {
-        "faster": "if y==-7 then\n\treturn (x+1)//3 + (z+1)//3\u00261 == 1 and DARKBLUE or GREY\nelseif y\u003c5 and z^2\u003c2 then\n\treturn (y%4==1 or y-1\u00264==abs(x)) and BLACK or RED\nend\n",
-        "first_pass": "if y\u003c5 and y~=-7 and z^2\u003c2 then\n\treturn (y%4==1 or y-1\u00264==abs(x)) and BLACK or RED\nelseif y==-7 then\n\treturn (x+1)//3 + (z+1)//3\u00261 == 1 and DARKBLUE or GREY\nend\n\n"
+        "faster": "--67\n--6.783\nif y==-7 then\n\treturn (x+1)//3 + (z+1)//3\u00261 == 1 and DARKBLUE or GREY\nelseif z*z\u003c=1 and y\u003c5 then\n\tlocal v=y-1\u00264\n\treturn (v==x or v==-x or y%4==1 ) and BLACK or RED\nend\n",
+        "fastest": "--81\n--6.061\nif y==-7 then\n\treturn (x+1)//3 + (z+1)//3\u00261 == 1 and DARKBLUE or GREY\nelseif z\u003c2 and z\u003e-2 and y\u003c5 then\n\tif y%4==1 then\n\t\treturn BLACK\n\telseif x%4==0 and (y-1\u00264==x or y-1\u00264==-x) then\n\t\treturn BLACK\n\telse\n\t\treturn RED\n\tend\nend\n",
+        "first_pass": "--64\n--7.883\nif y\u003c5 and y~=-7 and z^2\u003c2 then\n\treturn (y%4==1 or y-1\u00264==abs(x)) and BLACK or RED\nelseif y==-7 then\n\treturn (x+1)//3 + (z+1)//3\u00261 == 1 and DARKBLUE or GREY\nend\n\n",
+        "smaller": "--60\n--6.816\nif y==-7 then\n\treturn (x+1)//3 + (z+1)//3\u00261 == 1 and DARKBLUE or GREY\nelseif z*z\u003c2 and y\u003c5 then\n\treturn (y%4==1 or y-1\u00264==abs(x)) and BLACK or RED\nend\n"
       },
       "completed": true,
       "fps": 12,
@@ -1092,7 +1092,9 @@
       "source": 100,
       "variant_order": [
         "first_pass",
-        "faster"
+        "smaller",
+        "faster",
+        "fastest"
       ]
     },
     {
@@ -1176,11 +1178,11 @@
     {
       "active_variant": "first_pass",
       "animated": false,
-      "challenge_complete": false,
+      "challenge_complete": true,
       "code_instructions": 9.70782,
       "code_size": 66,
       "code_variants": {
-        "first_pass": "-- Kinda tricky to communicate 'building'\n-- in just a few voxels, but I think having the\n-- windows lit up helped.\n\n-- Notes:\n-- make sure to peak inside, it helps\n-- to see how the blue edges were made.\n\n-- tower body\nif y\u003c3 and x^2 + z^2 \u003c 9 then\n\tif x^2 == z^2 then return DARKBLUE end\n\tif y%2 == 1 then return YELLOW end\n\treturn DARKBLUE\nend \n-- peak\nif y\u003e2 and x^2 + z^2 \u003c ((y-2)~3)^2 then \n--\tif x == 0 and z ==0 then \n--\tprint(\"y = \" .. y)\n--\tprint((y-2)~3) end\n\treturn DARKBLUE\nend\n"
+        "first_pass": "-- Kinda tricky to communicate 'building'\n-- in just a few voxels, but I think having the\n-- windows lit up helped.\n\n-- Notes:\n-- make sure to peak inside, it helps\n-- to see how the blue edges were made.\n\n-- tower body\nX=x*x\nZ=z*z\nif y\u003c3 and X+Z \u003c 9 then\n\tif X == Z then return DARKBLUE end\n\tif y%2 == 1 then return YELLOW end\n\treturn DARKBLUE\nend \n-- peak\nif y\u003e2 and X+Z \u003c ((y-2)~3)^2 then \n\treturn DARKBLUE\nend\n"
       },
       "completed": true,
       "fps": 12,
@@ -1212,12 +1214,13 @@
       ]
     },
     {
-      "active_variant": "faster",
+      "active_variant": "code",
       "animated": false,
-      "challenge_complete": false,
+      "challenge_complete": true,
       "code_instructions": 3.61157,
       "code_size": 67,
       "code_variants": {
+        "code": "-- it's X's turn :)\nif z == 0 then\n\tlocal X,Y=x*x,y*y\n\tif Y==4 or X==4 then return WHITE end\n\tif X\u003c=1 and X==Y then return RED end\n\tif x\u003e0 and X\u003e4 and Y\u003e4 and (x+y)%2 == 1 then return GREEN end\n\tif x\u003e0 and X\u003e4 and Y\u003c4 and (x+y)%2 == 1 then return GREEN end\n\tif x\u003c0 and X\u003e4 and Y\u003c4 and (x+y)%2 == 0 then return RED end\nend\n",
         "faster": "-- it's X's turn :)\nif z == 0 then\n\tlocal X,Y=x*x,y*y\n\tif Y==4 or X==4 then return WHITE end\n\tif X\u003c=1 and X==Y then return RED end\n\tif x\u003e0 and X\u003e=9 and Y\u003e=9 and (x+y)%2 == 1 then return GREEN end\nend\n-- ok your turn\n-- if x\u003e0 and x^2\u003e8 and y^2\u003c4 and (x+y)%2 == 0 then return RED end\n",
         "first_pass": "-- it's X's turn :)\nc = EMPTY\nif z == 0 then\n\tif y^2==4 or x^2==4 then c = WHITE end\n\tif x^2\u003c2 and x^2 == y^2 then c = RED end\n\tif x\u003e0 and x^2\u003e8 and y^2\u003e8 and (x+y)%2 == 1 then c = GREEN end\nend\nreturn c"
       },
@@ -1229,7 +1232,8 @@
       "source": 100,
       "variant_order": [
         "first_pass",
-        "faster"
+        "faster",
+        "code"
       ]
     },
     {
@@ -1859,7 +1863,7 @@
     {
       "active_variant": "first_pass",
       "animated": false,
-      "challenge_complete": false,
+      "challenge_complete": true,
       "code_instructions": 11.6221,
       "code_size": 123,
       "code_variants": {
@@ -1939,12 +1943,14 @@
     {
       "active_variant": "faster",
       "animated": false,
-      "challenge_complete": false,
-      "code_instructions": 13.008,
+      "challenge_complete": true,
+      "code_instructions": 12.936,
       "code_size": 114,
       "code_variants": {
-        "faster": "-- 130\n-- cycles/voxel: 13.008\n\n-- Dice are universal. \n-- Dice are simple.\n-- I want to make an entire roguelike\n-- about going through dungeons, but\n-- only using dice for all your attacks\n-- and abilities.\n\n-- an attempt at quick interior\n--if x^2+y^2+z^2\u003c4 then return WHITE end\n\nif     y == -2 and x^2+z^2\u003c4 and x%2-z%2 == 0 then return BLACK\nelseif z == -2 and x^2+y^2\u003c4 and x%2 == 1 then return BLACK\nelseif x == -2 and z==y and y^2+z^2\u003c4 then return BLACK\nelseif x == 2  and y^2+z^2==2 then return BLACK\nelseif y == 2  and x==-z and x^2+z^2==2 then return BLACK\nelseif z == 2  and x^2+y^2==0 then return BLACK end\n\nreturn WHITE",
-        "first_pass": "-- codesize: 114\n\n-- Dice are universal. \n-- Dice are simple.\n-- I want to make an entire roguelike\n-- about going through dungeons, but\n-- only using dice for all your attacks\n-- and abilities.\nXY=x^2+y^2\nXZ=x^2+z^2\nYZ=y^2+z^2\nreturn \ny==-2 and XZ\u003c4 and x%2-z%2==0 and BLACK or\nz==-2 and XY\u003c4 and x%2==1 and BLACK or\nx==-2 and z==y and YZ\u003c4 and BLACK or\nx==2  and YZ==2 and BLACK or\ny==2  and x==-z and XZ==2 and BLACK or\nz==2  and XY==0 and BLACK or WHITE\n"
+        "challenge_1": "-- codesize: 140\n-- 32.832\nXY=x^2+y^2\nXZ=x^2+z^2\nYZ=y^2+z^2\nc=(x+y+z)%2==1 and DARKBLUE or BLACK\nreturn\nXY+z*z\u003c=3 and PINK or \ny==-2 and XZ\u003c4 and x%2-z%2==0 and WHITE or\nx==-2 and YZ\u003c4 and z%2==1 and WHITE or\nz==-2 and x==y and XY\u003c4 and WHITE or\nz==2  and XY==2 and WHITE or\ny==2  and x==-z and XZ==2 and WHITE or\nx==2  and YZ==0 and WHITE or\nc",
+        "challenge_faster": "-- codesize: 147\n-- 20.424\n\nlocal X,Y,Z=x*x,y*y,z*z\nif X+Y+Z\u003c=3 then \n\treturn PINK \nelse\n\tlocal c=(x+y+z)%2==1 and DARKBLUE or BLACK\n\treturn \n\ty==-2 and X+Z\u003c4 and x%2-z%2==0 and WHITE or\n\tx==-2 and Y+Z\u003c4 and z%2==1 and WHITE or\n\tz==-2 and x==y and X+Y\u003c4 and WHITE or\n\tz==2  and X+Y==2 and WHITE or\n\ty==2  and x==-z and X+Z==2 and WHITE or\n\tx==2  and Y+Z==0 and WHITE or\n\tc\nend\n",
+        "faster": "-- 130\n-- 13.008\n\n-- Dice are universal. \n-- Dice are simple.\n-- I want to make an entire roguelike\n-- about going through dungeons, but\n-- only using dice for all your attacks\n-- and abilities.\n\n-- an attempt at quick interior\n--if x^2+y^2+z^2\u003c4 then return WHITE end\nif     y == -2 and x^2+z^2\u003c4 and x+z\u00261 == 0 then return BLACK --5\nelseif z == -2 and x^2+y^2\u003c4 and x%2 == 1 then return BLACK --6 \nelseif x == -2 and z==y and y^2+z^2\u003c4 then return BLACK --3\nelseif x == 2  and y^2+z^2==2 then return BLACK --4\nelseif y == 2  and x==-z and x^2+z^2==2 then return BLACK --2\nelseif z == 2  and x^2+y^2==0 then return BLACK end --1\nreturn WHITE\n",
+        "first_pass": "-- codesize: 114\n-- 23.416\n\n-- Dice are universal. \n-- Dice are simple.\n-- I want to make an entire roguelike\n-- about going through dungeons, but\n-- only using dice for all your attacks\n-- and abilities.\nlocal X,Y,Z=x*x,y*y,z*z\nreturn \ny==-2 and X+Z\u003c4 and x%2-z%2==0 and BLACK or\nz==-2 and X+Y\u003c4 and x%2==1 and BLACK or\nx==-2 and z==y and Y+Z\u003c4 and BLACK or\nx==2  and Y+Z==2 and BLACK or\ny==2  and x==-z and X+Z==2 and BLACK or\nz==2  and X+Y==0 and BLACK or WHITE\n"
       },
       "completed": true,
       "fps": 12,
@@ -1954,7 +1960,9 @@
       "source": 100,
       "variant_order": [
         "first_pass",
-        "faster"
+        "faster",
+        "challenge_1",
+        "challenge_faster"
       ]
     },
     {
@@ -1979,17 +1987,18 @@
       ]
     },
     {
-      "active_variant": "smallest",
+      "active_variant": "fastest",
       "animated": true,
       "challenge_complete": false,
       "code_instructions": 9.11541,
       "code_size": 47,
       "code_variants": {
-        "code": "-- vector length \nfunction length(vx,vy,vz)\n\treturn vx * vx + vy * vy + vz * vz\nend\n\n-- min function with blending (k modifies smoothness)\nfunction smoothMin(a,b,k)\n\tk = k * 2.0\n\ti = b - a\n\treturn 0.5 * (a + b - sqrt(i*i+k*k))\nend\n\n-- signed distance function returns the distance any point is \n-- from a shape of specified parameters\nfunction signedDistanceSphere(px,py,pz, size)\n\treturn length(px,py,pz) - size\nend\n\n-- distance functions can be used with min to allow for multiple objects to be drawn\nreturn smoothMin(\nsignedDistanceSphere(x + 16,y,z,50), \nsignedDistanceSphere(x - 16,y,z,50), \n40) \u003c 0 and (x+1)%15",
-        "code 2": "-- this is so slow on my pc I cannot optimize, lol\n\n-- cut out deadspace\nif y\u003e9 or z\u003e9 then return end\n\n-- excluding space between spheres doesnt add speed :(\n-- local X = abs(x)\n-- if t\u003c6 or t\u003e25 then\n-- \tif t\u003c6 and X \u003c 8 - t then return\n-- \telseif t\u003e25 and X \u003c (26-t) then return end\n-- end\n\n-- min function with blending (k modifies smoothness)\n-- minSmoothBlend\nfunction sb(a,b,k)\n\treturn (a + b - ((b - a)^2+(k * 2)^2)^0.5)/2\nend\n\nreturn sb(\n\t\t\t\t(x+16-1*t)^2 + y^2 + z^2 - 50, \n\t\t\t\t(x-16+1*t)^2 + y^2 + z^2 - 50, \n\t\t\t\t40) \u003c 0 and abs(x)%16+1",
-        "code 3": "-- Pushing the \"run code\" button is hilarious to me\n-- my system absolutely chugs\n\n-- empty space\nif y\u003c-9 or y\u003e9 or z\u003c-9 or z\u003e9 then return end\n-- maths\nlocal a = (x+16-t)^2 + y^2 + z^2 - 50\nlocal b = (x-16+t)^2 + y^2 + z^2 - 50\nreturn (a + b - ((b - a)^2+6400)^.5)/2 \u003c 0 and abs(x)+1\n\n-- codesize: 94 (my lowest is 75)\n-- cycles: 12.249\n\n-- matlab.mathworks.com\n-- !1Aifx\u003c-9thenreturnend!",
-        "code 4": "-- empty space\nif y\u003c-9 or y\u003e9 or z\u003c-9 or z\u003e9 then return end\n-- math\nlocal T=(t-16)^2 \nreturn T+x^2+y^2+z^2 \u003c 2*(400+x^2*T)^.5 + 50 and abs(x)+1\n-- 67\n-- 10.497",
         "fastest": "-- size: 71\n-- c/v:  9.115\n\n-- ##empty_space\nlocal YZ= y^2 + z^2\nif YZ\u003e89 then return end\n\n-- ##maths\nlocal X = x^2\nlocal T = (t-16)^2\nif T + X + YZ \u003c 50 + 2*(X*T + 4e2)^.5 then\n\tif x\u003e0 then\n\t\treturn x+1\n\telse\n\t\treturn 1-x\n\tend\nend\n\n-- I personally struggled to make the eq'n more simplified, ended up using free matlab online\n-- they give 20hours/month free for hobbists\n-- matlab.mathworks.com\n-- https://www.mathworks.com/help/symbolic/sym.simplify.html\n-- first I declare all my \"symbolics\"\n-- then we define some values and our eqn, then we ask it to simplify\n-- syms a b c x y z t\n-- a = (x + 16 - t)^2 + y^2 + z^2 - 50\n-- b = (x - 16 + t)^2 + y^2 + z^2 - 50\n-- eqn = (a + b - sqrt((b - a)^2+6400))/2 \u003c 0\n-- simplify(eqn,\"All\",true)\n--\n-- hooray! the matlabs simplify() func completed and then gave me this answer as a choice, 1 of 4 simlifications\n-- x^2 + t^2 - 2*(t^2*x^2 - 32*t*x^2 + 256*x^2 + 400)^(1/2) - 32*t + y^2 + z^2 + 256 \u003c 50\n--\n-- We can simplify further!:\n-- eqn2 = t^2*x^2 - 32*t*x^2 + 256*x^2 + 400\n-- collect(eqn2,\"All\",true)\n-- (t^2 - 32*t + 256)*x^2 + 400\n-- eqn3 = t^2 - 32*t + 256\n-- simplify(eqn3)\n-- (t - 16)^2\n-- Below we now try to put it all together:\n--\n-- x^2 + t^2 - 2*(t^2*x^2 - 32*t*x^2 + 256*x^2 + 400)^(1/2) - 32*t + y^2 + z^2 + 256 \u003c 50\n-- x^2 + t^2 - 32*t + 256 + y^2 + z^2  \u003c 50 + 2*(t^2*x^2 - 32*t*x^2 + 256*x^2 + 400)^(1/2)\n-- x^2 + t^2 - 32*t + 256 + y^2 + z^2  \u003c 50 + 2*((t^2 - 32*t + 256)*x^2 + 400)^(1/2)\n-- x^2 + (t-16)^2 + y^2 + z^2  \u003c 50 + 2*(x^2*(t-16)^2 + 400)^.5\n-- substitute for T,X,Y,Z\n-- T + X + YZ \u003c 50 + 2*(X*T + 400)^.5\n\n",
+        "first_pass": "-- vector length \nfunction length(vx,vy,vz)\n\treturn vx * vx + vy * vy + vz * vz\nend\n\n-- min function with blending (k modifies smoothness)\nfunction smoothMin(a,b,k)\n\tk = k * 2.0\n\ti = b - a\n\treturn 0.5 * (a + b - sqrt(i*i+k*k))\nend\n\n-- signed distance function returns the distance any point is \n-- from a shape of specified parameters\nfunction signedDistanceSphere(px,py,pz, size)\n\treturn length(px,py,pz) - size\nend\n\n-- distance functions can be used with min to allow for multiple objects to be drawn\nreturn smoothMin(\nsignedDistanceSphere(x + 16,y,z,50), \nsignedDistanceSphere(x - 16,y,z,50), \n40) \u003c 0 and (x+1)%15",
+        "first_pass_reduce1": "-- this is so slow on my pc I cannot optimize, lol\n\n-- cut out deadspace\nif y\u003e9 or z\u003e9 then return end\n\n-- excluding space between spheres doesnt add speed :(\n-- local X = abs(x)\n-- if t\u003c6 or t\u003e25 then\n-- \tif t\u003c6 and X \u003c 8 - t then return\n-- \telseif t\u003e25 and X \u003c (26-t) then return end\n-- end\n\n-- min function with blending (k modifies smoothness)\n-- minSmoothBlend\nfunction sb(a,b,k)\n\treturn (a + b - ((b - a)^2+(k * 2)^2)^0.5)/2\nend\n\nreturn sb(\n\t\t\t\t(x+16-1*t)^2 + y^2 + z^2 - 50, \n\t\t\t\t(x-16+1*t)^2 + y^2 + z^2 - 50, \n\t\t\t\t40) \u003c 0 and abs(x)%16+1",
+        "first_pass_reduce2": "-- Pushing the \"run code\" button is hilarious to me\n-- my system absolutely chugs\n\n-- empty space\nif y\u003c-9 or y\u003e9 or z\u003c-9 or z\u003e9 then return end\n-- maths\nlocal a = (x+16-t)^2 + y^2 + z^2 - 50\nlocal b = (x-16+t)^2 + y^2 + z^2 - 50\nreturn (a + b - ((b - a)^2+6400)^.5)/2 \u003c 0 and abs(x)+1\n\n-- codesize: 94 (my lowest is 75)\n-- cycles: 12.249\n",
+        "first_pass_reduce3": "-- empty space\nif y\u003c-9 or y\u003e9 or z\u003c-9 or z\u003e9 then return end\n-- math\nlocal T=(t-16)^2 \nreturn T+x^2+y^2+z^2 \u003c 2*(400+x^2*T)^.5 + 50 and abs(x)+1\n-- 67\n-- 10.497",
+        "orig": "-- vector length \nfunction length(vx,vy,vz)\n\treturn vx * vx + vy * vy + vz * vz\nend\n\n-- min function with blending (k modifies smoothness)\nfunction smoothMin(a,b,k)\n\tk = k * 2.0\n\ti = b - a\n\treturn 0.5 * (a + b - sqrt(i*i+k*k))\nend\n\n-- signed distance function returns the distance any point is \n-- from a shape of specified parameters\nfunction signedDistanceSphere(px,py,pz, size)\n\treturn length(px,py,pz) - size\nend\n\n-- distance functions can be used with min to allow for multiple objects to be drawn\nreturn smoothMin(signedDistanceSphere(x + 9,y,z,30), signedDistanceSphere(x - 9,y,z,30), 40) \u003c 0",
         "small_and_cool": "T = (t-16)^2\nreturn T + x^2 + y^2 + z^2 - 2*sqrt(x^2*T+4e2) \u003c 50 and abs(x)+1\n-- 44\n-- 22.376\n",
         "smallest": "T = t - 16\nreturn T^2 + x^2 + y^2 + z^2 - 2*sqrt((x*T)^2 + 4e2) \u003c 50 and abs(x)+1\n-- 44"
       },
@@ -2000,13 +2009,14 @@
       "size": 16,
       "source": 400,
       "variant_order": [
-        "code",
-        "code 2",
-        "code 3",
-        "code 4",
+        "first_pass",
+        "first_pass_reduce1",
+        "first_pass_reduce2",
+        "first_pass_reduce3",
         "fastest",
         "smallest",
-        "small_and_cool"
+        "small_and_cool",
+        "orig"
       ]
     },
     {
@@ -2305,13 +2315,16 @@
       ]
     },
     {
-      "active_variant": "code",
+      "active_variant": "faster2",
       "animated": false,
-      "challenge_complete": false,
-      "code_instructions": 37.3937,
-      "code_size": 146,
+      "challenge_complete": true,
+      "code_instructions": 8.96571,
+      "code_size": 75,
       "code_variants": {
-        "code": "-- This would be like some sort of physics\n-- puzzle, where players take turns removing\n-- pieces of a tower, trying not to be the\n-- one that causes it to topple over.\n\n-- might be better as a physical game\n-- than a videogame? hmmm\n\nif y == -4 then \n  return 2\nend\n\nlocal yy,d = (y+4)%4, 2\na = ((x==d and abs(z)\u003c=d+1) and 1 or 0)  * (yy==0 and 1 or 0)\nb = ((z==-d and abs(x)\u003c=d+1) and 1 or 0) * (yy==1 and 1 or 0)\nc = ((x==-d and abs(z)\u003c=d+1) and 1 or 0) * (yy==2 and 1 or 0)\nd = ((z==d and abs(x)\u003c=d+1) and 1 or 0)  * (yy==3 and 1 or 0)\n\nreturn (a+b+c+d)*15\n"
+        "faster1": "if y == -4 then return GREY end\nlocal yy=(y+4)%4\nif z==-2 and x\u003c=3 and x\u003e=-3 and yy==1 then\n\treturn BROWN\nend\nif x==-2 and z\u003c=3 and z\u003e=-3 and yy==2 then\n\treturn BROWN\nend\nif z==2 and x\u003c=3 and x\u003e=-3 and yy==3 then\n\treturn BROWN\nend\nif x==2 and z\u003c=3 and z\u003e=-3 and yy==0 then\n\treturn BROWN\nend\n",
+        "faster2": "--75\n--8.966\nif y==-4 then return GREY end\nlocal yy=(y+4)%4\nif\n((z==-2 and yy==1) or (z==2 and yy==3)) and x\u003c=3 and x\u003e=-3 or\n((x==-2 and yy==2) or (x==2 and yy==0)) and z\u003c=3 and z\u003e=-3\nthen\nreturn BROWN\nend\n",
+        "first_pass": "-- This would be like some sort of physics\n-- puzzle, where players take turns removing\n-- pieces of a tower, trying not to be the\n-- one that causes it to topple over.\n\n-- might be better as a physical game\n-- than a videogame? hmmm\n\nif y == -4 then \n  return 2\nend\n\nlocal yy,d = (y+4)%4, 2\na = ((x==d and abs(z)\u003c=d+1) and 1 or 0)  * (yy==0 and 1 or 0)\nb = ((z==-d and abs(x)\u003c=d+1) and 1 or 0) * (yy==1 and 1 or 0)\nc = ((x==-d and abs(z)\u003c=d+1) and 1 or 0) * (yy==2 and 1 or 0)\nd = ((z==d and abs(x)\u003c=d+1) and 1 or 0)  * (yy==3 and 1 or 0)\n\nreturn (a+b+c+d)*15\n",
+        "smaller1": "if y == -4 then return 2 end\nyy=(y+4)%4\nd=2\nX=x*x\u003c=9\nZ=z*z\u003c=9\na = (x==d and Z and 1 or 0)  * (yy==0 and 1 or 0)\nb = (z==-d and X and 1 or 0) * (yy==1 and 1 or 0)\nc = (x==-d and Z and 1 or 0) * (yy==2 and 1 or 0)\nd = (z==d and X and 1 or 0)  * (yy==3 and 1 or 0)\nreturn (a+b+c+d)*15\n"
       },
       "completed": true,
       "fps": 12,
@@ -2320,7 +2333,10 @@
       "size": 4,
       "source": 100,
       "variant_order": [
-        "code"
+        "first_pass",
+        "smaller1",
+        "faster1",
+        "faster2"
       ]
     },
     {
@@ -2345,10 +2361,11 @@
     {
       "active_variant": "first_pass",
       "animated": false,
-      "challenge_complete": false,
+      "challenge_complete": true,
       "code_instructions": 8.66392,
       "code_size": 135,
       "code_variants": {
+        "challenge_1": "-- bed of choice for getting \n-- beefbrain in hypnospace outlaw\n\n-- empty space\nif y\u003e2 then return end\n\n-- floor\nif y==-4 then return DARKBROWN end\n\n-- bed\nif x==-4 then \n\tif z^2==9 and y \u003c 1 then return BROWN -- small posts\n\telseif z^2\u003c9 and (y==-1 or y ==-2) then return BROWN end -- small bedframe\nelseif x==4 then\n\tif z^2==9 and y \u003c 3 then return BROWN -- tall posts\n\telseif z^2\u003c9 and y^2\u003c=4 and y~= 2 then return BROWN end -- tall bedframe\nelseif y ==-2 and z\u003e-3 and z\u003c3 then\n\treturn PEACH\nelseif (y==-1 or y ==-2) and x^2\u003c=9 and z^2\u003c=9 then\n\tlocal v= y==-1 and -1 or 0\n\treturn \n\t\t(x+z)%2==0 and 14+v or \n\t\t(x+z)%2==1 and z%2==0 and 15+v or \n\t\t(x+z)%2==1 and z%2==1 and 13+v -- sheets\nelseif y == 0 and (z^2==1 or z^2==4) and (x==2 or x==3) then \n\treturn PEACH -- pillows\nend\n",
         "first_pass": "-- bed of choice for getting \n-- beefbrain in hypnospace outlaw\n\n-- empty space\nif y\u003e2 then return end\n\n-- floor\nif y==-4 then return DARKBROWN end\n\n-- bed\nif x==-4 then \n\tif z^2==9 and y \u003c 1 then return ORANGE -- small posts\n\telseif z^2\u003c9 and (y==-1 or y ==-2) then return ORANGE end -- small bedframe\nelseif x==4 then\n\tif z^2==9 and y \u003c 3 then return ORANGE -- tall posts\n\telseif z^2\u003c9 and y^2\u003c=4 and y~= 2 then return ORANGE end -- tall bedframe\nelseif (y==-1 or y ==-2) and x^2\u003c=9 and z^2\u003c=9 then \n\treturn x%2 + 5 -- sheets\nelseif y == 0 and (z^2==1 or z^2==4) and (x==2 or x==3) then \n\treturn WHITE  -- pillows\nend\n"
       },
       "completed": true,
@@ -2358,7 +2375,8 @@
       "size": 4,
       "source": 100,
       "variant_order": [
-        "first_pass"
+        "first_pass",
+        "challenge_1"
       ]
     },
     {
@@ -2666,10 +2684,13 @@
       "active_variant": "first_pass",
       "animated": false,
       "challenge_complete": false,
-      "code_instructions": 17.2675,
-      "code_size": 40,
+      "code_instructions": 9.71193,
+      "code_size": 36,
       "code_variants": {
-        "first_pass": "--[[\neach voxel is at a nice integer location, but \ndistance is often a decimal number. You can\ntest against decimal values in your code,\nor you can also convert a decimal to an integer\nwith round(), floor(), and ceil().\n--]]\n--local d = sqrt(x^2 + z^2)\n\n-- notice how this doesn't make a full circle\n-- because the decimal values don't always turn\n-- out to be a 'clean' integer\n--if z == 3 then\n--\treturn d == 4\n--end\n--\n-- rounding the distance ensures it's an integer\n--if z == 0 then\n--\treturn round(d) == 4\n--end\n\n-- 40\n-- 17.267\nlocal d = round(sqrt(x^2 + z^2))\nif y^2\u003c=1 then return d \u003c= 3 end\nif y^2\u003c=9 then return d \u003c= 4 and BLACK end\n"
+        "faster": "-- 54\n-- 15.156\nif y==4 or y==-4 then return end\nlocal Y=y*y\nlocal d = round(sqrt(x^2 + z^2)) \nif Y\u003c=1 then\n\treturn d \u003c= 3\nelseif Y\u003c=9 then \n\tif d \u003c= 4 then\n\t\treturn BLACK\n\tend\nend\n",
+        "faster2": "-- 51\n-- 9.712\n-- empty space\nif y==4 or y==-4 then return end\n-- shape\nlocal Y=y*y\nlocal d = x*x + z*z\nif Y\u003c=1 then\n\treturn d \u003c= 12\nelseif Y\u003c=9 then \n\tif d \u003c= 24 then\n\t\treturn BLACK\n\tend\nend\n",
+        "first_pass": "--[[\neach voxel is at a nice integer location, but \ndistance is often a decimal number. You can\ntest against decimal values in your code,\nor you can also convert a decimal to an integer\nwith round(), floor(), and ceil().\n--]]\n--local d = sqrt(x^2 + z^2)\n\n-- notice how this doesn't make a full circle\n-- because the decimal values don't always turn\n-- out to be a 'clean' integer\n--if z == 3 then\n--\treturn d == 4\n--end\n--\n-- rounding the distance ensures it's an integer\n--if z == 0 then\n--\treturn round(d) == 4\n--end\n\n-- 40\n-- 17.267\nlocal d = round(sqrt(x^2 + z^2))\nif y^2\u003c=1 then return d \u003c= 3 end\nif y^2\u003c=9 then return d \u003c= 4 and BLACK end\n",
+        "smaller": "-- 36\n-- 14.045\nY=y*y\nd=x*x+z*z\nif Y\u003c=1 then \n\treturn d\u003c=12 \nelseif Y\u003c=9 then\n\treturn d\u003c=24 and BLACK\nend\n"
       },
       "completed": true,
       "fps": 12,
@@ -2678,7 +2699,10 @@
       "size": 4,
       "source": 100,
       "variant_order": [
-        "first_pass"
+        "first_pass",
+        "faster",
+        "faster2",
+        "smaller"
       ]
     },
     {
@@ -2701,14 +2725,18 @@
       ]
     },
     {
-      "active_variant": "second_attempt",
+      "active_variant": "first_attempt",
       "animated": false,
       "challenge_complete": false,
-      "code_instructions": 29.6017,
-      "code_size": 84,
+      "code_instructions": 8.88705,
+      "code_size": 41,
       "code_variants": {
-        "first_attempt": "--[[\n\nequation for a torus (donut):\nr^2 = (sqrt(x^2+z^2) - R)^2 + y^2\nlittle r = radius of the 'tube'\nbig R = radius of the 'ring'\n\nsqrt(x^2+z^2) - R  \u003c-- this is essentially the distance\nfrom the 'ring' on the XZ plane.\n\nremember, when visualizing values as colors, negative\nvalues will all appear as empty space, because any\nnumber \u003c= 0 becomes an empty voxel.\n--]]\nlocal r_tube = 4\nlocal r_ring = 7\nlocal ring_dist = sqrt(x^2+z^2) - r_ring\nlocal ring_dist = sqrt(x^2+z^2) - r_ring\n\n--r^2 = (sqrt(x^2+z^2) - R)^2 + y^2\nif ring_dist^2 + y^2 - r_tube^2 \u003c 0 then \n--\treturn abs(ring_dist)\n\treturn y\u003e0 and PINK or YELLOW\nend\n",
-        "second_attempt": "-- This code uses a trigonometric approach to find the distance to a torus. \n-- Instead of the standard vector-based Signed Distance Function (SDF), \n-- it uses an angle to \"track\" the point's position around the ring.\n--\n-- Here is the breakdown of how these specific variables interact:\n-- ## Geometric Variable Meanings\n-- In this specific snippet, the variables are building a 3D vector \n-- that points from the nearest part of the torus \"ring\" to your current point (x, y, z)\n\n-- * dsm (Small Radius): The thickness of the torus tube (the \"dough\")\n-- * dbr (Big Radius): The distance from the center of the hole to the middle of the tube\nlocal dsm = 3 -- smallradius, tube radius\nlocal dbr = 7 -- bigradius, from the center of the hole to the middle of the tube\n\n-- * da (Angle): The horizontal angle (in radians)\n-- of the point (x, z) relative to the center of the torus\n-- * cx, cz (Center Coordinates): The closest point on the major ring to your current position\n-- * sin(da) * dbr and cos(da) * dbr map the angle back onto a circle of radius dbr\nlocal da = atan(x,z)\nlocal cx = sin(da)*dbr\nlocal cz = cos(da)*dbr\n\n-- * dx, dy, dz (Delta/Difference): The distance vector from \n-- the ring's center line to the point (x, y, z)\nlocal dx = x - cx\nlocal dy = y\nlocal dz = z - cz\n\n-- * d (Distance): The length of that delta vector.\n-- This tells you how far the point is from the center of the \"dough.\"\nlocal d = floor(sqrt(dx^2+dy^2+dz^2))\n\n-- Threshold check, if \"d\" is below dsmall we are inside the toroid\nif d \u003c= dsm then\n\treturn y\u003e=1 and d==dsm and PINK or YELLOW\nend\n"
+        "faster": "--54\n--8.935\nlocal Y=y*y\nif Y\u003e9 then return end\nlocal d = floor(sqrt((sqrt(x^2+z^2) - 7)^2 + Y))\nif d \u003c= 3 then\n\treturn y\u003e0 and d==3 and PINK or YELLOW\nend\n",
+        "faster2": "--57\n--8.887\nlocal Y=y*y\nif Y\u003e9 then return end\nlocal d = floor(sqrt((sqrt(x^2+z^2) - 7)^2 + Y))\nif d\u003c=3 then\n\tif y\u003e0 and d==3 then\n\t return PINK\n\telse\n\t\treturn YELLOW\n\tend\nend\n",
+        "first_attempt": "--[[\nequation for a torus (donut):\nr^2 = (sqrt(x^2+z^2) - R)^2 + y^2\nlittle r = radius of the 'tube'\nbig R = radius of the 'ring'\n\nsqrt(x^2+z^2) - R  \u003c-- this is essentially the distance\nfrom the 'ring' on the XZ plane.\n\nremember, when visualizing values as colors, negative\nvalues will all appear as empty space, because any\nnumber \u003c= 0 becomes an empty voxel.\n--]]\nlocal r=3\nif y\u003er or y\u003c-r then return end\nlocal R=7\nlocal d = floor(sqrt((sqrt(x^2+z^2) - R)^2 + y^2))\nif d \u003c= r then\n\treturn y\u003e0 and d==r and PINK or YELLOW\nend\n",
+        "second_attempt": "if y\u003e3 or y\u003c-3 then return end\n-- This code uses a trigonometric approach to find the distance to a torus. \n-- Instead of the standard vector-based Signed Distance Function (SDF), \n-- it uses an angle to \"track\" the point's position around the ring.\n--\n-- Here is the breakdown of how these specific variables interact:\n-- ## Geometric Variable Meanings\n-- In this specific snippet, the variables are building a 3D vector \n-- that points from the nearest part of the torus \"ring\" to your current point (x, y, z)\n--\n-- * sm (Small Radius): The thickness of the torus tube (the \"dough\")\n-- * br (Big Radius): The distance from the center of the hole to the middle of the tube\nlocal sm = 3 -- smallradius, tube radius\nlocal br = 7 -- bigradius, from the center of the hole to the middle of the tube\n-- * a (Angle): The horizontal angle (in radians)\n-- of the point (x, z) relative to the center of the torus\n-- * cx, cz (Center Coordinates): The closest point on the major ring to your current position\n-- * sin(da) * dbr and cos(da) * dbr map the angle back onto a circle of radius dbr\nlocal a = atan(x,z)\nlocal cx = sin(a)*br\nlocal cz = cos(a)*br\n-- * dx, dy, dz (Delta/Difference): The distance vector from \n-- the ring's center line to the point (x, y, z)\nlocal dx = x - cx\nlocal dy = y\nlocal dz = z - cz\n-- * d (Distance): The length of that delta vector.\n-- This tells you how far the point is from the center of the \"dough.\"\nlocal d = floor(sqrt(dx^2+dy^2+dz^2))\n-- Threshold check, if \"d\" is below dsmall we are inside the toroid\nif d \u003c= sm then\n\treturn y\u003e=1 and d==sm and PINK or YELLOW\nend\n",
+        "small": "--52\n--12.031\nY=y*y\nif Y\u003e9 then return end\nd = floor(sqrt((sqrt(x^2+z^2) - 7)^2 + Y))\nif d \u003c= 3 then\n\treturn y\u003e0 and d==3 and PINK or YELLOW\nend\n",
+        "smaller": "--41\n--19.650\nd = floor(sqrt((sqrt(x*x+z*z) - 7)^2 + y*y))\nreturn d\u003c=3 and (y\u003e0 and d==3 and PINK or YELLOW)\n"
       },
       "completed": true,
       "fps": 12,
@@ -2718,17 +2746,23 @@
       "source": 100,
       "variant_order": [
         "first_attempt",
-        "second_attempt"
+        "second_attempt",
+        "small",
+        "smaller",
+        "faster",
+        "faster2"
       ]
     },
     {
-      "active_variant": "code",
+      "active_variant": "smaller",
       "animated": false,
       "challenge_complete": false,
-      "code_instructions": 12.1514,
-      "code_size": 94,
+      "code_instructions": 8.03733,
+      "code_size": 92,
       "code_variants": {
-        "code": "-- watermelon = portion of a sphere\n-- plate = circle\n\n-- empty space above\nif abs(z)\u003e=-y+1 then return end\n\nlocal X,Y,Z = x^2,y^2,z^2\n\n-- plate\nif y==-7 and Z+X\u003c=48 then return WHITE end\n\n-- water melon\nlocal s = round(sqrt(X+Y+Z))\nif s\u003c=6 then\n\tif s\u003c=5 then\n\t\tif z%2==0 and x%3==0 and y%2==0 then\n\t\t\treturn BLACK\n\t\tend\n\t\treturn RED\n\tend\n\treturn GREEN\nend\n"
+        "faster": "-- 92\n-- 8.037\n-- empty space above\nif z-y\u003c0 or -z-y\u003c0 then return end\nlocal Y,XZ=y*y,x*x+z*z\n-- plate\nif y==-7 and XZ\u003c=48 then return WHITE end\n-- water melon\nlocal s2 = XZ+Y\nif s2\u003c43 then\n\tif s2\u003c31 then\n\t\tif z%2==0 and x%3==0 and y%2==0 then\n\t\t\treturn BLACK\n\t\tend\n\t\treturn RED\n\tend\n\treturn GREEN\nend\n",
+        "first_pass": "-- watermelon = portion of a sphere\n-- plate = circle\n\n-- empty space above\nif abs(z)\u003e=-y+1 then return end\n\nlocal X,Y,Z = x^2,y^2,z^2\n\n-- plate\nif y==-7 and Z+X\u003c=48 then return WHITE end\n\n-- water melon\nlocal s = round(sqrt(X+Y+Z))\nif s\u003c=6 then\n\tif s\u003c=5 then\n\t\tif z%2==0 and x%3==0 and y%2==0 then\n\t\t\treturn BLACK\n\t\tend\n\t\treturn RED\n\tend\n\treturn GREEN\nend\n",
+        "smaller": "-- 86\nif z-y\u003c0 or -z-y\u003c0 then return end\nv=x*x+z*z+y*y\nif y==-7 and v-y*y\u003c=48 then return WHITE end\n\nif z%2==0 and x%3==0 and y%2==0 then\n\treturn v\u003c31 and BLACK\nend\nif vv\u003c43 then\n\tif v\u003c31 then\n\t\treturn RED\n\tend\n\treturn GREEN\nend\n"
       },
       "completed": true,
       "fps": 12,
@@ -2737,25 +2771,29 @@
       "size": 7,
       "source": 100,
       "variant_order": [
-        "code"
+        "first_pass",
+        "faster",
+        "smaller"
       ]
     },
     {
-      "active_variant": "code",
+      "active_variant": "first_attempt_at_torus",
       "animated": false,
       "challenge_complete": false,
-      "code_instructions": 0.0,
-      "code_size": 0,
+      "code_instructions": 45.0537,
+      "code_size": 253,
       "code_variants": {
-        "code": "-- pipe can be broken up into sections...\n-- hint: cut a donut in half, and then\n-- attach cylinders to it.\nreturn 1"
+        "code": "-- pipe can be broken up into sections...\n-- hint: cut a toriod in half, and then\n-- attach cylinders to it.\n\n-- lordy, I needed a zillion tweaks and touchups \n-- and I still couldnt match the U pipe\n\n-- * sR (Small Radius): The thickness of the torus tube\n-- * br (Big Radius): The distance from the center of the hole to the middle of the tube\n-- * ang (Angle): The horizontal angle (in radians)\n-- of the point (x, z) relative to the center of the torus\n-- * cx, cz (Center Coordinates): The closest point on the major ring to your current position\n-- * sin(ang) * bigRadius and cos(ang) * bigRadius, map the angle back onto a circle of bigRadius\n-- * dx, dy, dz (Delta/Difference): The distance vector from \n-- the ring's center line to the point (x, y, z)\nif y\u003e5 or y==-extent or x==extent or x==-extent then return end\n\nlocal r = 2.5 -- smallradius, tube radius\nlocal R = 4 -- bigradius, from the center of the hole to the middle of the tube\nlocal a = atan(x,y)\nlocal cx = sin(a)*R\nlocal cy = 1 + cos(a)*R\nlocal dx = x - cx\nlocal dy = (y+2) - cy\nlocal dz = z\n-- * du (Distance): The length of that delta vector.\n-- This tells you how far the point is from the center of the toroid.\nlocal dUpipe = dx^2+dy^2+dz^2\n\nif y\u003c=-3 then\n\t-- rest of Upipe\n\tif dUpipe\u003cr then return BLUE end\n\tif dUpipe\u003c7 then return LIGHTGREEN end\nend\nif y\u003e-3 then\n\tlocal p2 = round(sqrt((x-4)^2+z*z))\n\tlocal p1 = round(sqrt((x+4)^2+z*z))\n\tif y\u003c=2 then\n\t\tif p1\u003c2 or p2\u003c2 then return BLUE end\n\t\tif p1==2 or p2==2 then return LIGHTGREEN end\n\telseif p1==3 or p2==3 then\n\t\treturn y\u003c=5 and LIGHTGREEN\n\telseif p1\u003c3 or p2\u003c3 then\n\t\treturn y\u003c=4 and BLUE\n\tend\nend",
+        "first_attempt_at_torus": "-- pipe can be broken up into sections...\n-- hint: cut a toriod in half, and then\n-- attach cylinders to it.\n\n-- lordy, I needed a zillion tweaks and touchups \n-- and I still couldnt match the U pipe\n\n-- * sR (Small Radius): The thickness of the torus tube\n-- * br (Big Radius): The distance from the center of the hole to the middle of the tube\n-- * ang (Angle): The horizontal angle (in radians)\n-- of the point (x, z) relative to the center of the torus\n-- * cx, cz (Center Coordinates): The closest point on the major ring to your current position\n-- * sin(ang) * bigRadius and cos(ang) * bigRadius, map the angle back onto a circle of bigRadius\n-- * dx, dy, dz (Delta/Difference): The distance vector from \n-- the ring's center line to the point (x, y, z)\n\nlocal smallR = 2 -- smallradius, tube radius\nlocal bigR = 4 -- bigradius, from the center of the hole to the middle of the tube\nlocal ang = atan(x,y)\nlocal cx = sin(ang)*bigR\nlocal cy = 1 + cos(ang)*bigR\nlocal dx = x - cx\nlocal dy = (y+2) - cy\nlocal dz = z \n-- * du (Distance): The length of that delta vector.\n-- This tells you how far the point is from the center of the toroid.\nlocal dUpipe = round(sqrt(dx^2+dy^2+dz^2))\n\nif y\u003c=-3 then\n\t-- touchups\n\tif y==-3 and x*x==25 and z*z==4 then return LIGHTGREEN end\n\tif y==-3 and x*x==25 and z==0 then return BLUE end\n\tif y==-4 and x*x==16 and z*z==1 then return BLUE end\n\t\n\t-- rest of Upipe\n\tif dUpipe==smallR then return LIGHTGREEN end\n\tif dUpipe\u003csmallR then return BLUE end\nend\nif y\u003e-3 then\n\tlocal p2 = round(sqrt((x-4)^2+z*z))\n\tlocal p1 = round(sqrt((x+4)^2+z*z))\n\tif y\u003c=2 then\n\t\tif p1\u003c2 or p2\u003c2 then return BLUE end\n\t\tif p1==2 or p2==2 then return LIGHTGREEN end\n\telseif p1==3 or p2==3 then\n\t\treturn y\u003c=5 and LIGHTGREEN\n\telseif p1\u003c3 or p2\u003c3 then\n\t\treturn y\u003c=4 and BLUE\n\tend\nend"
       },
-      "completed": false,
+      "completed": true,
       "fps": 12,
       "frames": 1,
       "id": "u-pipe.txt",
       "size": 8,
       "source": 100,
       "variant_order": [
+        "first_attempt_at_torus",
         "code"
       ]
     },
@@ -2866,7 +2904,7 @@
         "faster": "--200\n--11.602\n-- exclude empty space\nif x|z\u003e0 or y^2\u003e=16 then return end\n\n-- exclude inner hollow of spirals\nlocal mx = max(x*x,z*z)\nif y==-3 and mx \u003e= 4 then return YELLOW -- hardcode bottom to avoid spiral math\nelseif y==-2 and (mx==9 or mx==16 or mx == 25 or mx==36 or mx == 49) then return\nelseif y==-1 and (mx==9 or mx == 49) then return\nelseif y==0 and (mx==9 or mx == 25 or mx == 49) then return\nelseif y==1 and (mx==9 or mx==16 or mx == 25 or mx == 49) then return\nelseif y==2 and (mx == 49) then return\nelseif y ==3 and (mx \u003c= 49) then return\nelseif y ==3 and (mx == 64) then return YELLOW end -- hardcode top to avoid spiral math\n\n-- Removing the function and doing everything \"inline\"\n-- Threshold check (0 or less is \"inside\" the shape)\nif max(abs(max(abs(x) - 5, abs(z) - 5)) - 3, abs(y) - 4) \u003c= 0 then\n\treturn YELLOW -- Solid Voxel\nend\n\n--\n--function fastSquareTorus(x, y, z, innerR, thickness, height)\n--    local d2d = abs(max(abs(x) - innerR, abs(y) - innerR)) - thickness\n--    return max(d2d, abs(z) - height)\n--end\n--\n--local innerRadius = 5\n--local thickness = 3\n--local height = 4\n--\n---- Threshold check (0 or less is \"inside\" the shape)\n--if fastSquareTorus(x, z, y, innerRadius, thickness, height) \u003c= 0 then\n--\treturn YELLOW -- Solid Voxel\n--else\n--\treturn -- Empty Voxel\n--end\n",
         "faster_still": "--163\n--9.020\n-- Exclude empty space\nif x|z\u003e0 or y*y\u003e=16 then return end\n-- poormans max() function\nlocal X,Z=x*x,z*z\nlocal mx = X\u003eZ and X or Z \n-- Exclude timbit hole\nif mx \u003c= 3 then return end\n-- Exclude the different inner hollows, per each layer\n-- note: the more we exclude the faster we go\nif y==3 and (mx\u003c=49) then return\nelseif y==-2 and (mx==9 or mx==16 or mx==25 or mx==36 or mx==49) then return\nelseif y== 1 and (mx==9 or mx==16 or mx==25 or mx==49) then return\nelseif y== 0 and (mx==9 or mx==25 or mx==49) then return\nelseif y==-1 and (mx==9 or mx==49) then return\nelseif y== 2 and (mx==49) then return\nend\n-- .: !!??voxel cronuts mustn't be real??!!\n-- .:   we are one with the squar'd croissanted toroid\n-- .:   bless'ed are the cheesemakers!!!\n-- .:   we must be be as crispy as a croissant!!!\nreturn YELLOW -- wait, what? no chocolate?\n",
         "faster_yet": "--164\n--8.338\n-- Exclude empty space\n-- note: order matters, the more we exclude the faster we go\nif y*y\u003e=16 then return\nelseif x|z\u003e0 then return end\n-- poormans max() function, for fun\nlocal X,Z=x*x,z*z\nlocal mx = X\u003eZ and X or Z \n-- Exclude the different inner hollows, per each layer\n-- note: order matters, the more we exclude the faster we go\nif y==3 and (mx\u003c=49) then return\nelseif y==-2 and (mx==9 or mx==16 or mx==25 or mx==36 or mx==49) then return\nelseif y== 1 and (mx==9 or mx==16 or mx==25 or mx==49) then return\nelseif y== 0 and (mx==9 or mx==25 or mx==49) then return\nelseif y==-1 and (mx==9 or mx==49) then return\nelseif mx \u003c= 3 then return -- Exclude timbit hole\nelseif y== 2 and (mx==49) then return\nend\n-- .: !!??voxel cronuts mustn't be real??!!\n-- .:   we are one with the squar'd croissanted toroid\n-- .:   bless'ed are the cheesemakers!!!\n-- .:   we must be be as crispy as a croissant!!!\nreturn YELLOW -- wait, what? no chocolate?\n",
-        "fastest": "--154\n--8.044\n-- Exclude empty space\n-- note: order matters, the more we exclude the faster we go\nif y\u003e3 or y\u003c-3 then return\nelseif x|z\u003e0 then return end\n-- poormans mx = max(x*x,z*z), for fun\nlocal mx = max(x*x,z*z) \n-- Exclude the different inner hollows, per each layer\n-- note: order matters, the more we exclude the faster we go\nif y==3 and mx\u003c=49 then return\nelseif y==-2 and (mx==9 or mx==16 or mx==25 or mx==36 or mx==49) then return\nelseif y== 1 and (mx==9 or mx==16 or mx==25 or mx==49) then return\nelseif y== 0 and (mx==9 or mx==25 or mx==49) then return\nelseif y==-1 and (mx==9 or mx==49) then return\nelseif mx\u003c=3 then return -- Exclude timbit hole\nelseif y== 2 and mx==49 then return\nend\n-- .: !!??voxel cronuts mustn't be real??!!\n-- .:   we are one with the squar'd croissanted toroid\n-- .:   bless'ed are the cheesemakers!!!\n-- .:   we must be as crispy as a croissant!!!\nreturn YELLOW -- wait, what? no chocolate?\n",
+        "fastest": "--154\n--8.044\n-- Exclude empty space\n-- note: order matters, the more we exclude the faster we go\nif y\u003e3 or y\u003c-3 then return\nelseif x|z\u003e0 then return end\nlocal mx = max(x*x,z*z)\n-- Exclude the different inner hollows, per each layer\n-- note: order matters, the more we exclude the faster we go\nif y==3 and mx\u003c=49 then return\nelseif y==-2 and (mx==9 or mx==16 or mx==25 or mx==36 or mx==49) then return\nelseif y== 1 and (mx==9 or mx==16 or mx==25 or mx==49) then return\nelseif y== 0 and (mx==9 or mx==25 or mx==49) then return\nelseif y==-1 and (mx==9 or mx==49) then return\nelseif mx\u003c=3 then return -- Exclude timbit hole\nelseif y== 2 and mx==49 then return\nend\n-- .: !!??voxel cronuts mustn't be real??!!\n-- .:   we are one with the squar'd croissanted toroid\n-- .:   bless'ed are the cheesemakers!!!\n-- .:   we must be as crispy as a croissant!!!\nreturn YELLOW -- wait, what? no chocolate?\n",
         "research1": "-- If it existed in reality,\n-- it would be crispy as a croissant!\n\nfunction spiralNr(xx, yy)\n  local X = xx^2\n  local Y = yy^2\n  local m = max(X, Y)\n   \n\tlocal se = (yy \u003c xx) and 1 or 0\n  local sw = (yy \u003c= -xx) and 1 or 0\n    \n  local common = -2 * se + 4 * se * sw\n\t\n  return 4 * m + (common - 1) * xx - (common + 1) * yy\nend\n\nreturn spiralNr(y,z)\n\n--if x|z\u003e0 or y^2\u003e=16 then return end\n--\n--local A=0\n--local B=1\n--\n--if x\u003c0 then\n--\tif sqrt(y^2+z^2) == A + B * atan(z,y) then\n--\t\treturn YELLOW \n--\tend\n--end\n--\n--if x % 2 == 0 and y \u003e= x and z \u003e= x then return 7 \n--elseif z % 2 == 0 and \n--elseif y % 2 == 1 and x \u003e y and z \u003e= y then return 9 end",
         "research2": "-- empty space\n-- if x|z\u003e0 or y^2\u003e=16 then return end\n\nlocal abs_x, abs_y = abs(x-5), abs(y)\nlocal ring_radius = max(abs_x, abs_y)\n\nif z==-x then return RED end\nif z==x then return ORANGE end\n   \nif z\u003c0 and z\u003e-8 then\n\tif ring_radius == 1 then return BLUE end\n\tif ring_radius == 2 then return GREEN end\n\tif ring_radius == 3 then return YELLOW end\nend\n",
         "research3": "-- exclude empty space\nif x|z\u003e0 or y^2\u003e=16 then return end\n\nlocal mx = max(x*x,z*z)\nif y==-2 and (mx==9 or mx==16 or mx == 25 or mx==36 or mx == 49) then return end\nif y==-1 and (mx==9 or mx == 49) then return end\nif y==0 and (mx==9 or mx == 25 or mx == 49) then return end\nif y==1 and (mx==9 or mx==16 or mx == 25 or mx == 49) then return end\nif y==2 and (mx == 49) then return end\nif y ==3 and (mx \u003c= 49) then return end\n\nfunction fastSquareTorus(x, y, z, innerR, thickness, height)\n    local d2d = abs(max(abs(x) - innerR, abs(y) - innerR)) - thickness\n    return max(d2d, abs(z) - height)\nend\n\nlocal innerRadius = 5\nlocal thickness = 3\nlocal height = 4\n\n-- Threshold check (0 or less is \"inside\" the shape)\nif fastSquareTorus(x, z, y, innerRadius, thickness, height) \u003c= 0 then\n\treturn YELLOW -- Solid Voxel\nelse\n\treturn -- Empty Voxel\nend\n\n"
@@ -3273,6 +3311,553 @@
       "source": 400,
       "variant_order": [
         "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 19.3961,
+      "code_size": 110,
+      "code_variants": {
+        "code": "local a = -(x-4)//8 -(y-5)//8 -(z-5)//8\n--if a\u003c3 then return end\nlocal b = -x//8 -(y-1)//8 -(z-1)//8\n--if b\u003c1 then return end \nlocal c = -x//4 -(y-1)//4 -(z-1)//4\nif c\u003c3 then return end \nlocal d = -x//2 -(y-1)//2 -(z-1)//2\n--if d\u003c4 then return end\nlocal e = -x//1 -(y-1)//1 -(z-1)//1\n--if e\u003c6 then return end\n\nreturn\na \u003e= 4 and DARKBLUE or\nb==3 and c==4 and BLUE or\nc==3 and d==7 and GREY or\nd==6 and e ==13 and WHITE\n",
+        "faster": "-- Removed the function call\n-- Did some checks to try bail early on empty space\nif x-1\u003e=-z then return end\nif y-1\u003e=-z then return end\nif x-1\u003e=-y then return end\n\nlocal a = -(x-4)//8 -(y-5)//8 -(z-5)//8\n--if a\u003c3 then return end\nlocal b = -x//8 -(y-1)//8 -(z-1)//8\n--if b\u003c1 then return end \nlocal c = -x//4 -(y-1)//4 -(z-1)//4\nif c\u003c3 then return end \nlocal d = -x//2 -(y-1)//2 -(z-1)//2\n--if d\u003c4 then return end\nlocal e = -x//1 -(y-1)//1 -(z-1)//1\n--if e\u003c6 then return end\n\nreturn\na \u003e= 4 and DARKBLUE or\nb==3 and c==4 and BLUE or\nc==3 and d==7 and GREY or\nd==6 and e ==13 and WHITE\n\n--[[\n-- my original solution\nfunction f(scale, offset, offset2)\n\treturn -(x-offset2)//scale -(y-offset)//scale -(z-offset)//scale\nend\na = f(8,5,4)\nb = f(8,1,0)\nc = f(4,1,0)\nd = f(2,1,0)\ne = f(1,1,0)\nreturn \na \u003e= 4 and 12 or\nb==3 and c==4 and 13 or\nc==3 and d==7 and 2 or\nd==6 and e == 13\n]]--",
+        "first_pass": "function f(scale, offset, offset2)\n\treturn -(x-offset2)//scale -(y-offset)//scale -(z-offset)//scale\nend\na = f(8,5,4)\nb = f(8,1,0)\nc = f(4,1,0)\nd = f(2,1,0)\ne = f(1,1,0)\nreturn \na \u003e= 4 and 12 or\nb==3 and c==4 and 13 or\nc==3 and d==7 and 2 or\nd==6 and e == 13\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "stairs-fractal.weekly",
+      "size": 11,
+      "source": 400,
+      "variant_order": [
+        "first_pass",
+        "faster",
+        "code"
+      ]
+    },
+    {
+      "active_variant": "thanks_anch",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 8.87517,
+      "code_size": 42,
+      "code_variants": {
+        "thanks_anch": "-- make sure to peek inside to see\n-- the priority for what color to\n-- pick where things overlap.\n\n--return ((x-1)//2+(y-1)//2+(z-1)//2) \u003c 1 and BLUE\n\nif abs(x-y)\u003c=1 and abs(z-y)\u003c=1 and abs(x-z)\u003c=1 then \n\treturn clamp(min(x,y,z)+6,2,9)\nend\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "angle-stack.txt",
+      "size": 4,
+      "source": 100,
+      "variant_order": [
+        "thanks_anch"
+      ]
+    },
+    {
+      "active_variant": "first_pass",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 28.7085,
+      "code_size": 87,
+      "code_variants": {
+        "first_pass": "-- good luck!\nlocal X,Y,Z=abs(x),abs(y),abs(z)\nlocal maxXY,maxXZ,maxYZ=max(X,Y),max(X,Z),max(Y,Z)\nreturn\nmaxXY==1 and maxXZ==1 and maxYZ==1 and BLACK or \nmaxXY==2 and maxXZ==2 and maxYZ==2 and GREY or \nmaxXY==3 and maxXZ==3 and maxYZ==3 and WHITE \n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "nested_frames.txt",
+      "size": 3,
+      "source": 100,
+      "variant_order": [
+        "first_pass"
+      ]
+    },
+    {
+      "active_variant": "beauty",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 7.2828,
+      "code_size": 100,
+      "code_variants": {
+        "beauty": "local X,Z=x*x,z*z\nlocal XZ=X+Z\nif XZ\u003e2 or XZ==0 then return end -- empty space\nlocal Y=y*y\nif Y==9 and XZ\u003c=2 then return WHITE end\nif Z==1 and x*sign(z)-1==y then return 7+7*btoi(z\u003c0) end\nif X==1 and z*sign(x)-1==-y then return 7+7*btoi(x\u003c0) end\n",
+        "faster": "--103\n--7.283\nif x\u003c-1 or x\u003e1 or z\u003c-1 or z\u003e1 or (x==0 and z==0) then return end -- empty space\nif y==3 or y==-3 then return WHITE end\nif (z==1 or z==-1) and x*sign(z)-1==y then return 7+7*btoi(z\u003c0) end\nif (x==1 or x==-1) and z*sign(x)-1==-y then return 7+7*btoi(x\u003c0) end\n",
+        "first_pass": "--107\n--9.187\nlocal X,Z=x*x,z*z\nlocal XZ=X+Z\nif XZ\u003e2 or XZ==0 then return end -- empty space\nlocal Y=y*y\nif Y==9 and XZ\u003c=2 then return WHITE end\nif Z==1 and x*sign(z)-1==y then return 7+7*btoi(z\u003c0) end\nif X==1 and z*sign(x)-1==-y then return 7+7*btoi(x\u003c0) end\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "mini_dna.txt",
+      "size": 3,
+      "source": 100,
+      "variant_order": [
+        "first_pass",
+        "faster",
+        "beauty"
+      ]
+    },
+    {
+      "active_variant": "faster2",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 8.52066,
+      "code_size": 53,
+      "code_variants": {
+        "faster": "-- remember max() is useful for\n-- making frames / box shapes\n\nif z*z\u003e4 then return end\n\nif y\u003e=0 then\n\tlocal a = max(abs(x),y)\n\treturn a%2==1 and z+8\nelse\n\tlocal b = max(abs(x-1),-y)\n\treturn b%2==0 and z+8\nend\n",
+        "faster2": "-- 53\n-- 8.521\nif z\u003e2 or z\u003c-2 then return end\nif y\u003e=0 then\n\treturn max(abs(x),y)%2==1 and z+8\nelse\n\treturn max(abs(x-1),-y)%2==0 and z+8\nend\n",
+        "first_pass": "-- remember max() is useful for\n-- making frames / box shapes\n\nif z*z\u003e4 then return end\n\nif y\u003e=0 then\n\tlocal a = max(abs(x),y)\n\treturn (a==1 or a==3 or a==5) and z+8\nelse\n\tlocal b = max(abs(x-1),-y)\n\treturn b%2==0 and z+8\nend\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "spiral.txt",
+      "size": 5,
+      "source": 100,
+      "variant_order": [
+        "first_pass",
+        "faster",
+        "faster2"
+      ]
+    },
+    {
+      "active_variant": "first_pass",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 10.9913,
+      "code_size": 59,
+      "code_variants": {
+        "first_pass": "-- good luck!\nlocal X,Y,Z=x*x,y*y,z*z\nreturn\nX==4 and Y==4 and Z==4 and LIGHTGREEN or\n(X==4 and Y==4 or X==4 and Z==4 or Y==4 and Z==4) and DARKBLUE"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "framework.txt",
+      "size": 3,
+      "source": 100,
+      "variant_order": [
+        "first_pass"
+      ]
+    },
+    {
+      "active_variant": "faster",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 5.016,
+      "code_size": 50,
+      "code_variants": {
+        "fast": "--54\n--5.024\nif z\u003e0 or z==-2 or x==-2 or x==2 then return end\nif x==0 and z==0 and y\u003c=1 and y\u003e=-1 then\n return t-1==y and 10-t^1.5 or GREY\nend\nreturn BLACK\n",
+        "faster": "--57\n--5.016\nif z\u003e0 or z\u003c-1 or x\u003c-1 or x\u003e1 then return end\nif x==0 and z==0 and y\u003c=1 and y\u003e=-1 then\n  if t-1==y then \n\t\treturn 10-t^1.5\n\telse \n\t\treturn GREY\n\tend\nend\nreturn BLACK\n",
+        "small": "--51\n--6.512\nif (z+.5)^2\u003e=2 or x*x\u003e=2 then return end\nif x==0 and z==0 and y*y\u003c=1 then\n  return t==y+1 and 10-t^1.5 or GREY\nend\nreturn BLACK\n",
+        "small2": "--50\n--6.512\nif (z+.5)^2\u003c2 and x*x\u003c2 then\n\tif x==0 and z==0 and y*y\u003c=1 then\n  \treturn t==y+1 and 10-t^1.5 or GREY\n\tend\n\treturn BLACK\nend\n"
+      },
+      "completed": true,
+      "fps": 1,
+      "frames": 3,
+      "id": "traffic_light.txt",
+      "size": 2,
+      "source": 100,
+      "variant_order": [
+        "small",
+        "small2",
+        "fast",
+        "faster"
+      ]
+    },
+    {
+      "active_variant": "sdf",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "sdf": "-- p_x, p_y, p_z: current voxel coordinates\n-- b_x, b_y, b_z: box half-extents (distance from center to face)\nfunction sdBox(p_x, p_y, p_z, b_x, b_y, b_z)\n    -- Calculate q (absolute distance from center minus half-extents)\n    local q_x = abs(p_x) - b_x\n    local q_y = abs(p_y) - b_y\n    local q_z = abs(p_z) - b_z\n\n    -- External distance: distance to box if point is outside\n    -- Max(q, 0) components\n    local mq_x = max(q_x, 0.0)\n    local mq_y = max(q_y, 0.0)\n    local mq_z = max(q_z, 0.0)\n    local externalDist = sqrt(mq_x*mq_x + mq_y*mq_y + mq_z*mq_z)\n\n    -- Internal distance: distance to nearest face if point is inside\n    local internalDist = min(max(q_x, max(q_y, q_z)), 0.0)\n\n    return externalDist + internalDist\nend\n\nreturn sdBox(x,y+2,z,4,3,3)==0 and GREY\n"
+      },
+      "completed": false,
+      "fps": 1,
+      "frames": 5,
+      "id": "toaster.txt",
+      "size": 5,
+      "source": 100,
+      "variant_order": [
+        "sdf"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- good luck!\nreturn 1"
+      },
+      "completed": false,
+      "fps": 10,
+      "frames": 8,
+      "id": "treadmill.txt",
+      "size": 4,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- good luck!\nreturn 1"
+      },
+      "completed": false,
+      "fps": 6,
+      "frames": 4,
+      "id": "waterfall.txt",
+      "size": 4,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- good luck!\nreturn 1"
+      },
+      "completed": false,
+      "fps": 2,
+      "frames": 11,
+      "id": "seven_seg.txt",
+      "size": 4,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- good luck!\nreturn 1"
+      },
+      "completed": false,
+      "fps": 3,
+      "frames": 16,
+      "id": "ferris-wheel.txt",
+      "size": 9,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- good luck!\nreturn 1"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 20,
+      "id": "roadtrip.txt",
+      "size": 5,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "faster3",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 8.7686,
+      "code_size": 107,
+      "code_variants": {
+        "faster": "--130\n--23.231\nif y==-extent then return 15 end\nif y==-extent+1 then return 11 end\nif x*x\u003e=16 then return end\nif y==-3 or inrange(y,3,extent) then\n\tlocal X,xx=x*x,y==-3 and 3 or 6-y%6\n\tif X\u003c=xx*xx then return WHITE end\nend\n\nif y\u003c3 and (x~=0 or not inrange(z,-3,3)) then\n\tlocal xx = btoi(x%2==0) * x\n\tlocal zz = btoi(z%2==0) * z\n\tif x==xx and z==zz then return WHITE end\nend\n",
+        "faster2": "--114\n--12.579\nif y\u003c-extent+2 then\n\tif y==-extent then return BROWN end\n\tif y==-extent+1 then return GREEN end\nelse\n\tif x\u003e=4 or x\u003c=-4 then return end\n\tif y==-3 then return WHITE end\n\tif y\u003e=3 and y\u003c=extent then\n\t\tlocal ex=7-y%6\n\t\tif x\u003cex and x\u003e-ex then return WHITE end\n\tend\n\tif y\u003c=2 and not (x==0 and z\u003e-3 and z\u003c3) and x%2==0 and z%2==0 then \n\t\treturn WHITE\n\tend\nend\n",
+        "faster3": "--107\n--8.769\nif y\u003c-3 then\n\tif y==-5 then return BROWN end\n\tif y==-4 then return GREEN end\nelse\n\tif x\u003e=4 or x\u003c=-4 then return end\n\tif y==-3 then return WHITE end\n\tif y\u003e=3 and y\u003c=5 then\n\t\tlocal ex=7-y%6\n\t\tif x\u003cex and x\u003e-ex then return WHITE end\n\tend\n\tif y\u003c=2 and not (x==0 and z\u003e-3 and z\u003c3) and x%2==0 and z%2==0 then \n\t\treturn WHITE\n\tend\nend\n",
+        "sdf": "-- homage to this famous video\n-- https://www.youtube.com/watch?v=-pdSjBPH3zM\n--\n-- see also:https://iquilezles.org/articles/distfunctions2d/\n--\n-- Box - exact\n-- https://www.youtube.com/watch?v=62-pRVZuS5c\n--\n--float sdBox( in vec2 p, in vec2 b )\n--{\n--    vec2 d = abs(p)-b;\n--    return length(max(d,0.0)) + min(max(d.x,d.y),0.0);\n--}\n--  p: Table {x, y, z} (Current sampling point)\n--  b: Table {x, y, z} (Half-dimensions of the box)\n--\n--\n-- Segment - exact\n-- https://www.shadertoy.com/view/3tdSDj\n-- https://www.youtube.com/watch?v=PMltMdi1Wzg\n--\n--float sdSegment( in vec2 p, in vec2 a, in vec2 b )\n--{\n--    vec2 pa = p-a, ba = b-a;\n--    float h = clamp( dot(pa,ba)/dot(ba,ba), 0.0, 1.0 );\n--    return length( pa - ba*h );\n--}\nif y==-extent then return 15 end\nif y==-extent+1 then return 11 end\nif x*x\u003e=16 then return end\n--\n-- Converting the above glsl to lua:\n--\n\nlocal function inigo_sdBox(px, py, bx, by)\n    local dx, dy = abs(px) - bx, abs(py) - by\n    local ex = sqrt(max(dx, 0)^2 + max(dy, 0)^2)\n    local i = min(max(dx, dy), 0)\n    \n    return ex + i\nend\nlocal function inigo_sdSegment(px, py, pz, ax, ay, az, bx, by, bz)\n    local pax, pay, paz = px - ax, py - ay, pz - az\n    local bax, bay, baz = bx - ax, by - ay, bz - az\n\n    local h = (pax*bax + pay*bay + paz*baz) / (bax*bax + bay*bay + baz*baz)\n    h = max(0.0, min(1.0, h))\n    \n    local dx, dy, dz = pax - bax*h, pay - bay*h, paz - baz*h\n    return sqrt(dx*dx + dy*dy + dz*dz)\nend\n\nif y==-3 or inrange(y,3,extent) then\n\tlocal xx = y==-3 and 3 or 6-y%6\n\t-- local zz=extent\n\treturn inigo_sdBox(x,z,xx,extent) \u003c= 0\nend\n\nif x~=0 or not inrange(z,-3,3) then\n\tlocal xx = x%2==0 and x or 0\n\tlocal zz = z%2==0 and z or 0\n\treturn inigo_sdSegment(x,y,z,xx,-2,zz,xx,2,zz) \u003c= 0\nend\n",
+        "sdf2": "-- homage to this famous video\n-- https://www.youtube.com/watch?v=-pdSjBPH3zM\n--\n-- see also:https://iquilezles.org/articles/distfunctions2d/\n--\n-- Box - exact\n-- https://www.youtube.com/watch?v=62-pRVZuS5c\n--\n--float sdBox( in vec2 p, in vec2 b )\n--{\n--    vec2 d = abs(p)-b;\n--    return length(max(d,0.0)) + min(max(d.x,d.y),0.0);\n--}\n--  p: Table {x, y, z} (Current sampling point)\n--  b: Table {x, y, z} (Half-dimensions of the box)\n--\n--\n-- Segment - exact\n-- https://www.shadertoy.com/view/3tdSDj\n-- https://www.youtube.com/watch?v=PMltMdi1Wzg\n--\n--float sdSegment( in vec2 p, in vec2 a, in vec2 b )\n--{\n--    vec2 pa = p-a, ba = b-a;\n--    float h = clamp( dot(pa,ba)/dot(ba,ba), 0.0, 1.0 );\n--    return length( pa - ba*h );\n--}\nif y==-extent then return 15 end\nif y==-extent+1 then return 11 end\nif x*x\u003e=16 then return end\n--\n-- Converting the above glsl to lua:\n--\nlocal function inigo_sdBox(px, py, bx, by)\n    local dx, dy = abs(px) - bx, abs(py) - by\n    local ex = sqrt(max(dx, 0)^2 + max(dy, 0)^2)\n    local i = min(max(dx, dy), 0)\n    \n    return ex + i\nend\nlocal function inigo_sdSegment(px, py, pz, ax, ay, az, bx, by, bz)\n    local pax, pay, paz = px - ax, py - ay, pz - az\n    local bax, bay, baz = bx - ax, by - ay, bz - az\n\n    local h = (pax*bax + pay*bay + paz*baz) / (bax*bax + bay*bay + baz*baz)\n    h = max(0.0, min(1.0, h))\n    \n    local dx, dy, dz = pax - bax*h, pay - bay*h, paz - baz*h\n    return sqrt(dx*dx + dy*dy + dz*dz)\nend\n\nif y==-3 or inrange(y,3,extent) then\n\tlocal xx = y==-3 and 3 or 6-y%6\n\t-- local zz=extent\n\treturn inigo_sdBox(x,z,xx,extent) \u003c= 0\nend\n\nif x~=0 or not inrange(z,-3,3) then\n\tlocal xx = btoi(x%2==0) * x\n\tlocal zz = btoi(z%2==0) * z\n\treturn inigo_sdSegment(x,y,z,xx,-2,zz,xx,2,zz) \u003c= 0\nend\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "roman_temple.txt",
+      "size": 5,
+      "source": 100,
+      "variant_order": [
+        "sdf",
+        "sdf2",
+        "faster",
+        "faster2",
+        "faster3"
+      ]
+    },
+    {
+      "active_variant": "faster1",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 5.46502,
+      "code_size": 126,
+      "code_variants": {
+        "faster1": "--126\n--5.465\n-- empty space\nif z\u003e1 or z\u003c-1 then return end\nif y\u003c=2 then\n-- trophys\nif x\u003c-1 and y\u003e=-1 then \n\tif y==-1 then return WHITE end --ledge\n\tif x==-3 and z==0 and y\u003c2  then return GREY end -- silver\n\treturn -- empty space above ledge, around trophy\nelseif x\u003e1 and y\u003e=-2 then\n\tif y==-2 then return WHITE end --ledge\n\tif x==3 and z==0 and y\u003c1  then return ORANGE end -- bronze\n\treturn -- empty space above ledge, around trophy\nelseif x\u003c=1 and x\u003e=-1 and y\u003e=0 then\n\tif y==0 then return WHITE end --ledge \n\tif x==0 and z==0 and y\u003c3 then return YELLOW end -- gold\n\treturn -- empty space above ledge, around trophy\nend\n-- everything else\nreturn BROWN\nend",
+        "first_pass": "-- empty space\nif z\u003e1 or z\u003c-1 then return end\nif y\u003e2 then return end\n\n-- figure out whice place, we are\nlocal pl = 1\nif x\u003e1 then pl=3 elseif x\u003c-1 then pl=2 end\n\n-- trophys\nif pl==1 and y\u003e=0 then\n\tif y==0 then return 1 end --ledges\n\tif x==0 and z==0 and y\u003c3 then return YELLOW end -- gold\n\treturn -- empty space above ledge, around trophy\nend\nif pl==2 and y\u003e=-1 then \n\tif y==-1 then return 1 end --ledges\n\tif x==-3 and z==0 and y\u003c2  then return GREY end -- silver\n\treturn -- empty space above ledge, around trophy\nend\nif pl==3 and y\u003e=-2 then\n\tif y==-2 then return 1 end --ledges\n\tif x==3 and z==0 and y\u003c1  then return ORANGE end -- bronze\n\treturn -- empty space above ledge, around trophy\nend\n\n-- everything else\nreturn BROWN"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "podium.weekly",
+      "size": 4,
+      "source": 400,
+      "variant_order": [
+        "first_pass",
+        "faster1"
+      ]
+    },
+    {
+      "active_variant": "first_pass",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 32.214,
+      "code_size": 52,
+      "code_variants": {
+        "first_pass": "box1 = max(abs(x-2),abs(y-2),abs(z-2))\nbox2 = max(abs(x+2),abs(y+2),abs(z+2))\nreturn min(box1,box2) == 4 and WHITE\n",
+        "with_sdf": "--float opUnion( float a, float b )\n--{ return min(a,b); }\n--float opSubtraction( float a, float b )\n--{ return max(-a,b); }\n--float opIntersection( float a, float b )\n--{ return max(a,b); }\n--float opXor( float a, float b )\n--{ return max(min(a,b),-max(a,b)); }\n\n-- p_x, p_y, p_z: current voxel coordinates\n-- b_x, b_y, b_z: box half-extents (distance from center to face)\nfunction sdBox(p_x, p_y, p_z, b_x, b_y, b_z)\n    -- Calculate q (absolute distance from center minus half-extents)\n    local q_x = abs(p_x) - b_x\n    local q_y = abs(p_y) - b_y\n    local q_z = abs(p_z) - b_z\n\n    -- External distance: distance to box if point is outside\n    -- Max(q, 0) components\n    local mq_x = max(q_x, 0.0)\n    local mq_y = max(q_y, 0.0)\n    local mq_z = max(q_z, 0.0)\n    local externalDist = sqrt(mq_x*mq_x + mq_y*mq_y + mq_z*mq_z)\n\n    -- Internal distance: distance to nearest face if point is inside\n    local internalDist = min(max(q_x, max(q_y, q_z)), 0.0)\n\n    return externalDist + internalDist\nend\nbox1 = sdBox(x-2,y-2,z-2,4,4,4)\nbox2 = sdBox(x+2,y+2,z+2,4,4,4)\nreturn min(box1,box2) == 0 and WHITE\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "corner-intersect.txt",
+      "size": 4,
+      "source": 100,
+      "variant_order": [
+        "with_sdf",
+        "first_pass"
+      ]
+    },
+    {
+      "active_variant": "faster2",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 19.147,
+      "code_size": 70,
+      "code_variants": {
+        "faster1": "--73\n--23.883\nlocal d = abs(x)+abs(y)+abs(z)\nlocal v = abs(x)==abs(y) and abs(y)==abs(z)\nif d\u003c=6 then\n\tif d==6 and (y==0 or x==0 or z==0) then return BLACK end\n\tif d%3==0 and v then return YELLOW end\n\treturn PURPLE\nend\n",
+        "faster2": "--72\n--19.147\nlocal d = abs(x)+abs(y)+abs(z)\nlocal v = (x==y or -x==y) and (y==z or -y==z)\nif d\u003c=6 then\n\tif d==6 and x*y*z==0 then return BLACK end\n\tif d%3==0 and v then return YELLOW end\n\treturn PURPLE\nend\n",
+        "smaller": "--70\n--19.147\nd = abs(x)+abs(y)+abs(z)\nv = (x==y or -x==y) and (y==z or -y==z)\nif d\u003c=6 then\n\tif d==6 and y*x*z==0 then return BLACK end\n\tif d%3==0 and v then return YELLOW end\n\treturn PURPLE\nend\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "octo-gem.txt",
+      "size": 6,
+      "source": 100,
+      "variant_order": [
+        "faster1",
+        "faster2",
+        "smaller"
+      ]
+    },
+    {
+      "active_variant": "faster",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 13.5248,
+      "code_size": 134,
+      "code_variants": {
+        "faster": "--152\n--13.525\n-- good luck!\nlocal X,Y,Z=x*x,y*y,z*z\n-- outer box\nif X==9 and Z==9 then \n\tif Y==9 then return GREY else return WHITE end\nelseif X==9 and Y==9 then \n\tif Z==9 then return GREY else return WHITE end\nelseif Y==9 and Z==9 then\n\tif X==9 then return GREY else return WHITE end\nend\n-- inner thingy\nif X\u003c=4 and y==0 and z==0 then\n\tif x==0 then return BLUE else return RED end\nelseif Y\u003c=4 and x==0 and z==0 then\n\tif y==0 then return BLUE else return LIGHTGREEN end\nelseif Z\u003c=4 and x==0 and y==0 then\n\tif z==0 then return BLUE else return LIGHTBLUE end\nend\n",
+        "first_pass": "-- good luck!\nlocal X,Y,Z=x*x,y*y,z*z\nif x==0 and y==0 and z==0 then return BLUE end\nif X\u003c=4 and y==0 and z==0 then return RED end\nif Y\u003c=4 and x==0 and z==0 then return LIGHTGREEN end\nif Z\u003c=4 and x==0 and y==0 then return LIGHTBLUE end\nif X==9 and Z==9 and Y==9 then return GREY end\nif X==9 and Z==9 then return WHITE end\nif X==9 and Y==9 then return WHITE end\nif Y==9 and Z==9 then return WHITE end\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "axis_frame.txt",
+      "size": 3,
+      "source": 100,
+      "variant_order": [
+        "first_pass",
+        "faster"
+      ]
+    },
+    {
+      "active_variant": "faster2",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 8.83171,
+      "code_size": 59,
+      "code_variants": {
+        "faster1": "--67\n--9.956\nlocal X,Y,Z=x%4,y%4,z%4\nif X==0 and Y==0 and Z==0 then return WHITE\nelseif X==0 and Z==0 then return LIGHTGREEN\nelseif X==0 and Y==0 then return LIGHTBLUE\nelseif Y==0 and Z==0 then return RED end\n",
+        "faster2": "--79\n--8.832\nlocal X,Y,Z=x%4,y%4,z%4\nif X==0 and Z==0 then\n\tif Y==0 then return WHITE else return LIGHTGREEN end\nelseif X==0 and Y==0 then \n\tif Z==0 then return WHITE else return LIGHTBLUE end\nelseif Y==0 and Z==0 then \n\tif X==0 then return WHITE else return RED end\nend\n",
+        "first_pass": "--67\n--9.956\nlocal X=x%4\nlocal Y=y%4\nlocal Z=z%4\nif\nX==0 and\nY==0 and\nZ==0 then return WHITE\nelseif\nX==0 and\nZ==0 then return LIGHTGREEN\nelseif\nX==0 and\nY==0 then return LIGHTBLUE\nelseif\nY==0 and\nZ==0 then return RED end\n",
+        "smaller": "--59\n--18.729 \nX=x%4\nY=y%4\nZ=z%4\nreturn \nX==0 and Y==0 and Z==0 and 1 or\nX==0 and Z==0 and 10 or\nX==0 and Y==0 and 14 or\nY==0 and Z==0 and 7\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "xyz-lattice.txt",
+      "size": 5,
+      "source": 100,
+      "variant_order": [
+        "first_pass",
+        "smaller",
+        "faster1",
+        "faster2"
+      ]
+    },
+    {
+      "active_variant": "faster1",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 29.0014,
+      "code_size": 68,
+      "code_variants": {
+        "faster1": "--74\n--29.001\nlocal X,Y,Z=abs(x),abs(y),abs(z)\nreturn\nmin(-Y,-Z)+x \u003e=1 and RED or\nmin(-X,-Z)+y \u003e=1 and YELLOW or\nmin(-X,-Y)+z \u003e=1 and GREEN or\nx==0 and y==0 and z==0 and BLACK\n",
+        "first_pass": "--68\n--36.273\n-- good luck!\nreturn\nx==0 and y==0 and z==0 and BLACK or\nmin(-abs(y),-abs(z))+x \u003e=1 and RED or\nmin(-abs(x),-abs(z))+y \u003e=1 and YELLOW or\nmin(-abs(x),-abs(y))+z \u003e=1 and GREEN"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "tri-pyramid.txt",
+      "size": 4,
+      "source": 100,
+      "variant_order": [
+        "first_pass",
+        "faster1"
+      ]
+    },
+    {
+      "active_variant": "faster_b",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 34.8903,
+      "code_size": 121,
+      "code_variants": {
+        "faster_a": "--120\n--39.059\nlocal s1,s2,s3 = 0,0,0\nif y\u003e=0 then\n\ts1 = max(abs(x),y)%2\nelse\n\ts1 = 1-max(abs(x-1),-y)%2\nend\nif z\u003e=0 then\n\ts2 = max(abs(y),z)%2\n\ts3 = max(abs(x),z)%2\nelse\n\ts2 = 1-max(abs(y-1),-z)%2\n\ts3 = 1-max(abs(x-1),-z)%2\nend\nreturn min(s1, s2, s3)==1 and YELLOW\n",
+        "faster_b": "--121\n--34.890\nlocal s1=0\nlocal s2=0\nlocal s3=0\nif y\u003e=0 then\n\ts1 = max(abs(x),y)%2\nelse\n\ts1 = 1-max(abs(x-1),-y)%2\nend\nif z\u003e=0 then\n\ts2 = max(abs(y),z)%2\n\ts3 = max(abs(x),z)%2\nelse\n\ts2 = 1-max(abs(y-1),-z)%2\n\ts3 = 1-max(abs(x-1),-z)%2\nend\nreturn s1~=0 and s2~=0 and s3~=0 and YELLOW\n",
+        "first_pass": "--150\n--43.323\nlocal s1,s2,s3 = 0,0,0\nif y\u003e=0 then\n\ts1 = max(abs(x),y)%2==1 and 1 or 0\nelse\n\ts1 = max(abs(x-1),-y)%2==0 and 1 or 0\nend\nif z\u003e=0 then\n\ts2 = max(abs(y),z)%2==1 and 1 or 0\n\ts3 = max(abs(x),z)%2==1 and 1 or 0\nelse\n\ts2 = max(abs(y-1),-z)%2==0 and 1 or 0\n\ts3 = max(abs(x-1),-z)%2==0 and 1 or 0\nend\nreturn min(s1, s2, s3)==1 and YELLOW\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "triple-spiral.txt",
+      "size": 5,
+      "source": 100,
+      "variant_order": [
+        "first_pass",
+        "faster_a",
+        "faster_b"
+      ]
+    },
+    {
+      "active_variant": "faster1",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 25.3704,
+      "code_size": 115,
+      "code_variants": {
+        "_fun_comment": "--[[\nAh, the Menger Sponge.  Probably the fractal\nthat 'fits' most easily into a 3D voxel\nrepresentation.\n\ndivide space into a 3x3x3 grid, and then cut out the\ncenters when viewed from each side.\n\nthen subdivide each 1x1x1 in the larger object into\nits own 3x3x3 and repeat.\n\nalthough, this is only 2 levels here, so you can also\njust do it manually without any fancy recursion or loops.\n--]]",
+        "faster1": "--115\n--25.370\nlocal X,Y,Z=x*x,y*y,z*z\nif\nX\u003c=1 and Y\u003c=1 or\nX\u003c=1 and Z\u003c=1 or\nY\u003c=1 and Z\u003c=1 then return end\nlocal xx = abs(x)%3\nlocal xxx = xx\u003e=2 and 1 or xx\nlocal yy = abs(y)%3\nlocal yyy = yy\u003e=2 and 1 or yy\nlocal zz = abs(z)%3\nlocal zzz = zz\u003e=2 and 1 or zz\nif xxx+yyy+zzz \u003c=1 then\n\treturn 0\nend\nreturn y+10\n",
+        "first_pass": "--118\n--30.438\nlocal X,Y,Z=x*x,y*y,z*z\nlocal xx = abs(x)%3\nlocal xxx = xx\u003e=2 and 1 or xx\nlocal yy = abs(y)%3\nlocal yyy = yy\u003e=2 and 1 or yy\nlocal zz = abs(z)%3\nlocal zzz = zz\u003e=2 and 1 or zz\nif xxx+yyy+zzz \u003c=1 then\n\treturn 0\nend\nreturn \nX\u003c=1 and Y\u003c=1 and 0 or\nX\u003c=1 and Z\u003c=1 and 0 or\nY\u003c=1 and Z\u003c=1 and 0 or\ny+10\n",
+        "with_sdf1": "--201\n--146.549\n--\n-- signed distance function for MengerBox\nlocal function sdMengerBox(px, py, pz, size, holeWidth)\n  -- Distance to the base Cube\n  local apx = abs(px)\n  local apy = abs(py)\n  local apz = abs(pz)\t\n  local adx = apx - size\n  local ady = apy - size\n  local adz = apz - size\n  local dBox = max(adx, ady, adz)\n\n  -- Define the cross-shaped holes (3 intersecting prisms)\n  -- hole through X-Y (Z-axis opening)\n  local hZ = max(apx - holeWidth, apy - holeWidth)\n  -- hole through Y-Z (X-axis opening)\n  local hX = max(apy - holeWidth, apz - holeWidth)\n  -- hole through Z-X (Y-axis opening)\n  local hY = max(apz - holeWidth, apx - holeWidth)\n\n  -- Union all the holes with min()\n  local crossHoles = min(hZ, hX, hY)\n  -- in SDFs, subtracting is, max(shape, -otherShape)\n  return max(dBox, -crossHoles)\nend\n\n-- big box\nlocal mbox0=sdMengerBox(x, y, z, 4.5, 1.5)\n\n-- little boxes everywhere\nlocal xx = x%3==2 and 1 or x%3\nlocal yy = y%3==2 and 1 or y%3\nlocal zz = z%3==2 and 1 or z%3\nlocal mbox1=sdMengerBox(xx, yy, zz, 1.5, 0.5)\n\nif max(mbox1,mbox0)\u003c=0 then return y+10 end\n--if min(mbox1,mbox0)\u003c=0 then return y+10 end\n",
+        "with_sdf2": "--197\n--101.289\n--\n-- signed distance function for MengerBox\nlocal function sdMengerBox(px, py, pz, size, holeWidth)\n  -- Distance to the base Cube\n  local apx = abs(px)\n  local apy = abs(py)\n  local apz = abs(pz)\t\n  local adx = apx - size\n  local ady = apy - size\n  local adz = apz - size\n  local dBox = max(adx, ady, adz)\n\n  -- Define the cross-shaped holes (3 intersecting prisms)\n  -- hole through X-Y (Z-axis opening)\n  local hZ = max(apx - holeWidth, apy - holeWidth)\n  -- hole through Y-Z (X-axis opening)\n  local hX = max(apy - holeWidth, apz - holeWidth)\n  -- hole through Z-X (Y-axis opening)\n  local hY = max(apz - holeWidth, apx - holeWidth)\n\n  -- Union all the holes with min()\n  local crossHoles = min(hZ, hX, hY)\n  -- in SDFs, subtracting is, max(shape, -otherShape)\n  return max(dBox, -crossHoles)\nend\n\n-- big box\nlocal mbox0=sdMengerBox(x, y, z, 4.5, 1.5)\n\n-- little boxes everywhere\nlocal mbox1=sdMengerBox(\n\t((x + 3/2) % 3) - 3/2,\n\t((y + 3/2) % 3) - 3/2,\n\t((z + 3/2) % 3) - 3/2,\n\t3/2, 1/2\n)\n\nif mbox1\u003c=0 and mbox0\u003c=0 then return y+10 end\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "menger_sponge.txt",
+      "size": 4,
+      "source": 100,
+      "variant_order": [
+        "_fun_comment",
+        "first_pass",
+        "faster1",
+        "with_sdf1",
+        "with_sdf2"
+      ]
+    },
+    {
+      "active_variant": "with_sdf1",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 159.964,
+      "code_size": 204,
+      "code_variants": {
+        "_fun_comment": "--[[ \nThe 'T-Square' fractal.\n\nstart with a square(cube).\nat each corner, place a new square(cube) of 1/2 size.\n\nrepeat (in this case, 3 repetitions)\n--]]\n",
+        "first_pass": "function sdBox(px, py, pz, bx, by, bz)\n    local dx = abs(px) - bx\n    local dy = abs(py) - by\n    local dz = abs(pz) - bz\n    \n    -- External part\n    local mx = max(dx, 0.0)\n    local my = max(dy, 0.0)\n    local mz = max(dz, 0.0)\n    local external = sqrt(mx * mx + my * my + mz * mz)\n    \n    -- Internal part\n    local internal = min(max(dx, max(dy, dz)), 0.0)\n    \n    return external + internal\nend\n\n-- p = point position, b = box half-size, c = box center\nfunction isCornerFromBox(px, py, pz, cx, cy, cz, bx, by, bz)\n    local eps = 0.1 -- Tolerance for voxel centers\n    \n    -- Translate point to local space relative to center\n    local localX = abs(px - cx)\n    local localY = abs(py - cy)\n    local localZ = abs(pz - cz)\n\n    -- You are at a corner if you are at the limit of ALL axes\n    if localX \u003e= (bx - eps) and \n       localY \u003e= (by - eps) and \n       localZ \u003e= (bz - eps) then\n        return true\n    end\n    return false\nend\n\nbox1=sdBox(x+.5,y+.5,z+.5, 4,4,4)\nbox2=sdBox(x-3.5, y-3.5, z-3.5, 2, 2, 2)\nbox3=1\n\n-- there is bad mod math here, taking a small break\n-- PEACH boxes\nif isCornerFromBox(x,y,z, 4,4,4, 0.5, 0.5, 0.5) then\n\tbox2 = sdBox(x%8-3.5, y%8-3.5, z%8-3.5, 2, 2, 2)\nend\n\n-- GREY BOXES\nif isCornerFromBox(x,y,z, 2,2,2, 0-3.5*x%8,0-3.5*y%8,0-3.5*z%8) then\n\tbox3 = sdBox(x%4-1.5, y%4-1.5, z%4-1.5, 1, 1, 1)\nend\n\n-- TIME TO RENDER!!!\nif min(box1,box2,box3) \u003c=0 then\n\t\treturn \n\t\tbox1\u003c=0 and ORANGE or \n\t\tbox2\u003c=0 and PEACH or\n\t\tbox3\u003c=0 and GREY\t\nend\n",
+        "with_sdf1": "--204\n--159.964\n--\n--float sdBox( vec3 p, vec3 b )\n--{\n--  vec3 q = abs(p) - b;\n--  return length(max(q,0.0)) + min(max(q.x,max(q.y,q.z)),0.0);\n--}\nlocal function sdBox(px, py, pz, bx, by, bz)\n\tlocal dx = abs(px) - bx\n\tlocal dy = abs(py) - by\n\tlocal dz = abs(pz) - bz\n\t\n\t-- external part\n\tlocal mx = max(dx, 0.0)\n\tlocal my = max(dy, 0.0)\n\tlocal mz = max(dz, 0.0)\n\tlocal external = sqrt(mx * mx + my * my + mz * mz)\n\t\n\t-- internal part\n\tlocal internal = min(max(dx, dy, dz), 0.0) \n\treturn external + internal\nend\n-- boxes boxes everywhere\nlocal box1=sdBox(x+.5,y+.5,z+.5, 4,4,4)\nlocal box2=sdBox(x%8-3.5, y%8-3.5, z%8-3.5, 2, 2, 2)\nlocal box3=sdBox(x%4-1.5, y%4-1.5, z%4-1.5, 1, 1, 1)\n-- bippity boppity boo\nreturn\nbox1\u003c=0 and ORANGE or\nbox2\u003c=0 and PEACH or\nbox3\u003c=0 and GREY\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "t-square.txt",
+      "size": 7,
+      "source": 100,
+      "variant_order": [
+        "_fun_comment",
+        "first_pass",
+        "with_sdf1"
+      ]
+    },
+    {
+      "active_variant": "faster2",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 23.3165,
+      "code_size": 293,
+      "code_variants": {
+        "_fun_comment": "--[[\nThe 'Vicsek' fractal.  Pretty similar to the\nMenger Sponge, almost it's inverse.\n\nin a 3x3x3 region, only keep the cubes that make a\n'cross' along each axis.\n\nnow visit each of these individual cubes, and apply\nthe same rule to them.\n\nrepeat for 3 iterations.\n]]",
+        "faster1": "--293\n--28.242\nlocal X,Y,Z=x*x,y*y,z*z\n-- excludes a large portion of easy to calc negative space\nif X\u003e16 and Y\u003e16 or\n\t X\u003e16 and Z\u003e16 or\n\t Y\u003e16 and Z\u003e16 then return end\n\nfunction sdMengerBox(px, py, pz, size, holeWidth)\n    -- Distance to the base Cube\n    local adx = abs(px) - size\n    local ady = abs(py) - size\n    local adz = abs(pz) - size\n    local dBox = max(adx, ady, adz)\n\n    -- Define the cross-shaped holes (3 intersecting prisms)\n    -- hole through X-Y (Z-axis opening)\n    local hZ = max(abs(px) - holeWidth, abs(py) - holeWidth)\n    -- hole through Y-Z (X-axis opening)\n    local hX = max(abs(py) - holeWidth, abs(pz) - holeWidth)\n    -- hole through Z-X (Y-axis opening)\n    local hY = max(abs(pz) - holeWidth, abs(px) - holeWidth)\n\n    -- subtract the holes from the box\n    -- in SDFs, subtracting is, max(shape, -hole)\n    local crossHoles = min(hZ, hX, hY)\n    \n    return max(dBox, -crossHoles)\nend\n\n-- NOTE: I really need this\n-- \"generic repetition formula\"\n-- local localX = ((x + (W / 2)) % W) - (W / 2)\n\n-- mengerBoxes wrapping over the 9x9x9 crosses \n-- and the entire voxel space\nlocal mengerBoxes=sdMengerBox(\n\t((x + 4.5) % 9) - 4.5,\n\t((y + 4.5) % 9) - 4.5,\n\t((z + 4.5) % 9) - 4.5,\n\t4.5, 1.5\n)\nif mengerBoxes\u003c=0 then return end\n\n-- poormans vicsekCrosses everywhere\nlocal xM = abs(x)%3\nlocal XX = xM==2 and 1 or xM\nlocal yM = abs(y)%3\nlocal YY = yM==2 and 1 or yM\nlocal zM = abs(z)%3\nlocal ZZ = zM==2 and 1 or zM\nif XX+YY+ZZ \u003c=1 then\n\treturn X\u003c25 and Y\u003c25 and Z\u003c25 and WHITE or GREY\nend\n",
+        "faster2": "--301\n--23.317\nlocal X,Y,Z=x*x,y*y,z*z\n-- excludes a large portion of easy to calc negative space\nif X\u003e16 and Y\u003e16 or\n\t X\u003e16 and Z\u003e16 or\n\t Y\u003e16 and Z\u003e16 then return end\n\n-- signed distance function for MengerBox\nlocal function sdMengerBox(px, py, pz, size, holeWidth)\n    -- Distance to the base Cube\n\t\tlocal apx = abs(px)\n\t\tlocal apy = abs(py)\n\t\tlocal apz = abs(pz)\t\n    local adx = apx - size\n    local ady = apy - size\n    local adz = apz - size\n    local dBox = max(adx, ady, adz)\n\n    -- Define the cross-shaped holes (3 intersecting prisms)\n    -- hole through X-Y (Z-axis opening)\n    local hZ = max(apx - holeWidth, apy - holeWidth)\n    -- hole through Y-Z (X-axis opening)\n    local hX = max(apy - holeWidth, apz - holeWidth)\n    -- hole through Z-X (Y-axis opening)\n    local hY = max(apz - holeWidth, apx - holeWidth)\n\n    -- Union all the holes with min()\n    local crossHoles = min(hZ, hX, hY)\n    -- in SDFs, subtracting is, max(shape, -otherShape)\n    return max(dBox, -crossHoles)\nend\n\n-- NOTE: I really need this\n-- \"generic repetition formula\"\n-- local localX = ((x + (W / 2)) % W) - (W / 2)\n\n-- mengerBoxes wrapping over the 9x9x9 crosses \n-- and the entire voxel space\nlocal mengerBoxes=sdMengerBox(\n\t((x + 9/2) % 9) - 9/2,\n\t((y + 9/2) % 9) - 9/2,\n\t((z + 9/2) % 9) - 9/2,\n\t9/2, 1.5\n)\nif mengerBoxes\u003c=0 then return end\n\n-- poormans vicsekCrosses everywhere\nlocal xM = abs(x)%3\nlocal XX = xM==2 and 1 or xM\nlocal yM = abs(y)%3\nlocal YY = yM==2 and 1 or yM\nlocal zM = abs(z)%3\nlocal ZZ = zM==2 and 1 or zM\nif XX+YY+ZZ \u003c=1 then\n\treturn X\u003c25 and Y\u003c25 and Z\u003c25 and WHITE or GREY\nend\n",
+        "first_pass": "local X,Y,Z=x*x,y*y,z*z\nGOTIME=1\n--391\n--287.037\n--\n--float sdBox( vec3 p, vec3 b )\n--{\n--  vec3 q = abs(p) - b;\n--  return length(max(q,0.0)) + min(max(q.x,max(q.y,q.z)),0.0);\n--}\nfunction sdMengerBox(px, py, pz, size, holeWidth)\n    -- Distance to the base Cube\n    local adx = abs(px) - size\n    local ady = abs(py) - size\n    local adz = abs(pz) - size\n    local dBox = max(adx, ady, adz)\n\n    -- Define the cross-shaped holes (3 intersecting prisms)\n    -- hole through X-Y (Z-axis opening)\n    local hZ = max(abs(px) - holeWidth, abs(py) - holeWidth)\n    -- hole through Y-Z (X-axis opening)\n    local hX = max(abs(py) - holeWidth, abs(pz) - holeWidth)\n    -- hole through Z-X (Y-axis opening)\n    local hY = max(abs(pz) - holeWidth, abs(px) - holeWidth)\n\n    -- subtract the holes from the box\n    -- in SDFs, subtracting is, max(shape, -hole)\n    local crossHoles = min(hZ, hX, hY)\n    \n    return max(dBox, -crossHoles)\nend\n\nlocal mbox1=1\nlocal mbox2=1\nlocal mbox3=1\nlocal mbox4=1\n\nmbox1=sdMengerBox(x, y, z, 4.5, 1.5) -- peach (center) box\nmbox2=sdMengerBox(abs(x)-9, y, z, 4.5, 1.5) -- yellow boxes\nmbox3=sdMengerBox(x, abs(y)-9, z, 4.5, 1.5) -- blue boxes\nmbox4=sdMengerBox(x, y, abs(z)-9, 4.5, 1.5) -- green boxes\n\nif GOTIME==1 then\n\tPURPLE=0\n\tPEACH=0\n\tYELLOW=0\n\tLIGHTBLUE=0\n\tGREEN=0\nend\n\nif X\u003e16 and Y\u003e16 or\n\t X\u003e16 and Z\u003e16 or\n\t Y\u003e16 and Z\u003e16 then return PURPLE end\n\nif min(mbox1,mbox2,mbox3,mbox4) \u003c=0 then\n  return\n  mbox1\u003c=0 and PEACH or\n  mbox2\u003c=0 and YELLOW or\n\tmbox3\u003c=0 and LIGHTBLUE or\n\tmbox4\u003c=0 and GREEN\t\t\nend\n\n-- This is the weird inner shape I discovered by mistake\nlocal xx = abs(x)%3\nlocal xxx = xx\u003e=2 and 1 or xx\nlocal yy = abs(y)%3\nlocal yyy = yy\u003e=2 and 1 or yy\nlocal zz = abs(z)%3\nlocal zzz = zz\u003e=2 and 1 or zz\n\nif xxx+yyy+zzz \u003c=1 then\n\treturn X\u003c25 and Y\u003c25 and Z\u003c25 and WHITE or GREY\nend\n",
+        "revisit_sdf": "--405\n--163.351\nGOTIME=0\n-- signed distance function for MengerBox\nfunction sdMengerBox(px, py, pz, size, holeWidth)\n    -- Distance to the base Cube\n\t\tlocal apx = abs(px)\n\t\tlocal apy = abs(py)\n\t\tlocal apz = abs(pz)\t\n    local adx = apx - size\n    local ady = apy - size\n    local adz = apz - size\n    local dBox = max(adx, ady, adz)\n\n    -- Define the cross-shaped holes (3 intersecting prisms)\n    -- hole through X-Y (Z-axis opening)\n    local hZ = max(apx - holeWidth, apy - holeWidth)\n    -- hole through Y-Z (X-axis opening)\n    local hX = max(apy - holeWidth, apz - holeWidth)\n    -- hole through Z-X (Y-axis opening)\n    local hY = max(apz - holeWidth, apx - holeWidth)\n\n    -- Union all the holes with min()\n    local crossHoles = min(hZ, hX, hY)\n    -- in SDFs, subtracting is, max(shape, -otherShape)\n    return max(dBox, -crossHoles)\nend\n-- signed distance function for VicsekCross\nfunction sdVicsekCross(px, py, pz, size)\n  local apx, apy, apz = abs(px), abs(py), abs(pz)\n  \n  -- 1. The Central Cube\n  -- box where all sides are equal to 'size'\n  local center = max(apx, apy, apz) - size\n  \n  -- 2. The 3 Axis Bars (The \"Arms\")\n  -- Each bar is long on one axis (size * 3) and thin on others (size)\n  local armLength = size * 3\n\t\n  -- X-axis bar: thin on Y and Z\n  local barX = max(apx - armLength, apy - size, apz - size)\n  -- Y-axis bar: thin on X and Z\n  local barY = max(apy - armLength, apx - size, apz - size)\n  -- Z-axis bar: thin on X and Y\n  local barZ = max(apz - armLength, apx - size, apy - size)\n  \n  -- 3. Union all parts together\n  -- min(A, B) merges the volumes\n  return min(center, barX, barY, barZ)\nend\n\n-- setup sdf holders\n-- useful if you need to comment something out to get a view\nlocal sdf0,sdf1,sdf2=1,1,1\n\n-- big outer mengerBox\nlocal sdf0=sdMengerBox(x, y, z, 13.5, 4.5)\n\n-- NOTE: I really need this\n-- \"generic repetition formula\"\n-- local localX = ((x + (W / 2)) % W) - (W / 2)\n\n-- Tiny mengerBoxes wrapping over the crosses \n-- and the entire voxel space\nlocal sdf1=sdMengerBox(\n\t((x + 4.5) % 9) - 4.5,\n\t((y + 4.5) % 9) - 4.5,\n\t((z + 4.5) % 9) - 4.5,\n\t4.5, 1.5\n)\n\n-- vicsek crosses everywhere!!!\nlocal sdf2 = sdVicsekCross(\n\t((x + 3/2) % 3) - 3/2,\n \t((y + 3/2) % 3) - 3/2,\n\t((z + 3/2) % 3) - 3/2,\n\t0.5\n)\n\nif GOTIME==1 then PURPLE,PEACH=0,0 end\nreturn\n\tsdf0\u003c=0 and PURPLE or\n\tsdf1\u003c=0 and PEACH or\n\tsdf2\u003c=0 and \n\t(x*x\u003c25 and y*y\u003c25 and z*z\u003c25\n\t\tand WHITE or GREY)\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "vicsek.txt",
+      "size": 13,
+      "source": 100,
+      "variant_order": [
+        "_fun_comment",
+        "first_pass",
+        "faster1",
+        "revisit_sdf",
+        "faster2"
+      ]
+    },
+    {
+      "active_variant": "faster",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 11.9835,
+      "code_size": 234,
+      "code_variants": {
+        "_fun_comment": "--[[\nslightly artistic take on the 'Cantor set'\ngiven 3 slots, only fill in the 2 edge slots.\nthen, subdivide the slots into 3 and apply the same\nrule:\n\nX-X   X-X         X-X   X-X\nXXX---XXX         XXX---XXX\nXXXXXXXXX---------XXXXXXXXX\n]]\n",
+        "faster": "--234\n--11.984\nif y\u003c=-9 then return BROWN end\n\nlocal X,Z=x*x,z*z\n-- bailout early on empty space\nif y\u003e=-2 and (X\u003c=16 or Z\u003c=16) then return end\nif y\u003e=7 then return end\n\n-- predefined things before the fractal gets started\nif y\u003c=-3 then return X\u003c=16 and Z\u003c=16 and 0 or GREY end\n\n-- Our fun little cantor castle\n-- given the x,y,z and the recusion level, compute the color\nlocal function calc_castle(x,y,z, level)\n\tlocal c=GREY -- color\n\n\tif level==1 or level==2 or level==3 then\n\t\tif X\u003c=16 or Z\u003c=16 then c=0 end\n\n\t\tif level==2 or level==3 then \n\t\t\tif X\u003e=64 and X\u003c=100 or Z\u003e=64 and Z\u003c=100 then c=0 end\n\t\t\t\n\t\t\tif level==3 then \n\t\t\t\tif (X==36 or X==144) or (Z==36 or Z==144) then c=0 end\n\t\t\tend\n\t\tend\n\tend\n\t\n\treturn c\nend\n\n-- run our poormans recursion per each level\nif y\u003e=-2 and y\u003c=0 then return calc_castle(x,y,z, 1) end\nif y\u003e=1 and y\u003c=3 then return calc_castle(x,y,z, 2) end\nif y\u003e=4 and y\u003c=6 then return calc_castle(x,y,z, 3) end\n",
+        "first_pass": "--234\n--14.354\n\nif y\u003c=-9 then return BROWN end\nlocal X,Z=x*x,z*z\n\nif y\u003e=-2 and (X\u003c=16 or Z\u003c=16) then return end\nif y\u003e=7 then return end\n\nif y\u003c=-3 then return X\u003c=16 and Z\u003c=16 and 0 or GREY end\n\nlocal function calc_castle(x,y,z, level)\n\tlocal color=GREY\n\n\tif level==1 or level==2 or level==3 then\n\t\tif X\u003c=16 or Z\u003c=16 then color=0 end\n\n\t\tif level==2 or level==3 then \n\t\t\tif X\u003e=64 and X\u003c=100 or Z\u003e=64 and Z\u003c=100 then color=0 end\n\t\t\t\n\t\t\tif level==3 then \n\t\t\t\tif (X==36 or X==144) or (Z==36 or Z==144) then color=0 end\n\t\t\tend\n\t\tend\n\tend\n\t\n\treturn color\nend\n\nif inrange(y,-2,0) then return calc_castle(x,y,z, 1) end\nif inrange(y,1,3) then return calc_castle(x,y,z, 2) end\nif inrange(y,4,6) then return calc_castle(x,y,z, 3) end\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "fractal-castle.txt",
+      "size": 13,
+      "source": 100,
+      "variant_order": [
+        "_fun_comment",
+        "first_pass",
+        "faster"
       ]
     }
   ]

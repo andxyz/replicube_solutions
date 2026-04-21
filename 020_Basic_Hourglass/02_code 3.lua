@@ -7,5 +7,3 @@
 -- :)
 
 return (x > y and x < -y or x < y and -x < y) and YELLOW
-
-
