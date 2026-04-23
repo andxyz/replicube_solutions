@@ -21,10 +21,12 @@ local function sdBox(px, py, pz, bx, by, bz)
 	local internal = min(max(dx, dy, dz), 0.0) 
 	return external + internal
 end
+
 -- boxes boxes everywhere
 local box1=sdBox(x+.5,y+.5,z+.5, 4,4,4)
 local box2=sdBox(x%8-3.5, y%8-3.5, z%8-3.5, 2, 2, 2)
 local box3=sdBox(x%4-1.5, y%4-1.5, z%4-1.5, 1, 1, 1)
+
 -- bippity boppity boo
 return
 box1<=0 and ORANGE or

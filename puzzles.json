@@ -840,13 +840,13 @@
       ]
     },
     {
-      "active_variant": "nine_toasters",
+      "active_variant": "menger_with_sdfs",
       "animated": false,
       "challenge_complete": false,
       "code_instructions": 0.0,
       "code_size": 0,
       "code_variants": {
-        "nine_toasters": "--641\n--154.098\n\n-- 16 frames, 1 FPS, 5 frames total\n\n-- first pass with sdfs\n--\n-- p_x, p_y, p_z: current voxel coordinates\n-- b_x, b_y, b_z: box half-extents (distance from center to face)\nfunction sdBox(p_x, p_y, p_z, b_x, b_y, b_z)\n    -- Calculate q (absolute distance from center minus half-extents)\n    local q_x = abs(p_x) - b_x\n    local q_y = abs(p_y) - b_y\n    local q_z = abs(p_z) - b_z\n\n    -- External distance: distance to box if point is outside\n    -- Max(q, 0) components\n    local mq_x = max(q_x, 0.0)\n    local mq_y = max(q_y, 0.0)\n    local mq_z = max(q_z, 0.0)\n    local externalDist = sqrt(mq_x*mq_x + mq_y*mq_y + mq_z*mq_z)\n\n    -- Internal distance: distance to nearest face if point is inside\n    local internalDist = min(max(q_x, q_y, q_z), 0.0)\n\n    return externalDist + internalDist\nend\nlocal function sdBox2d(px, py, bx, by)\n    local dx, dy = abs(px) - bx, abs(py) - by\n    local ex = sqrt(max(dx, 0)^2 + max(dy, 0)^2)\n    local i = min(max(dx, dy), 0)\n    \n    return ex + i\nend\nlocal function sdSegment(px, py, pz, ax, ay, az, bx, by, bz)\n    local pax, pay, paz = px - ax, py - ay, pz - az\n    local bax, bay, baz = bx - ax, by - ay, bz - az\n\n    local h = (pax*bax + pay*bay + paz*baz) / (bax*bax + bay*bay + baz*baz)\n    h = max(0.0, min(1.0, h))\n    \n    local dx, dy, dz = pax - bax*h, pay - bay*h, paz - baz*h\n    return sqrt(dx*dx + dy*dy + dz*dz)\nend\n-- px, py, pz: Current voxel coordinates\n-- period: The horizontal distance before the wave repeats\n-- amplitude: The height of the square step\n-- offset_y: The base height of the wave\nlocal function sdSquareWaveLine(px, py, pz, period, amplitude, offset_y, thickness)\n    -- 1. Localize the horizontal position within one period [0, period]\n    local x_mod = (fmod(px, period) + period) % period\n    local half_p = period * 0.5\n    \n    -- 2. Vertical heights of the two horizontal segments\n    local h_top = offset_y + amplitude\n    local h_bot = offset_y\n    \n    -- 3. Distance to the Horizontal Segments\n    -- Segment 1: The \"High\" flat (from x=0 to x=half_p)\n    -- Segment 2: The \"Low\" flat (from x=half_p to x=period)\n    local dist_h\n    if x_mod \u003c half_p then\n        dist_h = abs(py - h_top)\n    else\n        dist_h = abs(py - h_bot)\n    end\n    \n    -- 4. Distance to the Vertical Segments (The \"Connectors\")\n    -- These occur at x_mod = 0 and x_mod = half_p\n    -- We measure the distance to the closest vertical line segment\n    local dx_v = min(x_mod, abs(x_mod - half_p), abs(x_mod - period))\n    \n    -- Bound the vertical line between the top and bottom heights\n    local clamped_y = max(h_bot, min(py, h_top))\n    local dy_v = py - clamped_y\n    local dist_v = sqrt(dx_v * dx_v + dy_v * dy_v)\n    \n    -- 5. The final SDF is the distance to the closest part of the \"wire\" minus thickness\n    return min(dist_h, dist_v) - thickness\nend\n\nlocal toaster,heating_elem,toaster_lever,toasts=1,1,1,1\n\n-- NOTE: I really need this\n-- \"generic repetition formula\"\n-- local localX = ((x + (W / 2)) % W) - (W / 2)\n\n-- Tiny mengerBoxes wrapping over the crosses \n-- and the entire voxel space\n--local sdf1=sdMengerBox(\n--\t((x + 4.5) % 9) - 4.5,\n--\t((y + 4.5) % 9) - 4.5,\n--\t((z + 4.5) % 9) - 4.5,\n--\t4.5, 1.5\n--)\n--\n--slots in the toaster\nif y==1 and (z==1 or z==-1) and x*x\u003c=9 then\nelse\n\t-- p_x, p_y, p_z: current voxel coordinates\n\t-- b_x, b_y, b_z: box half-extents (distance from center to face)\n\t-- function sdBox(p_x, p_y, p_z, b_x, b_y, b_z)\n\ttoaster = sdBox(\n\t\t((x + (11/2)) % 11) - (11/2),\n\t\t((y+2 + (12/2)) % 12) - (12/2), z, 4,3,3)\nend\n\n-- sdSquareWaveLine(px, py, pz, period, amplitude, offset_y, thickness)\nheating_elem = (z*z==4 or z==0) and \nsdSquareWaveLine(\n\t((x-1 + (11/2)) % 11) - (11/2), \n\t((y + (12/2)) % 12) - (12/2), \n\tz, 4, 4, -4,0.5) or 1\n\n-- sdSegment(px, py, pz, ax, ay, az, bx, by, bz)\nlocal magicP = t%4==0\nlocal Ly = magicP and 0 or -4\ntoaster_lever = \nsdSegment(\n\t((x + (11/2)) % 11) - (11/2),\n\t((y + (12/2)) % 12) - (12/2),\n\tz, -5, Ly, -1, -5, Ly, 1)\n\n-- sdBox2d(px, py, bx, by)\nlocal Ty = magicP and -3 or 2\ntoasts = (z==1 or z==-1) and \n\tsdBox2d(\n\t  ((x + (11/2)) % 11) - (11/2),\n\t  ((y+Ty + (12/2)) % 12) - (12/2), \n\t\t3, \n\t\t2) or 1\n\nreturn \ntoasts\u003c=0 and (t\u003c3 and YELLOW or ORANGE) or\ntoaster\u003c0 and heating_elem\u003c=0 and (t\u003c2 and BLACK or RED) or\ntoaster==0 and GREY or\ntoaster_lever\u003c=0 and BLACK\n"
+        "menger_with_sdfs": "--\n-- Some of my understanding of \"signed distance functions\" \n-- is thanks to https://iquilezles.org/articles/distfunctions/ \n--\n-- signed distance function for MengerBox\nlocal function sdMengerBox(px, py, pz, size, holeWidth)\n  -- Distance to the base Cube\n  local apx = abs(px)\n  local apy = abs(py)\n  local apz = abs(pz)\t\n  local adx = apx - size\n  local ady = apy - size\n  local adz = apz - size\n  local dBox = max(adx, ady, adz)\n\n  -- Define the cross-shaped holes (3 intersecting prisms)\n  -- hole through X-Y (Z-axis opening)\n  local hZ = max(apx - holeWidth, apy - holeWidth)\n  -- hole through Y-Z (X-axis opening)\n  local hX = max(apy - holeWidth, apz - holeWidth)\n  -- hole through Z-X (Y-axis opening)\n  local hY = max(apz - holeWidth, apx - holeWidth)\n\n  -- Union all the holes with min()\n  local crossHoles = min(hZ, hX, hY)\n  -- in SDFs, subtracting is, max(shape, -otherShape)\n  return max(dBox, -crossHoles)\nend\n\n-- big box\nlocal a=sdMengerBox(x, y, z, 4.5, 1.5)\n\n-- little boxes everywhere\nlocal b=sdMengerBox(\n\t((x + 3/2) % 3) - 3/2,\n\t((y + 3/2) % 3) - 3/2,\n\t((z + 3/2) % 3) - 3/2,\n\t3/2, 1/2\n)\n\n-- Setup our colorwheel to be a subset of the 16 colors with \"counter-colors\"\n-- The vibrant colors were 8,7,6, 11,10,9, 14,13,12,\nlocal counter_part_color = {1,2,3,4,5, 8,7,6, 11,10,9, 14,13,12, 16,15}\nlocal color1 = (y-t+3)%7+7\nlocal color2 = counter_part_color[(y-t+3)%7+7] -- keep in in range of my 9 color pallette swaps\n\n--[[ \nOkay! time for the fun part\n\nNow we go looking for a fun shape using Primitive combinations!\n\nPrimitive combinations for two shapes using signed distance functions:\n\n  operation Union:        min(a,b)\n  operation Subtraction:  max(-a,b)\n  operation Intersection: max(a,b)\n  operation Xor:          max(min(a,b),-max(a,b))\n]]--\n \n--## Intersection examples\nreturn max(a,b)\u003c=0 and color1 or max(a,b)\u003e0 and color2 \n--## or this one \n\n--## Subtraction examples\n--return max(-b,a)\u003c=0 and color1 \n--## or this one\n--return max(-b,a)\u003e0 and color2\n\n--## Union examples\n--return min(a,b)\u003c=0 and color1\n--## or this one\n--return min(a,b)\u003e0 and color2\n\n--## Combinations I enjoyed:\n\n--## I liked a few of the different subtractions:\n--return max(-b,a)\u003c=0 and color1 \n--## or this one\n--return max(-a,b)\u003e0 and color1 \n\n--## Fun with \"multiple combinations\" \n--## You can keep on combining shapes together!\n\n--## I enjoyed xor + outer union:\n--if max(min(a,b),-max(a,b))\u003c=0 then\n--\treturn color1\n--elseif min(a,b)\u003e0 then\n--\treturn color2\n--end\n\n--## I liked Subtraction + reversal Subtraction\n--return max(-b,a)\u003c=0 and color1 or max(-a,b)\u003c=0 and color2\n"
       },
       "completed": false,
       "fps": 12,
@@ -855,7 +855,7 @@
       "size": 3,
       "source": 200,
       "variant_order": [
-        "nine_toasters"
+        "menger_with_sdfs"
       ]
     },
     {
@@ -1098,13 +1098,14 @@
       ]
     },
     {
-      "active_variant": "code",
+      "active_variant": "code 2",
       "animated": true,
       "challenge_complete": false,
       "code_instructions": 16.4171,
       "code_size": 33,
       "code_variants": {
-        "code": "\n\nyes = inrange((y^2 - x^2 - z^2 + 8 + t*12),4,36)\n\nreturn yes and y%11 + 4"
+        "code": "\n\nyes = inrange((y^2 - x^2 - z^2 + 8 + t*12),0,35)\n\nreturn yes and y%11 + 4",
+        "code 2": "\nfunction part(y)\n\treturn clamp(6,y%11,10)\nend\n\nlocal to_the_rainbow = inrange((y^2 - x^2 - z^2 + 3*t),6,24)\n\n-- weeeeeeee\nreturn to_the_rainbow and part(y)\n"
       },
       "completed": true,
       "fps": 8,
@@ -1113,7 +1114,8 @@
       "size": 10,
       "source": 300,
       "variant_order": [
-        "code"
+        "code",
+        "code 2"
       ]
     },
     {
@@ -3530,22 +3532,26 @@
       ]
     },
     {
-      "active_variant": "code",
+      "active_variant": "lame_but_ez",
       "animated": true,
       "challenge_complete": false,
-      "code_instructions": 0.0,
-      "code_size": 0,
+      "code_instructions": 104.575,
+      "code_size": 320,
       "code_variants": {
-        "code": "-- good luck!\nreturn 1"
+        "first_pass": "-- good luck!\n--\n--\n-- empty space\n\nif z==3 or z==4 or x==-4 then return end\nlocal Y=y*y\nlocal nn = x==0 or x==1\nif y%3~=0 and nn then return BLACK end\nif (x==-1 or x==2) and (y%3==0 or Y==16)  then return BLACK end\nif x\u003c-1 or x\u003e2 then return BLACK end\n\nif z==2 then return PEACH end\n\nreturn BLACK",
+        "lame_but_ez": "-- good luck!\n--320\n--104.575\n\n-- presave the values in tables\nc1={[0]=12, 12,12,12,7,7 ,7,12,7,7,7}\nc2={[0]=12, 12,7,12,12,12 ,7,12,7,12,7}\n\nc3={[0]=12, 12,7,7,12,7 ,7,7,7,7,7}\nc4={[0]=12, 12,7,7,7,7 ,7,12,7,7,12}\nc5={[0]=12, 12,7,7,12,7 ,7,12,7,7,7}\n\nc6={[0]=12, 7,7,7,7,12 ,12,7,7,7,7}\nc7={[0]=12, 7,12,7,7,7 ,7,7,7,7,7}\n\n-- empty space\nif z==3 or z==4 or x==-4 then return end\n\nif z==2 then\nif x==-1 then\n\t-- R 4 5 6 8 9 10\n\tif y==2  or y==1  then return c1[t] end -- c1\n\t-- R 2 6 8 10\n\tif y==-2 or y==-1 then return c2[t] end -- c2\nend\n\nif x==0 or x==1 then\n\tif y==3  then return c3[t] end -- c3\n\tif y==0  then return c4[t] end -- c4\n\tif y==-3 then return c5[t] end -- c5\nend\n\nif x==2 then\n\tif y==2  or y==1  then return c6[t] end -- c1\n\tif y==-2 or y==-1 then return c7[t] end -- c2\nend\nend\n\nreturn BLACK",
+        "second_pass": "-- good luck!\n--\n--\n-- empty space\nc1=(t\u003e=4 and t~=7) and RED or DARKBLUE\nc2=(t\u003e0 and t%2==0 and t~=4) and RED or DARKBLUE\n\nc3=LIGHTGREEN\nc4=BLUE\nc5=PURPLE\n\nc6=PINK\nc7=PEACH\nif z==3 or z==4 or x==-4 then return end\n\nif x==-1 then\n\t-- R 4 5 6 8 9 10\n\tif y==2  or y==1  then return c1 end -- c1\n\t-- R 2 6 8 10\n\tif y==-2 or y==-1 then return c2 end -- c2\nend\n\nif x==0 or x==1 then\n\tif y==3  then return c3 end -- c3\n\tif y==0  then return c4 end -- c4\n\tif y==-3 then return c5 end -- c5\nend\n\nif x==2 then\n\tif y==2  or y==1  then return c6 end -- c1\n\tif y==-2 or y==-1 then return c7 end -- c2\nend\n\nreturn BLACK"
       },
-      "completed": false,
+      "completed": true,
       "fps": 2,
       "frames": 11,
       "id": "seven_seg.txt",
       "size": 4,
       "source": 100,
       "variant_order": [
-        "code"
+        "first_pass",
+        "second_pass",
+        "lame_but_ez"
       ]
     },
     {
@@ -3773,17 +3779,18 @@
       ]
     },
     {
-      "active_variant": "faster1",
+      "active_variant": "with_sdf2",
       "animated": false,
       "challenge_complete": false,
-      "code_instructions": 25.3704,
-      "code_size": 115,
+      "code_instructions": 25.1783,
+      "code_size": 113,
       "code_variants": {
         "_fun_comment": "--[[\nAh, the Menger Sponge.  Probably the fractal\nthat 'fits' most easily into a 3D voxel\nrepresentation.\n\ndivide space into a 3x3x3 grid, and then cut out the\ncenters when viewed from each side.\n\nthen subdivide each 1x1x1 in the larger object into\nits own 3x3x3 and repeat.\n\nalthough, this is only 2 levels here, so you can also\njust do it manually without any fancy recursion or loops.\n--]]",
         "faster1": "--115\n--25.370\nlocal X,Y,Z=x*x,y*y,z*z\nif\nX\u003c=1 and Y\u003c=1 or\nX\u003c=1 and Z\u003c=1 or\nY\u003c=1 and Z\u003c=1 then return end\nlocal xx = abs(x)%3\nlocal xxx = xx\u003e=2 and 1 or xx\nlocal yy = abs(y)%3\nlocal yyy = yy\u003e=2 and 1 or yy\nlocal zz = abs(z)%3\nlocal zzz = zz\u003e=2 and 1 or zz\nif xxx+yyy+zzz \u003c=1 then\n\treturn 0\nend\nreturn y+10\n",
+        "faster2": "--115\n--25.370\nlocal X,Y,Z=x*x,y*y,z*z\nif\nX\u003c=1 and Y\u003c=1 or\nX\u003c=1 and Z\u003c=1 or\nY\u003c=1 and Z\u003c=1 then return end\nlocal xx = abs(x)%3\nlocal xxx = xx==2 and 1 or xx\nlocal yy = abs(y)%3\nlocal yyy = yy==2 and 1 or yy\nlocal zz = abs(z)%3\nlocal zzz = zz==2 and 1 or zz\nif xxx+yyy+zzz \u003e1 then\n\treturn y+10\nend\n",
         "first_pass": "--118\n--30.438\nlocal X,Y,Z=x*x,y*y,z*z\nlocal xx = abs(x)%3\nlocal xxx = xx\u003e=2 and 1 or xx\nlocal yy = abs(y)%3\nlocal yyy = yy\u003e=2 and 1 or yy\nlocal zz = abs(z)%3\nlocal zzz = zz\u003e=2 and 1 or zz\nif xxx+yyy+zzz \u003c=1 then\n\treturn 0\nend\nreturn \nX\u003c=1 and Y\u003c=1 and 0 or\nX\u003c=1 and Z\u003c=1 and 0 or\nY\u003c=1 and Z\u003c=1 and 0 or\ny+10\n",
-        "with_sdf1": "--201\n--146.549\n--\n-- signed distance function for MengerBox\nlocal function sdMengerBox(px, py, pz, size, holeWidth)\n  -- Distance to the base Cube\n  local apx = abs(px)\n  local apy = abs(py)\n  local apz = abs(pz)\t\n  local adx = apx - size\n  local ady = apy - size\n  local adz = apz - size\n  local dBox = max(adx, ady, adz)\n\n  -- Define the cross-shaped holes (3 intersecting prisms)\n  -- hole through X-Y (Z-axis opening)\n  local hZ = max(apx - holeWidth, apy - holeWidth)\n  -- hole through Y-Z (X-axis opening)\n  local hX = max(apy - holeWidth, apz - holeWidth)\n  -- hole through Z-X (Y-axis opening)\n  local hY = max(apz - holeWidth, apx - holeWidth)\n\n  -- Union all the holes with min()\n  local crossHoles = min(hZ, hX, hY)\n  -- in SDFs, subtracting is, max(shape, -otherShape)\n  return max(dBox, -crossHoles)\nend\n\n-- big box\nlocal mbox0=sdMengerBox(x, y, z, 4.5, 1.5)\n\n-- little boxes everywhere\nlocal xx = x%3==2 and 1 or x%3\nlocal yy = y%3==2 and 1 or y%3\nlocal zz = z%3==2 and 1 or z%3\nlocal mbox1=sdMengerBox(xx, yy, zz, 1.5, 0.5)\n\nif max(mbox1,mbox0)\u003c=0 then return y+10 end\n--if min(mbox1,mbox0)\u003c=0 then return y+10 end\n",
-        "with_sdf2": "--197\n--101.289\n--\n-- signed distance function for MengerBox\nlocal function sdMengerBox(px, py, pz, size, holeWidth)\n  -- Distance to the base Cube\n  local apx = abs(px)\n  local apy = abs(py)\n  local apz = abs(pz)\t\n  local adx = apx - size\n  local ady = apy - size\n  local adz = apz - size\n  local dBox = max(adx, ady, adz)\n\n  -- Define the cross-shaped holes (3 intersecting prisms)\n  -- hole through X-Y (Z-axis opening)\n  local hZ = max(apx - holeWidth, apy - holeWidth)\n  -- hole through Y-Z (X-axis opening)\n  local hX = max(apy - holeWidth, apz - holeWidth)\n  -- hole through Z-X (Y-axis opening)\n  local hY = max(apz - holeWidth, apx - holeWidth)\n\n  -- Union all the holes with min()\n  local crossHoles = min(hZ, hX, hY)\n  -- in SDFs, subtracting is, max(shape, -otherShape)\n  return max(dBox, -crossHoles)\nend\n\n-- big box\nlocal mbox0=sdMengerBox(x, y, z, 4.5, 1.5)\n\n-- little boxes everywhere\nlocal mbox1=sdMengerBox(\n\t((x + 3/2) % 3) - 3/2,\n\t((y + 3/2) % 3) - 3/2,\n\t((z + 3/2) % 3) - 3/2,\n\t3/2, 1/2\n)\n\nif mbox1\u003c=0 and mbox0\u003c=0 then return y+10 end\n"
+        "with_sdf1": "--201\n--146.549\n--\n-- signed distance function for MengerBox\nlocal function sdMengerBox(px, py, pz, size, holeWidth)\n  -- Distance to the base Cube\n  local apx = abs(px)\n  local apy = abs(py)\n  local apz = abs(pz)\t\n  local adx = apx - size\n  local ady = apy - size\n  local adz = apz - size\n  local dBox = max(adx, ady, adz)\n\n  -- Define the cross-shaped holes (3 intersecting prisms)\n  -- hole through X-Y (Z-axis opening)\n  local hZ = max(apx - holeWidth, apy - holeWidth)\n  -- hole through Y-Z (X-axis opening)\n  local hX = max(apy - holeWidth, apz - holeWidth)\n  -- hole through Z-X (Y-axis opening)\n  local hY = max(apz - holeWidth, apx - holeWidth)\n\n  -- Union all the holes with min()\n  local crossHoles = min(hZ, hX, hY)\n  -- in SDFs, subtracting is, max(shape, -otherShape)\n  return max(dBox, -crossHoles)\nend\n\n-- big box\nlocal mbox0=sdMengerBox(x, y, z, 4.5, 1.5)\n\n-- little boxes everywhere\nlocal xx = x%3==2 and 1 or x%3\nlocal yy = y%3==2 and 1 or y%3\nlocal zz = z%3==2 and 1 or z%3\nlocal mbox1=sdMengerBox(xx, yy, zz, 1.5, 0.5)\n\n-- union two SDFs with max()\nif max(mbox1,mbox0)\u003c=0 then return y+10 end\n",
+        "with_sdf2": "--195\n--105.549\n--\n-- signed distance function for MengerBox\nlocal function sdMengerBox(px, py, pz, size, holeWidth)\n  -- Distance to the base Cube\n  local apx = abs(px)\n  local apy = abs(py)\n  local apz = abs(pz)\t\n  local adx = apx - size\n  local ady = apy - size\n  local adz = apz - size\n  local dBox = max(adx, ady, adz)\n\n  -- Define the cross-shaped holes (3 intersecting prisms)\n  -- hole through X-Y (Z-axis opening)\n  local hZ = max(apx - holeWidth, apy - holeWidth)\n  -- hole through Y-Z (X-axis opening)\n  local hX = max(apy - holeWidth, apz - holeWidth)\n  -- hole through Z-X (Y-axis opening)\n  local hY = max(apz - holeWidth, apx - holeWidth)\n\n  -- Union all the holes with min()\n  local crossHoles = min(hZ, hX, hY)\n  -- in SDFs, subtracting is, max(shape, -otherShape)\n  return max(dBox, -crossHoles)\nend\n\n-- big box\nlocal mbox0=sdMengerBox(x, y, z, 4.5, 1.5)\n\n-- NOTE: I really need this\n-- \"generic repetition formula\"\n-- local localX = ((x + (W / 2)) % W) - (W / 2)\n\n-- little boxes everywhere\nlocal mbox1=sdMengerBox(\n\t((x + 3/2) % 3) - 3/2,\n\t((y + 3/2) % 3) - 3/2,\n\t((z + 3/2) % 3) - 3/2,\n\t3/2, 1/2\n)\n\nreturn mbox1\u003c=0 and mbox0\u003c=0 and y+10\n"
       },
       "completed": true,
       "fps": 12,
@@ -3795,6 +3802,7 @@
         "_fun_comment",
         "first_pass",
         "faster1",
+        "faster2",
         "with_sdf1",
         "with_sdf2"
       ]
@@ -3808,7 +3816,7 @@
       "code_variants": {
         "_fun_comment": "--[[ \nThe 'T-Square' fractal.\n\nstart with a square(cube).\nat each corner, place a new square(cube) of 1/2 size.\n\nrepeat (in this case, 3 repetitions)\n--]]\n",
         "first_pass": "function sdBox(px, py, pz, bx, by, bz)\n    local dx = abs(px) - bx\n    local dy = abs(py) - by\n    local dz = abs(pz) - bz\n    \n    -- External part\n    local mx = max(dx, 0.0)\n    local my = max(dy, 0.0)\n    local mz = max(dz, 0.0)\n    local external = sqrt(mx * mx + my * my + mz * mz)\n    \n    -- Internal part\n    local internal = min(max(dx, max(dy, dz)), 0.0)\n    \n    return external + internal\nend\n\n-- p = point position, b = box half-size, c = box center\nfunction isCornerFromBox(px, py, pz, cx, cy, cz, bx, by, bz)\n    local eps = 0.1 -- Tolerance for voxel centers\n    \n    -- Translate point to local space relative to center\n    local localX = abs(px - cx)\n    local localY = abs(py - cy)\n    local localZ = abs(pz - cz)\n\n    -- You are at a corner if you are at the limit of ALL axes\n    if localX \u003e= (bx - eps) and \n       localY \u003e= (by - eps) and \n       localZ \u003e= (bz - eps) then\n        return true\n    end\n    return false\nend\n\nbox1=sdBox(x+.5,y+.5,z+.5, 4,4,4)\nbox2=sdBox(x-3.5, y-3.5, z-3.5, 2, 2, 2)\nbox3=1\n\n-- there is bad mod math here, taking a small break\n-- PEACH boxes\nif isCornerFromBox(x,y,z, 4,4,4, 0.5, 0.5, 0.5) then\n\tbox2 = sdBox(x%8-3.5, y%8-3.5, z%8-3.5, 2, 2, 2)\nend\n\n-- GREY BOXES\nif isCornerFromBox(x,y,z, 2,2,2, 0-3.5*x%8,0-3.5*y%8,0-3.5*z%8) then\n\tbox3 = sdBox(x%4-1.5, y%4-1.5, z%4-1.5, 1, 1, 1)\nend\n\n-- TIME TO RENDER!!!\nif min(box1,box2,box3) \u003c=0 then\n\t\treturn \n\t\tbox1\u003c=0 and ORANGE or \n\t\tbox2\u003c=0 and PEACH or\n\t\tbox3\u003c=0 and GREY\t\nend\n",
-        "with_sdf1": "--204\n--159.964\n--\n--float sdBox( vec3 p, vec3 b )\n--{\n--  vec3 q = abs(p) - b;\n--  return length(max(q,0.0)) + min(max(q.x,max(q.y,q.z)),0.0);\n--}\nlocal function sdBox(px, py, pz, bx, by, bz)\n\tlocal dx = abs(px) - bx\n\tlocal dy = abs(py) - by\n\tlocal dz = abs(pz) - bz\n\t\n\t-- external part\n\tlocal mx = max(dx, 0.0)\n\tlocal my = max(dy, 0.0)\n\tlocal mz = max(dz, 0.0)\n\tlocal external = sqrt(mx * mx + my * my + mz * mz)\n\t\n\t-- internal part\n\tlocal internal = min(max(dx, dy, dz), 0.0) \n\treturn external + internal\nend\n-- boxes boxes everywhere\nlocal box1=sdBox(x+.5,y+.5,z+.5, 4,4,4)\nlocal box2=sdBox(x%8-3.5, y%8-3.5, z%8-3.5, 2, 2, 2)\nlocal box3=sdBox(x%4-1.5, y%4-1.5, z%4-1.5, 1, 1, 1)\n-- bippity boppity boo\nreturn\nbox1\u003c=0 and ORANGE or\nbox2\u003c=0 and PEACH or\nbox3\u003c=0 and GREY\n"
+        "with_sdf1": "--204\n--159.964\n--\n--float sdBox( vec3 p, vec3 b )\n--{\n--  vec3 q = abs(p) - b;\n--  return length(max(q,0.0)) + min(max(q.x,max(q.y,q.z)),0.0);\n--}\nlocal function sdBox(px, py, pz, bx, by, bz)\n\tlocal dx = abs(px) - bx\n\tlocal dy = abs(py) - by\n\tlocal dz = abs(pz) - bz\n\t\n\t-- external part\n\tlocal mx = max(dx, 0.0)\n\tlocal my = max(dy, 0.0)\n\tlocal mz = max(dz, 0.0)\n\tlocal external = sqrt(mx * mx + my * my + mz * mz)\n\t\n\t-- internal part\n\tlocal internal = min(max(dx, dy, dz), 0.0) \n\treturn external + internal\nend\n\n-- boxes boxes everywhere\nlocal box1=sdBox(x+.5,y+.5,z+.5, 4,4,4)\nlocal box2=sdBox(x%8-3.5, y%8-3.5, z%8-3.5, 2, 2, 2)\nlocal box3=sdBox(x%4-1.5, y%4-1.5, z%4-1.5, 1, 1, 1)\n\n-- bippity boppity boo\nreturn\nbox1\u003c=0 and ORANGE or\nbox2\u003c=0 and PEACH or\nbox3\u003c=0 and GREY\n"
       },
       "completed": true,
       "fps": 12,
@@ -3823,17 +3831,18 @@
       ]
     },
     {
-      "active_variant": "revisit_sdf",
+      "active_variant": "revisit_sdf_with_brain_turned_on",
       "animated": false,
       "challenge_complete": false,
       "code_instructions": 23.3165,
-      "code_size": 293,
+      "code_size": 261,
       "code_variants": {
         "_fun_comment": "--[[\nThe 'Vicsek' fractal.  Pretty similar to the\nMenger Sponge, almost it's inverse.\n\nin a 3x3x3 region, only keep the cubes that make a\n'cross' along each axis.\n\nnow visit each of these individual cubes, and apply\nthe same rule to them.\n\nrepeat for 3 iterations.\n]]",
         "faster1": "--293\n--28.242\nlocal X,Y,Z=x*x,y*y,z*z\n-- excludes a large portion of easy to calc negative space\nif X\u003e16 and Y\u003e16 or\n\t X\u003e16 and Z\u003e16 or\n\t Y\u003e16 and Z\u003e16 then return end\n\nfunction sdMengerBox(px, py, pz, size, holeWidth)\n    -- Distance to the base Cube\n    local adx = abs(px) - size\n    local ady = abs(py) - size\n    local adz = abs(pz) - size\n    local dBox = max(adx, ady, adz)\n\n    -- Define the cross-shaped holes (3 intersecting prisms)\n    -- hole through X-Y (Z-axis opening)\n    local hZ = max(abs(px) - holeWidth, abs(py) - holeWidth)\n    -- hole through Y-Z (X-axis opening)\n    local hX = max(abs(py) - holeWidth, abs(pz) - holeWidth)\n    -- hole through Z-X (Y-axis opening)\n    local hY = max(abs(pz) - holeWidth, abs(px) - holeWidth)\n\n    -- subtract the holes from the box\n    -- in SDFs, subtracting is, max(shape, -hole)\n    local crossHoles = min(hZ, hX, hY)\n    \n    return max(dBox, -crossHoles)\nend\n\n-- NOTE: I really need this\n-- \"generic repetition formula\"\n-- local localX = ((x + (W / 2)) % W) - (W / 2)\n\n-- mengerBoxes wrapping over the 9x9x9 crosses \n-- and the entire voxel space\nlocal mengerBoxes=sdMengerBox(\n\t((x + 4.5) % 9) - 4.5,\n\t((y + 4.5) % 9) - 4.5,\n\t((z + 4.5) % 9) - 4.5,\n\t4.5, 1.5\n)\nif mengerBoxes\u003c=0 then return end\n\n-- poormans vicsekCrosses everywhere\nlocal xM = abs(x)%3\nlocal XX = xM==2 and 1 or xM\nlocal yM = abs(y)%3\nlocal YY = yM==2 and 1 or yM\nlocal zM = abs(z)%3\nlocal ZZ = zM==2 and 1 or zM\nif XX+YY+ZZ \u003c=1 then\n\treturn X\u003c25 and Y\u003c25 and Z\u003c25 and WHITE or GREY\nend\n",
-        "faster2": "--301\n--23.317\nlocal X,Y,Z=x*x,y*y,z*z\n-- excludes a large portion of easy to calc negative space\nif X\u003e16 and Y\u003e16 or\n\t X\u003e16 and Z\u003e16 or\n\t Y\u003e16 and Z\u003e16 then return end\n\n-- signed distance function for MengerBox\nlocal function sdMengerBox(px, py, pz, size, holeWidth)\n    -- Distance to the base Cube\n\t\tlocal apx = abs(px)\n\t\tlocal apy = abs(py)\n\t\tlocal apz = abs(pz)\t\n    local adx = apx - size\n    local ady = apy - size\n    local adz = apz - size\n    local dBox = max(adx, ady, adz)\n\n    -- Define the cross-shaped holes (3 intersecting prisms)\n    -- hole through X-Y (Z-axis opening)\n    local hZ = max(apx - holeWidth, apy - holeWidth)\n    -- hole through Y-Z (X-axis opening)\n    local hX = max(apy - holeWidth, apz - holeWidth)\n    -- hole through Z-X (Y-axis opening)\n    local hY = max(apz - holeWidth, apx - holeWidth)\n\n    -- Union all the holes with min()\n    local crossHoles = min(hZ, hX, hY)\n    -- in SDFs, subtracting is, max(shape, -otherShape)\n    return max(dBox, -crossHoles)\nend\n\n-- NOTE: I really need this\n-- \"generic repetition formula\"\n-- local localX = ((x + (W / 2)) % W) - (W / 2)\n\n-- mengerBoxes wrapping over the 9x9x9 crosses \n-- and the entire voxel space\nlocal mengerBoxes=sdMengerBox(\n\t((x + 9/2) % 9) - 9/2,\n\t((y + 9/2) % 9) - 9/2,\n\t((z + 9/2) % 9) - 9/2,\n\t9/2, 1.5\n)\nif mengerBoxes\u003c=0 then return end\n\n-- poormans vicsekCrosses everywhere\nlocal xM = abs(x)%3\nlocal XX = xM==2 and 1 or xM\nlocal yM = abs(y)%3\nlocal YY = yM==2 and 1 or yM\nlocal zM = abs(z)%3\nlocal ZZ = zM==2 and 1 or zM\nif XX+YY+ZZ \u003c=1 then\n\treturn X\u003c25 and Y\u003c25 and Z\u003c25 and WHITE or GREY\nend\n",
+        "faster2": "--301\n--23.317\n\nlocal X,Y,Z=x*x,y*y,z*z\n-- excludes a large portion of easy to calc negative space\nif X\u003e16 and Y\u003e16 or\n\t X\u003e16 and Z\u003e16 or\n\t Y\u003e16 and Z\u003e16 then return end\n\n-- signed distance function for MengerBox\nlocal function sdMengerBox(px, py, pz, size, holeWidth)\n    -- Distance to the base Cube\n\t\tlocal apx = abs(px)\n\t\tlocal apy = abs(py)\n\t\tlocal apz = abs(pz)\t\n    local adx = apx - size\n    local ady = apy - size\n    local adz = apz - size\n    local dBox = max(adx, ady, adz)\n\n    -- Define the cross-shaped holes (3 intersecting prisms)\n    -- hole through X-Y (Z-axis opening)\n    local hZ = max(apx - holeWidth, apy - holeWidth)\n    -- hole through Y-Z (X-axis opening)\n    local hX = max(apy - holeWidth, apz - holeWidth)\n    -- hole through Z-X (Y-axis opening)\n    local hY = max(apz - holeWidth, apx - holeWidth)\n\n    -- Union all the holes with min()\n    local crossHoles = min(hZ, hX, hY)\n    -- in SDFs, subtracting is, max(shape, -otherShape)\n    return max(dBox, -crossHoles)\nend\n\n-- NOTE: I really need this\n-- \"generic repetition formula\"\n-- local localX = ((x + (W / 2)) % W) - (W / 2)\n\n-- mengerBoxes wrapping over the 9x9x9 crosses \n-- and the entire voxel space\nlocal mengerBoxes=sdMengerBox(\n\t((x + 9/2) % 9) - 9/2,\n\t((y + 9/2) % 9) - 9/2,\n\t((z + 9/2) % 9) - 9/2,\n\t9/2, 1.5\n)\nif mengerBoxes\u003c=0 then return end\n\n-- poormans vicsekCrosses everywhere\nlocal xM = abs(x)%3\nlocal XX = xM==2 and 1 or xM\nlocal yM = abs(y)%3\nlocal YY = yM==2 and 1 or yM\nlocal zM = abs(z)%3\nlocal ZZ = zM==2 and 1 or zM\nif XX+YY+ZZ \u003c=1 then\n\treturn X\u003c25 and Y\u003c25 and Z\u003c25 and WHITE or GREY\nend\n",
         "first_pass": "local X,Y,Z=x*x,y*y,z*z\nGOTIME=1\n--391\n--287.037\n--\n--float sdBox( vec3 p, vec3 b )\n--{\n--  vec3 q = abs(p) - b;\n--  return length(max(q,0.0)) + min(max(q.x,max(q.y,q.z)),0.0);\n--}\nfunction sdMengerBox(px, py, pz, size, holeWidth)\n    -- Distance to the base Cube\n    local adx = abs(px) - size\n    local ady = abs(py) - size\n    local adz = abs(pz) - size\n    local dBox = max(adx, ady, adz)\n\n    -- Define the cross-shaped holes (3 intersecting prisms)\n    -- hole through X-Y (Z-axis opening)\n    local hZ = max(abs(px) - holeWidth, abs(py) - holeWidth)\n    -- hole through Y-Z (X-axis opening)\n    local hX = max(abs(py) - holeWidth, abs(pz) - holeWidth)\n    -- hole through Z-X (Y-axis opening)\n    local hY = max(abs(pz) - holeWidth, abs(px) - holeWidth)\n\n    -- subtract the holes from the box\n    -- in SDFs, subtracting is, max(shape, -hole)\n    local crossHoles = min(hZ, hX, hY)\n    \n    return max(dBox, -crossHoles)\nend\n\nlocal mbox1=1\nlocal mbox2=1\nlocal mbox3=1\nlocal mbox4=1\n\nmbox1=sdMengerBox(x, y, z, 4.5, 1.5) -- peach (center) box\nmbox2=sdMengerBox(abs(x)-9, y, z, 4.5, 1.5) -- yellow boxes\nmbox3=sdMengerBox(x, abs(y)-9, z, 4.5, 1.5) -- blue boxes\nmbox4=sdMengerBox(x, y, abs(z)-9, 4.5, 1.5) -- green boxes\n\nif GOTIME==1 then\n\tPURPLE=0\n\tPEACH=0\n\tYELLOW=0\n\tLIGHTBLUE=0\n\tGREEN=0\nend\n\nif X\u003e16 and Y\u003e16 or\n\t X\u003e16 and Z\u003e16 or\n\t Y\u003e16 and Z\u003e16 then return PURPLE end\n\nif min(mbox1,mbox2,mbox3,mbox4) \u003c=0 then\n  return\n  mbox1\u003c=0 and PEACH or\n  mbox2\u003c=0 and YELLOW or\n\tmbox3\u003c=0 and LIGHTBLUE or\n\tmbox4\u003c=0 and GREEN\t\t\nend\n\n-- This is the weird inner shape I discovered by mistake\nlocal xx = abs(x)%3\nlocal xxx = xx\u003e=2 and 1 or xx\nlocal yy = abs(y)%3\nlocal yyy = yy\u003e=2 and 1 or yy\nlocal zz = abs(z)%3\nlocal zzz = zz\u003e=2 and 1 or zz\n\nif xxx+yyy+zzz \u003c=1 then\n\treturn X\u003c25 and Y\u003c25 and Z\u003c25 and WHITE or GREY\nend\n",
-        "revisit_sdf": "--405\n--163.351\nGOTIME=0\n-- signed distance function for MengerBox\nfunction sdMengerBox(px, py, pz, size, holeWidth)\n    -- Distance to the base Cube\n\t\tlocal apx = abs(px)\n\t\tlocal apy = abs(py)\n\t\tlocal apz = abs(pz)\t\n    local adx = apx - size\n    local ady = apy - size\n    local adz = apz - size\n    local dBox = max(adx, ady, adz)\n\n    -- Define the cross-shaped holes (3 intersecting prisms)\n    -- hole through X-Y (Z-axis opening)\n    local hZ = max(apx - holeWidth, apy - holeWidth)\n    -- hole through Y-Z (X-axis opening)\n    local hX = max(apy - holeWidth, apz - holeWidth)\n    -- hole through Z-X (Y-axis opening)\n    local hY = max(apz - holeWidth, apx - holeWidth)\n\n    -- Union all the holes with min()\n    local crossHoles = min(hZ, hX, hY)\n    -- in SDFs, subtracting is, max(shape, -otherShape)\n    return max(dBox, -crossHoles)\nend\n-- signed distance function for VicsekCross\nfunction sdVicsekCross(px, py, pz, size)\n  local apx, apy, apz = abs(px), abs(py), abs(pz)\n  \n  -- 1. The Central Cube\n  -- box where all sides are equal to 'size'\n  local center = max(apx, apy, apz) - size\n  \n  -- 2. The 3 Axis Bars (The \"Arms\")\n  -- Each bar is long on one axis (size * 3) and thin on others (size)\n  local armLength = size * 3\n\t\n  -- X-axis bar: thin on Y and Z\n  local barX = max(apx - armLength, apy - size, apz - size)\n  -- Y-axis bar: thin on X and Z\n  local barY = max(apy - armLength, apx - size, apz - size)\n  -- Z-axis bar: thin on X and Y\n  local barZ = max(apz - armLength, apx - size, apy - size)\n  \n  -- 3. Union all parts together\n  -- min(A, B) merges the volumes\n  return min(center, barX, barY, barZ)\nend\n\n-- setup sdf holders\n-- useful if you need to comment something out to get a view\nlocal sdf0,sdf1,sdf2=1,1,1\n\n-- big outer mengerBox\nlocal sdf0=sdMengerBox(x, y, z, 13.5, 4.5)\n\n-- NOTE: I really need this\n-- \"generic repetition formula\"\n-- local localX = ((x + (W / 2)) % W) - (W / 2)\n\n-- Tiny mengerBoxes wrapping over the crosses \n-- and the entire voxel space\nlocal sdf1=sdMengerBox(\n\t((x + 4.5) % 9) - 4.5,\n\t((y + 4.5) % 9) - 4.5,\n\t((z + 4.5) % 9) - 4.5,\n\t4.5, 1.5\n)\n\n-- vicsek crosses everywhere!!!\nlocal sdf2 = sdVicsekCross(\n\t((x + 3/2) % 3) - 3/2,\n \t((y + 3/2) % 3) - 3/2,\n\t((z + 3/2) % 3) - 3/2,\n\t0.5\n)\n\nif GOTIME==1 then PURPLE,PEACH=0,0 end\nreturn\n\tsdf0\u003c=0 and PURPLE or\n\tsdf1\u003c=0 and PEACH or\n\tsdf2\u003c=0 and \n\t(x*x\u003c25 and y*y\u003c25 and z*z\u003c25\n\t\tand WHITE or GREY)\n"
+        "revisit_sdf": "--405\n--163.351\nGOTIME=0\n-- signed distance function for MengerBox\nfunction sdMengerBox(px, py, pz, size, holeWidth)\n    -- Distance to the base Cube\n\t\tlocal apx = abs(px)\n\t\tlocal apy = abs(py)\n\t\tlocal apz = abs(pz)\t\n    local adx = apx - size\n    local ady = apy - size\n    local adz = apz - size\n    local dBox = max(adx, ady, adz)\n\n    -- Define the cross-shaped holes (3 intersecting prisms)\n    -- hole through X-Y (Z-axis opening)\n    local hZ = max(apx - holeWidth, apy - holeWidth)\n    -- hole through Y-Z (X-axis opening)\n    local hX = max(apy - holeWidth, apz - holeWidth)\n    -- hole through Z-X (Y-axis opening)\n    local hY = max(apz - holeWidth, apx - holeWidth)\n\n    -- Union all the holes with min()\n    local crossHoles = min(hZ, hX, hY)\n    -- in SDFs, subtracting is, max(shape, -otherShape)\n    return max(dBox, -crossHoles)\nend\n-- signed distance function for VicsekCross\nfunction sdVicsekCross(px, py, pz, size)\n  local apx, apy, apz = abs(px), abs(py), abs(pz)\n  \n  -- 1. The Central Cube\n  -- box where all sides are equal to 'size'\n  local center = max(apx, apy, apz) - size\n  \n  -- 2. The 3 Axis Bars (The \"Arms\")\n  -- Each bar is long on one axis (size * 3) and thin on others (size)\n  local armLength = size * 3\n\t\n  -- X-axis bar: thin on Y and Z\n  local barX = max(apx - armLength, apy - size, apz - size)\n  -- Y-axis bar: thin on X and Z\n  local barY = max(apy - armLength, apx - size, apz - size)\n  -- Z-axis bar: thin on X and Y\n  local barZ = max(apz - armLength, apx - size, apy - size)\n  \n  -- 3. Union all parts together\n  -- min(A, B) merges the volumes\n  return min(center, barX, barY, barZ)\nend\n\n-- setup sdf holders\n-- useful if you need to comment something out to get a view\nlocal sdf0,sdf1,sdf2=1,1,1\n\n-- big outer mengerBox\nlocal sdf0=sdMengerBox(x, y, z, 13.5, 4.5)\n\n-- NOTE: I really need this\n-- \"generic repetition formula\"\n-- local localX = ((x + (W / 2)) % W) - (W / 2)\n\n-- Tiny mengerBoxes wrapping over the crosses \n-- and the entire voxel space\nlocal sdf1=sdMengerBox(\n\t((x + 4.5) % 9) - 4.5,\n\t((y + 4.5) % 9) - 4.5,\n\t((z + 4.5) % 9) - 4.5,\n\t4.5, 1.5\n)\n\n-- vicsek crosses everywhere!!!\nlocal sdf2 = sdVicsekCross(\n\t((x + 3/2) % 3) - 3/2,\n \t((y + 3/2) % 3) - 3/2,\n\t((z + 3/2) % 3) - 3/2,\n\t0.5\n)\n\nif GOTIME==1 then PURPLE,PEACH=0,0 end\nreturn\n\tsdf0\u003c=0 and PURPLE or\n\tsdf1\u003c=0 and PEACH or\n\tsdf2\u003c=0 and \n\t(x*x\u003c25 and y*y\u003c25 and z*z\u003c25\n\t\tand WHITE or GREY)\n",
+        "revisit_sdf_with_brain_turned_on": "--297\n--35.485\nlocal X,Y,Z=x*x,y*y,z*z\n\n-- Empty Space Cheat: excludes a large portion of easy to calc negative space\nif X\u003e16 and Y\u003e16 or\n\t X\u003e16 and Z\u003e16 or\n\t Y\u003e16 and Z\u003e16 then return end\n\n-- signed distance function for MengerBox\nfunction sdMengerBox(px, py, pz, size, holeWidth)\n    -- Distance to the base Cube\n\t\tlocal apx = abs(px)\n\t\tlocal apy = abs(py)\n\t\tlocal apz = abs(pz)\t\n    local adx = apx - size\n    local ady = apy - size\n    local adz = apz - size\n    local dBox = max(adx, ady, adz)\n\n    -- Define the cross-shaped holes (3 intersecting prisms)\n    -- hole through X-Y (Z-axis opening)\n    local hZ = max(apx - holeWidth, apy - holeWidth)\n    -- hole through Y-Z (X-axis opening)\n    local hX = max(apy - holeWidth, apz - holeWidth)\n    -- hole through Z-X (Y-axis opening)\n    local hY = max(apz - holeWidth, apx - holeWidth)\n\n    -- Union all the holes with min()\n    local crossHoles = min(hZ, hX, hY)\n    -- in SDFs, subtracting is, max(shape, -otherShape)\n    return max(dBox, -crossHoles)\nend\n\n-- Signed Distance Function for VicsekCross\n--\n-- I am so silly! sdVicsekCross() is simply the inner part of a mengerBox!\n-- I dont need this function at all!\n--function sdVicsekCross(px, py, pz, size)\n--  local apx, apy, apz = abs(px), abs(py), abs(pz)\n--  \n--  -- 1. The Central Cube\n--  -- box where all sides are equal to 'size'\n--  local center = max(apx, apy, apz) - size\n--  \n--  -- 2. The 3 Axis Bars (The \"Arms\")\n--  -- Each bar is long on one axis (size * 3) and thin on others (size)\n--  local armLength = size * 3\n--\t\n--  -- X-axis bar: thin on Y and Z\n--  local barX = max(apx - armLength, apy - size, apz - size)\n--  -- Y-axis bar: thin on X and Z\n--  local barY = max(apy - armLength, apx - size, apz - size)\n--  -- Z-axis bar: thin on X and Y\n--  local barZ = max(apz - armLength, apx - size, apy - size)\n--  \n--  -- 3. Union all parts together\n--  -- min(A, B) merges the volumes\n--  return min(center, barX, barY, barZ)\n--end\n\n-- setup sdf holders\n-- useful if you need to comment something out to get a better view\n--local sdf0,sdf1,sdf2=1,1,0\n\n-- big outer mengerBox\n-- dont need anymore thanks to \"Empty Space Cheat:\" above\n--local sdf0=sdMengerBox(x, y, z, 13.5, 4.5)\n\n-- NOTE: I really need this\n-- \"generic repetition formula\"\n-- local localX = ((x + (W / 2)) % W) - (W / 2)\n\n-- Mid-size mengerBoxes 9x9x9 wrapping over the crosses \n-- and the entire voxel space\nlocal sdf1=sdMengerBox(\n\t((x + 9/2) % 9) - 9/2,\n\t((y + 9/2) % 9) - 9/2,\n\t((z + 9/2) % 9) - 9/2,\n\t9/2, 3/2\n)\n\n-- tiny menger boxes 3x3x3 (we will use the inversion to create the crosses)\nlocal sdf2=sdMengerBox(\n\t((x + 3/2) % 3) - 3/2,\n\t((y + 3/2) % 3) - 3/2,\n\t((z + 3/2) % 3) - 3/2,\n\t3/2, 1/2\n)\n\nif sdf1\u003c=0 then\n\treturn\nelse\n\treturn sdf2\u003e0 and (X\u003c25 and Y\u003c25 and Z\u003c25 and WHITE or GREY)\nend\n"
       },
       "completed": true,
       "fps": 12,
@@ -3845,8 +3854,9 @@
         "_fun_comment",
         "first_pass",
         "faster1",
+        "faster2",
         "revisit_sdf",
-        "faster2"
+        "revisit_sdf_with_brain_turned_on"
       ]
     },
     {
@@ -3873,14 +3883,15 @@
       ]
     },
     {
-      "active_variant": "faster2",
+      "active_variant": "faster3",
       "animated": false,
       "challenge_complete": false,
-      "code_instructions": 9.16431,
+      "code_instructions": 7.92171,
       "code_size": 124,
       "code_variants": {
         "faster": "-- Just add code to grow this sapling\n--10.336\nlocal XZ=x*x+z*z \nif y\u003e=0 then\n\tif XZ + (y-3)^2 \u003c 16 then\n\t\treturn y%2==0 and (2*(x-y/2-1)-(z+1))%6==0 and PINK or PEACH\n\telse\n\t\treturn\n\tend\nelseif x==0 and z==0 then\n\treturn DARKBROWN\nelseif y==-6 then\n\treturn\n\t\t\tXZ\u003c25 and (\n\t\t\t\t((x==2 or x==-4) and z==2 or \n\t\t\t\t\t x==-1 and z==-1 or \n\t\t\t\t\t x==2 and z==-4\n\t\t \t\t) and PINK\n\t\t\t\tor z%2==x%2 and PEACH) \n\t\t\tor GREEN\nend\n\n--y \n--0 1\n--2 2\n--4 3\n--6 4\n  ",
         "faster2": "-- Just add code to grow this sapling\n--9.164\nif y\u003e=0 then\n\tif x*x+z*z + (y-3)^2 \u003c 16 then\n\t\treturn y%2==0 and (2*(x-y/2-1)-(z+1))%6==0 and PINK or PEACH\n\telse\n\t\treturn\n\tend\nelseif x==0 and z==0 then\n\treturn DARKBROWN\nelseif y==-6 then\n\tif x*x+z*z\u003c25 then\n\t\tif (x==2 or x==-4) and z==2 \n\t\t\t\t\tor x==-1 and z==-1 \n\t\t\t\t\tor x==2 and z==-4 then\n\t\t\treturn PINK\n\t\telseif z%2==x%2 then\n\t\t\treturn PEACH\n\t\telse\n\t\t\treturn GREEN\n\t\tend\n\telse\n\t\treturn GREEN\n\tend\nend\n\n--y \n--0 1\n--2 2\n--4 3\n--6 4\n  ",
+        "faster3": "-- Just add code to grow this sapling\n--7.922\n--local function sakura()\nif y\u003e=0 then -- upper tree\n\tlocal Z=z*z\n\tif Z\u003e9 or x\u003c-3 or x\u003e3 then return\n\telseif x*x+Z + (y-3)^2 \u003c 16 then\n\t\treturn y%2==0 and (2*(x-y/2-1)-(z+1))%6==0 and PINK or PEACH\n\telse\n\t\treturn\n\tend\nelseif x==0 and z==0 then -- trunk\n\treturn DARKBROWN\nelseif y==-6 then -- floor\n\tif x*x+z*z\u003c25 then\n\t\tif (x==2 or x==-4) and z==2 \n\t\t\t\t\tor x==-1 and z==-1 \n\t\t\t\t\tor x==2 and z==-4 then\n\t\t\treturn PINK\n\t\telseif z%2==x%2 then\n\t\t\treturn PEACH\n\t\telse\n\t\t\treturn GREEN\n\t\tend\n\telse\n\t\treturn GREEN\n\tend\nend\n\n--y \n--0 1\n--2 2\n--4 3\n--6 4\n",
         "first_pass": "-- just add code to grow this sapling\n\nlocal XZ=x*x+z*z \nif XZ + (y-3)^2 \u003c 16 then\n\treturn y%2==0 and (2*(x-y/2-1)-(z+1))%6==0 and PINK or PEACH\nelseif x|z == 0 and y \u003c= -1 then\n\treturn DARKBROWN\nelseif y == -extent then\n\treturn XZ\u003c25 and (\n\t\t\t(((x==2 or x==-4) and z==2 or \n\t\t\t\t x==-1 and z==-1 or \n\t\t\t\t x==2 and z==-4\n\t\t \t) and PINK\n\t\t\t) or z%2 == x%2 and PEACH \n\t\t\t) or GREEN\n\tend\n\n--y \n--0 1\n--2 2\n--4 3\n--6 4\n  "
       },
       "completed": true,
@@ -3892,7 +3903,8 @@
       "variant_order": [
         "first_pass",
         "faster",
-        "faster2"
+        "faster2",
+        "faster3"
       ]
     },
     {
@@ -3947,6 +3959,253 @@
       "frames": 5,
       "id": "nine_toasts.vox",
       "size": 16,
+      "source": 200,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- Sometimes simple is best.\n\n-- In this game you are simply a red ball\n-- that needs to roll and bounce across\n-- levels filled with obstacles, to reach the\n-- exit.\n\n-- potential title: Super Bouncy Ball\nreturn 1"
+      },
+      "completed": false,
+      "fps": 10,
+      "frames": 8,
+      "id": "stairs-bounce.txt",
+      "size": 8,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- An analog horror game where\n-- watching a cursed TV signal dooms\n-- you to die unless you make someone\n-- else watch it!\nreturn 1"
+      },
+      "completed": false,
+      "fps": 8,
+      "frames": 20,
+      "id": "tv_color_bars.txt",
+      "size": 5,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- Every game dev needs to learn\n-- the animation fundamentals of\n-- 'squash and stretch' for more\n-- satisfying game feel!\nreturn 1"
+      },
+      "completed": false,
+      "fps": 10,
+      "frames": 8,
+      "id": "bouncing_ball.txt",
+      "size": 7,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- what's your 'desert island' game?\n\n-- someday one of my games will be somebody\n-- else's 'desert island game'!\nreturn 1"
+      },
+      "completed": false,
+      "fps": 8,
+      "frames": 7,
+      "id": "island.txt",
+      "size": 11,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- Manipulating time!\n\n-- imagine a game where you plant a sapling\n-- and then skip to the future and it's\n-- turned into a giant tree!\n\n-- or you go to the past and chop down\n-- the sapling, and then in the future\n-- the tree is GONE!\n\n-- so many possibilities, my brain is\n-- buzzing!\nreturn 1"
+      },
+      "completed": false,
+      "fps": 9,
+      "frames": 12,
+      "id": "clock.txt",
+      "size": 6,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- I'm back to the dolphin adventure game\n-- idea again.  I think that means\n-- this one has some real potential!\nreturn 1"
+      },
+      "completed": false,
+      "fps": 8,
+      "frames": 12,
+      "id": "dolphin.txt",
+      "size": 6,
+      "source": 100,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- good luck!\nreturn 1"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "keyboard.vox",
+      "size": 16,
+      "source": 200,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- good luck!\nreturn 1"
+      },
+      "completed": false,
+      "fps": 1,
+      "frames": 6,
+      "id": "sdf-nine-toasters.vox",
+      "size": 16,
+      "source": 200,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 21.903,
+      "code_size": 46,
+      "code_variants": {
+        "code": "--\n-- _NEVER_ ride the rainbow wormhole\n-- might be dangerous, could be fun though\n--\n\nfunction part(y)\n\treturn (y)%11+4\nend\n\nlocal to_the_rainbow = inrange((y^2 - x^2 - z^2 + 8 + 12*t),0,35)\n\n-- weeeeeeee\nreturn to_the_rainbow and part(y)\n"
+      },
+      "completed": true,
+      "fps": 6,
+      "frames": 10,
+      "id": "dl-8673.vox",
+      "size": 10,
+      "source": 300,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- good luck!\nreturn 1"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "menger_with_sdfs.vox",
+      "size": 3,
+      "source": 200,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 152.297,
+      "code_size": 35994,
+      "code_variants": {
+        "code": "--[[\n\tThe Menger Sponge! Wait, it looks a little different?\n\t\n\tWe are zoomed in here so we can not see too much of the \"Menger Sponge?\"\n\tbut, that is ok!\n\tIt makes things easier to work with when our working area is smaller.\n\t\n\tSome of my understanding of \"signed distance functions\" \n  is thanks to https://iquilezles.org/articles/distfunctions/ \n]]--\n\n--[[\n\t1. Okay, first things first\n\t\n\tWe setup a signed distance function (sdf) \n\tthis will help us to create our mini menger boxes.\n\tTogether, we can use the \"sdMengerBox\" function to make \n\ta bunch of boxes and then combine\tthem in interesting ways.\n]]--\n\n-- \"signed distance function\" for \"MengerBox\" (let us keep this function handy)\nlocal function sdMengerBox(px, py, pz, size, holeWidth)\n  -- Distance to the base Cube\n  local apx = abs(px)\n  local apy = abs(py)\n  local apz = abs(pz)\t\n  local adx = apx - size\n  local ady = apy - size\n  local adz = apz - size\n  local dBox = max(adx, ady, adz)\n\n  -- Define the cross-shaped holes (3 intersecting prisms)\n  -- hole through X-Y (Z-axis opening)\n  local hZ = max(apx - holeWidth, apy - holeWidth)\n  -- hole through Y-Z (X-axis opening)\n  local hX = max(apy - holeWidth, apz - holeWidth)\n  -- hole through Z-X (Y-axis opening)\n  local hY = max(apz - holeWidth, apx - holeWidth)\n\n  -- Union all the holes with min()\n  local crossHoles = min(hZ, hX, hY)\n  -- in SDFs, subtracting is, max(shape, -otherShape)\n  return max(dBox, -crossHoles)\nend\n-- this a helper function I need later to demo some things\nlocal function demoHelper(demo_name,a,b,color1,color2)\n  --## Subtraction examples:\n  if demo_name==\"subtraction_2\" then return max(-a,b)\u003c=0 and color1 end\n\tif demo_name==\"outer_subtraction_2\" then return max(-b,a)\u003e0 and color2 end\n  --## Union examples\n\tif demo_name==\"union\" then return min(a,b)\u003c=0 and color1 end\n\tif demo_name==\"outer_union\" then return min(a,b)\u003e0 and color2 end\n  --## Intersection examples:\n\tif demo_name==\"intersection\" then return max(a,b)\u003c=0 and color1 end\n\tif demo_name==\"outer_intersection\" then return max(a,b)\u003e0 and color2 end\n  --## Some other examples I enjoyed:\n\t if demo_name==\"wacky_subtraction_1\" then return max(-a,b)\u003e0 and color2 end\n  --## Fun with \"multiple combinations\"\n  --## You can keep on combining shapes together!\n  --## I enjoyed \"xor + outer union\":\n  if demo_name==\"xor_plus_outer_union\" then\n    if max(min(a,b),-max(a,b))\u003c=0 then\n    \treturn color1\n    elseif min(a,b)\u003e0 then\n    \treturn color2\n\t\telse \n\t\t\treturn 0\n    end\n  end\n  --## this one I call \"Subtraction + reversal Subtraction\":\n\tif demo_name==\"subtraction_plus_reversal_subtraction\" then return max(-b,a)\u003c=0 and color1 or max(-a,b)\u003c=0 and color2 end\n\t\n\treturn BROWN -- debug color incase my helper goes wrong somehow\nend\n\n--[[\n\t2. Okay, second things second\n\t\n\tWe will setup two variable: \"a=\" and \"b=\"\n\tThese will be our two \"shapes\".\n\t\n\tWe can combine our \"shapes\" in simple ways with\n\ta little bit of math, all thanks to our signed distance function above.\n]]--\n\n-- a, the big box:\n--\n-- Remember: above we have \"sdMengerBox(px, py, pz, size, holeWidth)\"\n-- Note: all sizes are \"half-sizes\", so we divide by 2.\nlocal a = sdMengerBox(x, y, z, 9/2, 3/2)\n\n-- b, little boxes everywhere:\n--\n-- Remember: sdMengerBox(px, py, pz, size, holeWidth)\n-- Note: we use mod() math here with our sdf to make \n--       a bunch of repeating mini menger boxes\nlocal b = sdMengerBox(\n\t((x + 3/2) % 3) - 3/2,\n\t((y + 3/2) % 3) - 3/2,\n\t((z + 3/2) % 3) - 3/2,\n\t3/2, 1/2\n)\n\n-- 3. Time to get really elaborate!\n--\n-- Now we setup a custom colorwheel to be a subset of the 16 colors\n-- with \"counter_part_colors\" chosen for some symmetry\n--\n-- The colors we will end up working with are: 6,7,9,10,11,13,14\n-- starting at purple and ending over in the blues\nlocal original_color_wheel = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16}\nlocal counter_part_color_wheel = {1,2,3,4,5, 8,7,6, 11,10,9, 14,13,12, 16,15}\n\n-- The following periodic number changes with \"y\"\n-- hopefully it stays between 7 and 13\n-- I hope it doesnt run away on us (heh heh)\nlocal our_periodic_number = (y+3)%7+7 \nif x==0 and z==0 then print(our_periodic_number) end\n\n-- Using our periodic number and our custom color wheels\n-- we can setup two colors that change with y\nlocal color1 = original_color_wheel[our_periodic_number]\nlocal color2 = counter_part_color_wheel[our_periodic_number]\n\n--[[ \n\t4. Okay! time for the fun part (heh heh)\n\n\tNow we go looking for a fun \"mengerspongey-ishy shape\" \n\tusing Primitive combinations with our \"sdfs\", \"a\" and \"b\"\n\n\tPrimitive combinations for two shapes using signed distance functions:\n  \toperation Union:        min(a,b)\n  \toperation Subtraction:  max(-a,b)\n  \toperation Intersection: max(a,b)\n  \toperation Xor:          max(min(a,b),-max(a,b))\n\n\tFor more visual examples of \"primitive combinations\" using \"a\" and \"b\"\n  Comment and Uncomment the \"return\" statements below to see new shapes!\n\t\n\tNote: make sure to only have one \"return\" statement uncommented\n]]--\n\n--## first example is basic subtraction:\n--## Note: make sure to only have one \"return\" statement uncommented\n--return max(-b,a)\u003c=0 and color1\n\n--return max(a,b)\u003c=0 and color1 or max(a,b)\u003e0 and color2\n\n--return demoHelper(\"subtraction_2\", a, b, color1, color2)\n--return demoHelper(\"outer_subtraction_2\", a, b, color1, color2)\n--return demoHelper(\"union\", a, b, color1, color2)\n--return demoHelper(\"outer_union\", a, b, color1, color2)\n--return demoHelper(\"intersection\", a, b, color1, color2)\n--return demoHelper(\"outer_intersection\", a, b, color1, color2)\n--return demoHelper(\"wacky_subtraction_1\", a, b, color1, color2)\n--return demoHelper(\"xor_plus_outer_union\", a, b, color1, color2)\n--return demoHelper(\"subtraction_plus_reversal_subtraction\", a, b, color1, color2)\n\n--## this one I call \"Subtraction plus Reversal Subtraction\":\n--return max(-b,a)\u003c=0 and color1 or max(-b,a)\u003e0 and color2\n\n\n\n\n\n\n--[[ \n\tbtw, Did you want to have a look at the shapes \"a\" and \"b\"?\n\t\n\tNote: because we repeated the sdf shape using mod() math above\n\tfor \"b\" we must do more mod() math to \"reveal it\" nicely\n]]-- \n\n--## Have a look at shape \"a\" (one big 9x9x9 mengercube)\n--return a\u003c=0 and PEACH\n\n--## Have a look at shape \"b\" (3x3x3 mengercubes)\n--return b\u003c=0 and (x-2)//3 + (y-2)//3 + (z-2)//3 + 12\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "dl-8678.vox",
+      "size": 3,
+      "source": 300,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "--[[\n\tThe Menger Sponge! Wait, it looks a little different?\n\t\n\tWe are zoomed in here so we can not see too much of the \"Menger Sponge?\"\n\tbut, that is ok!\n\tIt makes things easier to work with when our working area is smaller.\n\t\n\tSome of my understanding of \"signed distance functions\" \n  is thanks to https://iquilezles.org/articles/distfunctions/ \n]]--\n\n--[[\n\t1. Okay, first things first\n\t\n\tWe setup a signed distance function (sdf) \n\tthis will help us to create our mini menger boxes.\n\tTogether, we can use the \"sdMengerBox\" function to make \n\ta bunch of boxes and then combine\tthem in interesting ways.\n]]--\n\n-- \"signed distance function\" for \"MengerBox\" (let us keep this function handy)\nlocal function sdMengerBox(px, py, pz, size, holeWidth)\n  -- Distance to the base Cube\n  local apx = abs(px)\n  local apy = abs(py)\n  local apz = abs(pz)\t\n  local adx = apx - size\n  local ady = apy - size\n  local adz = apz - size\n  local dBox = max(adx, ady, adz)\n\n  -- Define the cross-shaped holes (3 intersecting prisms)\n  -- hole through X-Y (Z-axis opening)\n  local hZ = max(apx - holeWidth, apy - holeWidth)\n  -- hole through Y-Z (X-axis opening)\n  local hX = max(apy - holeWidth, apz - holeWidth)\n  -- hole through Z-X (Y-axis opening)\n  local hY = max(apz - holeWidth, apx - holeWidth)\n\n  -- Union all the holes with min()\n  local crossHoles = min(hZ, hX, hY)\n  -- in SDFs, subtracting is, max(shape, -otherShape)\n  return max(dBox, -crossHoles)\nend\n-- this a helper function I need later to demo some things\nlocal function demoHelper(demo_name,a,b,color1,color2)\n  --## Subtraction examples:\n  if demo_name==\"subtraction_2\" then return max(-a,b)\u003c=0 and color1 end\n\tif demo_name==\"outer_subtraction_2\" then return max(-b,a)\u003e0 and color2 end\n  --## Union examples\n\tif demo_name==\"union\" then return min(a,b)\u003c=0 and color1 end\n\tif demo_name==\"outer_union\" then return min(a,b)\u003e0 and color2 end\n  --## Intersection examples:\n\tif demo_name==\"intersection\" then return max(a,b)\u003c=0 and color1 end\n\tif demo_name==\"outer_intersection\" then return max(a,b)\u003e0 and color2 end\n  --## Some other examples I enjoyed:\n\t if demo_name==\"wacky_subtraction_1\" then return max(-a,b)\u003e0 and color2 end\n  --## Fun with \"multiple combinations\"\n  --## You can keep on combining shapes together!\n  --## I enjoyed \"xor + outer union\":\n  if demo_name==\"xor_plus_outer_union\" then\n    if max(min(a,b),-max(a,b))\u003c=0 then\n    \treturn color1\n    elseif min(a,b)\u003e0 then\n    \treturn color2\n\t\telse \n\t\t\treturn 0\n    end\n  end\n  --## this one I call \"Subtraction + reversal Subtraction\":\n\tif demo_name==\"subtraction_plus_reversal_subtraction\" then return max(-b,a)\u003c=0 and color1 or max(-a,b)\u003c=0 and color2 end\n\t\n\treturn BROWN -- debug color incase my helper goes wrong somehow\nend\n\n--[[\n\t2. Okay, second things second\n\t\n\tWe will setup two variable: \"a=\" and \"b=\"\n\tThese will be our two \"shapes\".\n\t\n\tWe can combine our \"shapes\" in simple ways with\n\ta little bit of math, all thanks to our signed distance function above.\n]]--\n\n-- a, the big box:\n--\n-- Remember: above we have \"sdMengerBox(px, py, pz, size, holeWidth)\"\n-- Note: all sizes are \"half-sizes\", so we divide by 2.\nlocal a = sdMengerBox(x, y, z, 9/2, 3/2)\n\n-- b, little boxes everywhere:\n--\n-- Remember: sdMengerBox(px, py, pz, size, holeWidth)\n-- Note: we use mod() math here with our sdf to make \n--       a bunch of repeating mini menger boxes\nlocal b = sdMengerBox(\n\t((x + 3/2) % 3) - 3/2,\n\t((y + 3/2) % 3) - 3/2,\n\t((z + 3/2) % 3) - 3/2,\n\t3/2, 1/2\n)\n\n-- 3. Time to get really elaborate!\n--\n-- Now we setup a custom colorwheel to be a subset of the 16 colors\n-- with \"counter_part_colors\" chosen for some symmetry\n--\n-- The colors we will end up working with are: 6,7,9,10,11,13,14\n-- starting at purple and ending over in the blues\nlocal original_color_wheel = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16}\nlocal counter_part_color_wheel = {1,2,3,4,5, 8,7,6, 11,10,9, 14,13,12, 16,15}\n\n-- The following periodic number changes with \"y\"\n-- hopefully it stays between 7 and 13\n-- I hope it doesnt run away on us (heh heh)\nlocal our_periodic_number = (y+3)%7+7 \nif x==0 and z==0 then print(our_periodic_number) end\n\n-- Using our periodic number and our custom color wheels\n-- we can setup two colors that change with y\nlocal color1 = original_color_wheel[our_periodic_number]\nlocal color2 = counter_part_color_wheel[our_periodic_number]\n\n--[[ \n\t4. Okay! time for the fun part (heh heh)\n\n\tNow we go looking for a fun \"mengerspongey-ishy shape\" \n\tusing Primitive combinations with our \"sdfs\", \"a\" and \"b\"\n\n\tPrimitive combinations for two shapes using signed distance functions:\n  \toperation Union:        min(a,b)\n  \toperation Subtraction:  max(-a,b)\n  \toperation Intersection: max(a,b)\n  \toperation Xor:          max(min(a,b),-max(a,b))\n\n\tFor more visual examples of \"primitive combinations\" using \"a\" and \"b\"\n  Comment and Uncomment the \"return\" statements below to see new shapes!\n\t\n\tNote: make sure to only have one \"return\" statement uncommented\n]]--\n\nreturn max(a,b)\u003c=0 and color1 or min(a,b)\u003e0 and color2\n--## first example is basic subtraction:\n--## Note: make sure to only have one \"return\" statement uncommented\nreturn max(a,b)\u003c=0 and color1 or min(a,b)\u003e0 and color2\n\n--return demoHelper(\"subtraction_2\", a, b, color1, color2)\n--return demoHelper(\"outer_subtraction_2\", a, b, color1, color2)\n--return demoHelper(\"union\", a, b, color1, color2)\n--return demoHelper(\"outer_union\", a, b, color1, color2)\n--return demoHelper(\"intersection\", a, b, color1, color2)\n--return demoHelper(\"outer_intersection\", a, b, color1, color2)\n--return demoHelper(\"wacky_subtraction_1\", a, b, color1, color2)\n--return demoHelper(\"xor_plus_outer_union\", a, b, color1, color2)\n--return demoHelper(\"subtraction_plus_reversal_subtraction\", a, b, color1, color2)\n\n--## this one I call \"Subtraction plus Reversal Subtraction\":\n--return max(-b,a)\u003c=0 and color1 or max(-b,a)\u003e0 and color2\n\n\n\n\n\n--[[ \n\tbtw, Did you want to have a look at the shapes \"a\" and \"b\"?\n\t\n\tNote: because we repeated the sdf shape using mod() math above\n\tfor \"b\" we must do more mod() math to \"reveal it\" nicely\n]]-- \n\n--## Have a look at shape \"a\" (one big 9x9x9 mengercube)\n--return a\u003c=0 and PEACH\n\n--## Have a look at shape \"b\" (3x3x3 mengercubes)\n--return b\u003c=0 and (x-2)//3 + (y-2)//3 + (z-2)//3 + 12\n"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "menger_with_distance_functions.vox",
+      "size": 3,
+      "source": 200,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 29.903,
+      "code_size": 65,
+      "code_variants": {
+        "code": "--\n-- _NEVER_ ride the rainbow wormhole\n-- might be dangerous, could be fun though\n--\n\nfunction part(y)\n\treturn y%11+4\nend\nlocal xyz=x*y*z+x*x+y*y+z*z\nlocal to_the_rainbow = inrange((y^2 - x^2 - z^2 + 8 + 12*t),0,35)\n\n-- weeeeeeee\nreturn to_the_rainbow and part(y)\n"
+      },
+      "completed": true,
+      "fps": 6,
+      "frames": 10,
+      "id": "rainbow-wormhole-v2.vox",
+      "size": 10,
       "source": 200,
       "variant_order": [
         "code"
