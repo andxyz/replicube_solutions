@@ -1,5 +1,6 @@
 --293
 --28.242
+
 local X,Y,Z=x*x,y*y,z*z
 -- excludes a large portion of easy to calc negative space
 if X>16 and Y>16 or

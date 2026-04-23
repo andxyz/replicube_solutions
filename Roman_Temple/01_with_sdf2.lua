@@ -49,12 +49,14 @@ local function inigo_sdSegment(px, py, pz, ax, ay, az, bx, by, bz)
     return sqrt(dx*dx + dy*dy + dz*dz)
 end
 
+--rooftop
 if y==-3 or inrange(y,3,extent) then
 	local xx = y==-3 and 3 or 6-y%6
 	-- local zz=extent
 	return inigo_sdBox(x,z,xx,extent) <= 0
 end
 
+--columns
 if x~=0 or not inrange(z,-3,3) then
 	local xx = btoi(x%2==0) * x
 	local zz = btoi(z%2==0) * z

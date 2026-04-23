@@ -1,13 +1,14 @@
---301
---23.317
+--300
+--25.624
 local X,Y,Z=x*x,y*y,z*z
--- excludes a large portion of easy to calc negative space
+
+-- Empty Space Cheat: excludes a large portion of easy to calc negative space
 if X>16 and Y>16 or
 	 X>16 and Z>16 or
 	 Y>16 and Z>16 then return end
 
 -- signed distance function for MengerBox
-local function sdMengerBox(px, py, pz, size, holeWidth)
+function sdMengerBox(px, py, pz, size, holeWidth)
     -- Distance to the base Cube
 		local apx = abs(px)
 		local apy = abs(py)
@@ -35,23 +36,29 @@ end
 -- "generic repetition formula"
 -- local localX = ((x + (W / 2)) % W) - (W / 2)
 
--- mengerBoxes wrapping over the 9x9x9 crosses 
+-- Mid-size mengerBoxes 9x9x9 wrapping over the crosses 
 -- and the entire voxel space
-local mengerBoxes=sdMengerBox(
+local sdf1=sdMengerBox(
 	((x + 9/2) % 9) - 9/2,
 	((y + 9/2) % 9) - 9/2,
 	((z + 9/2) % 9) - 9/2,
-	9/2, 1.5
+	9/2, 3/2
 )
-if mengerBoxes<=0 then return end
+if sdf1<=0 then
+	return
+end
 
--- poormans vicsekCrosses everywhere
-local xM = abs(x)%3
-local XX = xM==2 and 1 or xM
-local yM = abs(y)%3
-local YY = yM==2 and 1 or yM
-local zM = abs(z)%3
-local ZZ = zM==2 and 1 or zM
-if XX+YY+ZZ <=1 then
-	return X<25 and Y<25 and Z<25 and WHITE or GREY
+-- tiny menger boxes 3x3x3 (we will use the inversion to create the crosses)
+local sdf2=sdMengerBox(
+	((x + 3/2) % 3) - 3/2,
+	((y + 3/2) % 3) - 3/2,
+	((z + 3/2) % 3) - 3/2,
+	3/2, 1/2
+)
+if sdf2>0 then
+	if X<25 and Y<25 and Z<25 then
+		return WHITE
+	else
+		return GREY
+	end
 end

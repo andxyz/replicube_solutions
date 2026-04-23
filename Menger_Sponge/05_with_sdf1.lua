@@ -1,5 +1,5 @@
---201
---146.549
+--177
+--107.549
 --
 -- signed distance function for MengerBox
 local function sdMengerBox(px, py, pz, size, holeWidth)
@@ -30,10 +30,13 @@ end
 local mbox0=sdMengerBox(x, y, z, 4.5, 1.5)
 
 -- little boxes everywhere
-local xx = x%3==2 and 1 or x%3
-local yy = y%3==2 and 1 or y%3
-local zz = z%3==2 and 1 or z%3
-local mbox1=sdMengerBox(xx, yy, zz, 1.5, 0.5)
+local mbox1=sdMengerBox(
+	ceil(x%3/2), 
+	ceil(y%3/2), 
+	ceil(z%3/2), 
+	1.5, 0.5
+)
 
+-- union two SDFs with max()
 if max(mbox1,mbox0)<=0 then return y+10 end
---if min(mbox1,mbox0)<=0 then return y+10 end
+--return mbox1<=0 and mbox0<=0 and y+10

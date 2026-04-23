@@ -1,5 +1,5 @@
---297
---35.485
+--296
+--35.421
 local X,Y,Z=x*x,y*y,z*z
 
 -- Empty Space Cheat: excludes a large portion of easy to calc negative space
@@ -80,6 +80,7 @@ local sdf1=sdMengerBox(
 	9/2, 3/2
 )
 
+
 -- tiny menger boxes 3x3x3 (we will use the inversion to create the crosses)
 local sdf2=sdMengerBox(
 	((x + 3/2) % 3) - 3/2,
@@ -87,9 +88,8 @@ local sdf2=sdMengerBox(
 	((z + 3/2) % 3) - 3/2,
 	3/2, 1/2
 )
-
 if sdf1<=0 then
 	return
-else
-	return sdf2>0 and (X<25 and Y<25 and Z<25 and WHITE or GREY)
+elseif sdf2>0 then
+	return X<25 and Y<25 and Z<25 and WHITE or GREY
 end

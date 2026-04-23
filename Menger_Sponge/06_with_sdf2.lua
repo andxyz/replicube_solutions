@@ -1,5 +1,5 @@
---195
---105.549
+--200
+--88.067
 --
 -- signed distance function for MengerBox
 local function sdMengerBox(px, py, pz, size, holeWidth)
@@ -26,19 +26,23 @@ local function sdMengerBox(px, py, pz, size, holeWidth)
   return max(dBox, -crossHoles)
 end
 
--- big box
+-- big menger box
 local mbox0=sdMengerBox(x, y, z, 4.5, 1.5)
+if mbox0>0 then -- we are outside the big box shape
+	return -- leave early
+end
 
 -- NOTE: I really need this
 -- "generic repetition formula"
 -- local localX = ((x + (W / 2)) % W) - (W / 2)
 
--- little boxes everywhere
+-- little menger boxes everywhere
 local mbox1=sdMengerBox(
 	((x + 3/2) % 3) - 3/2,
 	((y + 3/2) % 3) - 3/2,
 	((z + 3/2) % 3) - 3/2,
 	3/2, 1/2
 )
-
-return mbox1<=0 and mbox0<=0 and y+10
+if mbox1<=0 then -- we are inside a little box
+	return y+10
+end

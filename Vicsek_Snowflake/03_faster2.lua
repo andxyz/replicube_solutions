@@ -1,5 +1,5 @@
---301
---23.317
+--265
+--22.880
 
 local X,Y,Z=x*x,y*y,z*z
 -- excludes a large portion of easy to calc negative space
@@ -47,12 +47,6 @@ local mengerBoxes=sdMengerBox(
 if mengerBoxes<=0 then return end
 
 -- poormans vicsekCrosses everywhere
-local xM = abs(x)%3
-local XX = xM==2 and 1 or xM
-local yM = abs(y)%3
-local YY = yM==2 and 1 or yM
-local zM = abs(z)%3
-local ZZ = zM==2 and 1 or zM
-if XX+YY+ZZ <=1 then
+if ceil(x%3/2)+ceil(y%3/2)+ceil(z%3/2) <=1 then
 	return X<25 and Y<25 and Z<25 and WHITE or GREY
 end
