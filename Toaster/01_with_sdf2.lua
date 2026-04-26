@@ -1,6 +1,6 @@
---641
---154.098
--- first pass with sdfs
+--639
+--152.119
+-- second pass with sdfs
 --
 -- p_x, p_y, p_z: current voxel coordinates
 -- b_x, b_y, b_z: box half-extents (distance from center to face)
