@@ -6,4 +6,5 @@
 -- exit.
 
 -- potential title: Super Bouncy Ball
-return 1
+
+return -z+1-t|-y-1+t//2 >= 0 and BROWN

@@ -1119,12 +1119,13 @@
       ]
     },
     {
-      "active_variant": "first_pass",
+      "active_variant": "faster",
       "animated": false,
       "challenge_complete": false,
-      "code_instructions": 6.96359,
+      "code_instructions": 6.52526,
       "code_size": 136,
       "code_variants": {
+        "faster": "-- I'm really proud of this one.\n-- I had one of these and played it for years.\n\n-- Notes:\n-- min() can be used to make cross shapes\n-- like the d-pad.\n\n-- 144\n-- 6.525\nif z\u003e=-1 and z\u003c=1 and x\u003e=-4 and x\u003c=4 then\n\t-- screen\n\tif (y-3)^2 \u003c= 4 then\n\t\tif (x==-3 or x==3) and z == 1 then\n\t\t\t-- grey bars\n\t\t\treturn GREY\n\t\telseif x\u003e=-2 and x\u003c=2 and z \u003e -1 then\n\t\t\t-- recessed green screen\n\t\t\treturn z == 0 and GREEN or z == 1 and EMPTY\n\t\tend\n\telseif y - x \u003c -8 then\n\t\t-- chip off the corner\n\t\treturn EMPTY\n\tend\n\n\treturn WHITE -- body of gameboy\nelseif z==2 then --\n\tif (x+2)^2 \u003c= 1 and \n\t\t (y+2)^2 \u003c= 1 and \n\t\t min(abs(x+2),abs(y+2)) == 0 then\n\t\t-- the dpad\n\t\treturn BLACK\n\telseif x == 1 and y == -3 or x == 3 and y == -2 then\n\t\t-- buttons\n\t\treturn RED\n\tend\nend\n",
         "first_pass": "-- I'm really proud of this one.\n-- I had one of these and played it for years.\n\n-- Notes:\n-- min() can be used to make cross shapes\n-- like the d-pad.\n\nif z^2 \u003c 2 and x^2 \u003c 17 then\n\t-- screen\n\tif (y-3)^2 \u003c 5 then\n\t\tif x^2 == 9 and z == 1 then\n\t\t\t-- grey bars\n\t\t\treturn GREY\n\t\telseif x^2\u003c5 and z \u003e -1 then\n\t\t\t-- recessed green screen\n\t\t\treturn z == 0 and GREEN or z == 1 and EMPTY\n\t\tend\n\telseif y - x \u003c -8 then\n\t\t-- chip off the corner\n\t\treturn EMPTY\n\tend\n\n\treturn WHITE -- body of gameboy\nelseif z==2 then --\n\tif (x+2)^2 \u003c 2 and \n\t\t (y+2)^2 \u003c 2 and \n\t\t min(abs(x+2),abs(y+2)) == 0 then\n\t\t-- the dpad\n\t\treturn BLACK\n\telseif x == 1 and y == -3 or x == 3 and y == -2 then\n\t\t-- buttons\n\t\treturn RED\n\tend\nend\n"
       },
       "completed": true,
@@ -1134,7 +1135,8 @@
       "size": 6,
       "source": 100,
       "variant_order": [
-        "first_pass"
+        "first_pass",
+        "faster"
       ]
     },
     {
@@ -3578,36 +3580,36 @@
       ]
     },
     {
-      "active_variant": "code",
+      "active_variant": "first_pass",
       "animated": true,
       "challenge_complete": false,
-      "code_instructions": 0.0,
-      "code_size": 0,
+      "code_instructions": 12.2595,
+      "code_size": 267,
       "code_variants": {
-        "code": "-- good luck!\nreturn 1"
+        "first_pass": "-- good luck!\n\n-- road and dirt\nlocal X=x*x\nif y\u003c=-3 then\n\tif X\u003c=9 and y==-3 then\n\t\tif X==4 then\n\t\t\tlocal tx = t%7\n\t\t\tlocal v1 = (z+7-tx)//3%7\n\t\t\tlocal v2 = (z-tx)//3%7\n\t\t\tif v1==0 or v2==0 then return YELLOW else return DARKBLUE end\n\t\telse\n\t\t\treturn DARKBLUE\n\t\tend\n\tend\n\treturn ORANGE\nend\n\n-- wheels\nif y\u003e=-2 and y\u003c=-1 and \n\t   (z\u003e=-3 and z\u003c=-2 or z\u003e=2 and z\u003c=3) \n\t   and X==1 then\n\treturn BLACK\nend\n\n-- car\n--if x|y|z==0 then\n--\tprint(t//2%2)\n--end\nif X\u003c=1 and z\u003e=-4 and z\u003c=4 then\n\tlocal bump_y=t//2%2\n\tif (y==1+bump_y or y==2+bump_y) and (z==4 or z\u003c=-3) then\n\t\treturn\n\telseif y\u003e=-1+bump_y and y\u003c=2+bump_y then\n\t\treturn LIGHTBLUE\n\tend\nend\n\n-- cacti\nif y\u003c=4 and X==25 then\n\tlocal cactus_periodic = (z-t+(x==5 and 10 or 0))%20\n\tif cactus_periodic == 2 then return GREEN end\n\tif y==0 and cactus_periodic == 1 then return GREEN end\n\tif y\u003c=3 and y\u003e=0 and cactus_periodic == 0 then return GREEN end\n\tif y==1 and cactus_periodic == 3 then return GREEN end\n\tif y\u003c=2 and y\u003e=1 and cactus_periodic == 4 then return GREEN end\nend\n\n"
       },
-      "completed": false,
+      "completed": true,
       "fps": 12,
       "frames": 20,
       "id": "roadtrip.txt",
       "size": 5,
       "source": 100,
       "variant_order": [
-        "code"
+        "first_pass"
       ]
     },
     {
       "active_variant": "faster3",
       "animated": false,
       "challenge_complete": false,
-      "code_instructions": 8.7686,
+      "code_instructions": 8.7423,
       "code_size": 107,
       "code_variants": {
         "faster": "--130\n--23.231\nif y==-extent then return 15 end\nif y==-extent+1 then return 11 end\nif x*x\u003e=16 then return end\nif y==-3 or inrange(y,3,extent) then\n\tlocal X,xx=x*x,y==-3 and 3 or 6-y%6\n\tif X\u003c=xx*xx then return WHITE end\nend\n\nif y\u003c3 and (x~=0 or not inrange(z,-3,3)) then\n\tlocal xx = btoi(x%2==0) * x\n\tlocal zz = btoi(z%2==0) * z\n\tif x==xx and z==zz then return WHITE end\nend\n",
         "faster2": "--114\n--12.579\nif y\u003c-extent+2 then\n\tif y==-extent then return BROWN end\n\tif y==-extent+1 then return GREEN end\nelse\n\tif x\u003e=4 or x\u003c=-4 then return end\n\tif y==-3 then return WHITE end\n\tif y\u003e=3 and y\u003c=extent then\n\t\tlocal ex=7-y%6\n\t\tif x\u003cex and x\u003e-ex then return WHITE end\n\tend\n\tif y\u003c=2 and not (x==0 and z\u003e-3 and z\u003c3) and x%2==0 and z%2==0 then \n\t\treturn WHITE\n\tend\nend\n",
-        "faster3": "--107\n--8.769\nif y\u003c-3 then\n\tif y==-5 then return BROWN end\n\tif y==-4 then return GREEN end\nelse\n\tif x\u003e=4 or x\u003c=-4 then return end\n\tif y==-3 then return WHITE end\n\tif y\u003e=3 and y\u003c=5 then\n\t\tlocal ex=7-y%6\n\t\tif x\u003cex and x\u003e-ex then return WHITE end\n\tend\n\tif y\u003c=2 and not (x==0 and z\u003e-3 and z\u003c3) and x%2==0 and z%2==0 then \n\t\treturn WHITE\n\tend\nend\n",
-        "with_sdf": "-- homage to this famous video\n-- https://www.youtube.com/watch?v=-pdSjBPH3zM\n--\n-- see also:https://iquilezles.org/articles/distfunctions2d/\n--\n-- Box - exact\n-- https://www.youtube.com/watch?v=62-pRVZuS5c\n--\n--float sdBox( in vec2 p, in vec2 b )\n--{\n--    vec2 d = abs(p)-b;\n--    return length(max(d,0.0)) + min(max(d.x,d.y),0.0);\n--}\n--  p: Table {x, y, z} (Current sampling point)\n--  b: Table {x, y, z} (Half-dimensions of the box)\n--\n--\n-- Segment - exact\n-- https://www.shadertoy.com/view/3tdSDj\n-- https://www.youtube.com/watch?v=PMltMdi1Wzg\n--\n--float sdSegment( in vec2 p, in vec2 a, in vec2 b )\n--{\n--    vec2 pa = p-a, ba = b-a;\n--    float h = clamp( dot(pa,ba)/dot(ba,ba), 0.0, 1.0 );\n--    return length( pa - ba*h );\n--}\nif y==-extent then return 15 end\nif y==-extent+1 then return 11 end\nif x*x\u003e=16 then return end\n--\n-- Converting the above glsl to lua:\n--\n\nlocal function inigo_sdBox(px, py, bx, by)\n    local dx, dy = abs(px) - bx, abs(py) - by\n    local ex = sqrt(max(dx, 0)^2 + max(dy, 0)^2)\n    local i = min(max(dx, dy), 0)\n    \n    return ex + i\nend\nlocal function inigo_sdSegment(px, py, pz, ax, ay, az, bx, by, bz)\n    local pax, pay, paz = px - ax, py - ay, pz - az\n    local bax, bay, baz = bx - ax, by - ay, bz - az\n\n    local h = (pax*bax + pay*bay + paz*baz) / (bax*bax + bay*bay + baz*baz)\n    h = max(0.0, min(1.0, h))\n    \n    local dx, dy, dz = pax - bax*h, pay - bay*h, paz - baz*h\n    return sqrt(dx*dx + dy*dy + dz*dz)\nend\n\nif y==-3 or inrange(y,3,extent) then\n\tlocal xx = y==-3 and 3 or 6-y%6\n\t-- local zz=extent\n\treturn inigo_sdBox(x,z,xx,extent) \u003c= 0\nend\n\nif x~=0 or not inrange(z,-3,3) then\n\tlocal xx = x%2==0 and x or 0\n\tlocal zz = z%2==0 and z or 0\n\treturn inigo_sdSegment(x,y,z,xx,-2,zz,xx,2,zz) \u003c= 0\nend\n",
-        "with_sdf2": "-- homage to this famous video\n-- https://www.youtube.com/watch?v=-pdSjBPH3zM\n--\n-- see also:https://iquilezles.org/articles/distfunctions2d/\n--\n-- Box - exact\n-- https://www.youtube.com/watch?v=62-pRVZuS5c\n--\n--float sdBox( in vec2 p, in vec2 b )\n--{\n--    vec2 d = abs(p)-b;\n--    return length(max(d,0.0)) + min(max(d.x,d.y),0.0);\n--}\n--  p: Table {x, y, z} (Current sampling point)\n--  b: Table {x, y, z} (Half-dimensions of the box)\n--\n--\n-- Segment - exact\n-- https://www.shadertoy.com/view/3tdSDj\n-- https://www.youtube.com/watch?v=PMltMdi1Wzg\n--\n--float sdSegment( in vec2 p, in vec2 a, in vec2 b )\n--{\n--    vec2 pa = p-a, ba = b-a;\n--    float h = clamp( dot(pa,ba)/dot(ba,ba), 0.0, 1.0 );\n--    return length( pa - ba*h );\n--}\nif y==-extent then return 15 end\nif y==-extent+1 then return 11 end\nif x*x\u003e=16 then return end\n--\n-- Converting the above glsl to lua:\n--\nlocal function inigo_sdBox(px, py, bx, by)\n    local dx, dy = abs(px) - bx, abs(py) - by\n    local ex = sqrt(max(dx, 0)^2 + max(dy, 0)^2)\n    local i = min(max(dx, dy), 0)\n    \n    return ex + i\nend\nlocal function inigo_sdSegment(px, py, pz, ax, ay, az, bx, by, bz)\n    local pax, pay, paz = px - ax, py - ay, pz - az\n    local bax, bay, baz = bx - ax, by - ay, bz - az\n\n    local h = (pax*bax + pay*bay + paz*baz) / (bax*bax + bay*bay + baz*baz)\n    h = max(0.0, min(1.0, h))\n    \n    local dx, dy, dz = pax - bax*h, pay - bay*h, paz - baz*h\n    return sqrt(dx*dx + dy*dy + dz*dz)\nend\n\n--rooftop\nif y==-3 or inrange(y,3,extent) then\n\tlocal xx = y==-3 and 3 or 6-y%6\n\t-- local zz=extent\n\treturn inigo_sdBox(x,z,xx,extent) \u003c= 0\nend\n\n--columns\nif x~=0 or not inrange(z,-3,3) then\n\tlocal xx = btoi(x%2==0) * x\n\tlocal zz = btoi(z%2==0) * z\n\treturn inigo_sdSegment(x,y,z,xx,-2,zz,xx,2,zz) \u003c= 0\nend\n"
+        "faster3": "--109\n--8.742\nif y\u003c-3 then\n\tif y==-5 then return BROWN end\n\tif y==-4 then return GREEN end\nelse\n\tif x\u003e=4 or x\u003c=-4 then return end\n\tif y==-3 then return WHITE end\n\tif y\u003e=3 and y\u003c=5 then\n\t\tlocal v=7-y%6\n\t\tif x\u003cv and x\u003e-v then return WHITE end\n\tend\n\tif y\u003c=2 and not (x==0 and z\u003e=-3 and z\u003c=3) then\n\t\tif x%2==0 and z%2==0 then\n\t\t\treturn WHITE\n\t\tend\n\tend\nend\n",
+        "with_sdf": "-- homage to this famous video\n-- https://www.youtube.com/watch?v=-pdSjBPH3zM\n--\n-- 335\n-- 41.700\n-- see also:https://iquilezles.org/articles/distfunctions2d/\n--\n-- Box - exact\n-- https://www.youtube.com/watch?v=62-pRVZuS5c\n--\n--float sdBox( in vec2 p, in vec2 b )\n--{\n--    vec2 d = abs(p)-b;\n--    return length(max(d,0.0)) + min(max(d.x,d.y),0.0);\n--}\n--  p: Table {x, y, z} (Current sampling point)\n--  b: Table {x, y, z} (Half-dimensions of the box)\n--\n--\n-- Segment - exact\n-- https://www.shadertoy.com/view/3tdSDj\n-- https://www.youtube.com/watch?v=PMltMdi1Wzg\n--\n--float sdSegment( in vec2 p, in vec2 a, in vec2 b )\n--{\n--    vec2 pa = p-a, ba = b-a;\n--    float h = clamp( dot(pa,ba)/dot(ba,ba), 0.0, 1.0 );\n--    return length( pa - ba*h );\n--}\nif y==-extent then return 15 end\nif y==-extent+1 then return 11 end\nif x*x\u003e=16 then return end\n--\n-- Converting the above glsl to lua:\n--\n\nlocal function inigo_sdBox(px, py, bx, by)\n    local dx, dy = abs(px) - bx, abs(py) - by\n    local ex = sqrt(max(dx, 0)^2 + max(dy, 0)^2)\n    local i = min(max(dx, dy), 0)\n    \n    return ex + i\nend\nlocal function inigo_sdSegment(px, py, pz, ax, ay, az, bx, by, bz)\n    local pax, pay, paz = px - ax, py - ay, pz - az\n    local bax, bay, baz = bx - ax, by - ay, bz - az\n\n    local h = (pax*bax + pay*bay + paz*baz) / (bax*bax + bay*bay + baz*baz)\n    h = max(0.0, min(1.0, h))\n    \n    local dx, dy, dz = pax - bax*h, pay - bay*h, paz - baz*h\n    return sqrt(dx*dx + dy*dy + dz*dz)\nend\n\nif y==-3 or inrange(y,3,extent) then\n\tlocal xx = y==-3 and 3 or 6-y%6\n\t-- local zz=extent\n\treturn inigo_sdBox(x,z,xx,extent) \u003c= 0\nend\n\nif x~=0 or not inrange(z,-3,3) then\n\tlocal xx = x%2==0 and x or 0\n\tlocal zz = z%2==0 and z or 0\n\treturn inigo_sdSegment(x,y,z,xx,-2,zz,xx,2,zz) \u003c= 0\nend\n",
+        "with_sdf2": "-- homage to this famous video\n-- https://www.youtube.com/watch?v=-pdSjBPH3zM\n--\n-- 335\n-- 44.856\n-- see also:https://iquilezles.org/articles/distfunctions2d/\n--\n-- Box - exact\n-- https://www.youtube.com/watch?v=62-pRVZuS5c\n--\n--float sdBox( in vec2 p, in vec2 b )\n--{\n--    vec2 d = abs(p)-b;\n--    return length(max(d,0.0)) + min(max(d.x,d.y),0.0);\n--}\n--  p: Table {x, y, z} (Current sampling point)\n--  b: Table {x, y, z} (Half-dimensions of the box)\n--\n--\n-- Segment - exact\n-- https://www.shadertoy.com/view/3tdSDj\n-- https://www.youtube.com/watch?v=PMltMdi1Wzg\n--\n--float sdSegment( in vec2 p, in vec2 a, in vec2 b )\n--{\n--    vec2 pa = p-a, ba = b-a;\n--    float h = clamp( dot(pa,ba)/dot(ba,ba), 0.0, 1.0 );\n--    return length( pa - ba*h );\n--}\nif y==-extent then return BROWN end\nif y==-extent+1 then return GREEN end\nif x*x\u003e=16 then return end\n--\n-- Converting the above glsl to lua:\n--\nlocal function inigo_sdBox(px, py, bx, by)\n    local dx, dy = abs(px) - bx, abs(py) - by\n    local ex = sqrt(max(dx, 0)^2 + max(dy, 0)^2)\n    local i = min(max(dx, dy), 0)\n    \n    return ex + i\nend\nlocal function inigo_sdSegment(px, py, pz, ax, ay, az, bx, by, bz)\n    local pax, pay, paz = px - ax, py - ay, pz - az\n    local bax, bay, baz = bx - ax, by - ay, bz - az\n\n    local h = (pax*bax + pay*bay + paz*baz) / (bax*bax + bay*bay + baz*baz)\n    h = max(0.0, min(1.0, h))\n    \n    local dx, dy, dz = pax - bax*h, pay - bay*h, paz - baz*h\n    return sqrt(dx*dx + dy*dy + dz*dz)\nend\n\n--rooftop\nif y==-3 or inrange(y,3,extent) then\n\tlocal bx = y==-3 and 3 or 6-y%6\n\t-- local zz=extent\n\treturn inigo_sdBox(x,z,bx,extent) \u003c= 0\nend\n\n--columns\nif x~=0 or not inrange(z,-3,3) then\n\tlocal xx = btoi(x%2==0) * x\n\tlocal zz = btoi(z%2==0) * z\n\treturn inigo_sdSegment(x,y,z,xx,-2,zz,xx,2,zz) \u003c= 0\nend\n"
       },
       "completed": true,
       "fps": 12,
@@ -3985,7 +3987,7 @@
       "code_instructions": 0.0,
       "code_size": 0,
       "code_variants": {
-        "code": "-- Sometimes simple is best.\n\n-- In this game you are simply a red ball\n-- that needs to roll and bounce across\n-- levels filled with obstacles, to reach the\n-- exit.\n\n-- potential title: Super Bouncy Ball\nreturn 1"
+        "code": "-- Sometimes simple is best.\n\n-- In this game you are simply a red ball\n-- that needs to roll and bounce across\n-- levels filled with obstacles, to reach the\n-- exit.\n\n-- potential title: Super Bouncy Ball\n\nreturn -z+1-t|-y-1+t//2 \u003e= 0 and BROWN"
       },
       "completed": false,
       "fps": 10,
@@ -4226,7 +4228,7 @@
       ]
     },
     {
-      "active_variant": "fun_pass",
+      "active_variant": "s8",
       "animated": false,
       "challenge_complete": false,
       "code_instructions": 6.15402,
@@ -4245,8 +4247,9 @@
         "s3": "-- Walaber says: Replicube now has 12 languages!\n--               Thank you to everyone for playing!\n--\n-- I say: Thank you Walaber, this game is so fun\n--        Never thought I could have this much fun\n--        all while learning math, voxel shaders, and lua!\n\n--86\n--7.689\n\nif y == -5 then return ORANGE end\nif x == -5 then return LIGHTGREEN end\nif z == -5 then return RED end\n-- oneliner bitshift for the entire grid\nreturn z==2 and (\n\ttonumber(x \u003c 1 and \n\t\t\t\t\t\t\t\"4y\"..\"o8\"..\"yy\"..\"tz\"..\"9g\" or \n\t\t\t\t\t\t\t\"9p\"..\"r2\"..\"hc\"..\"kg\"..\"gk\"..\"g\"\n\t\t\t\t\t,36) \n) \u003e\u003e29+x-5*y\u00261\n\n--[[ Original solution:\n\n-- Binary SOLO!!! BEEP BOOP BEEP\nlocal lang_data = {\n\t\t{0,0,1,0,0,1,1,1,1,1},\n\t\t{0,1,1,1,0,0,1,0,0,0},\n\t\t{0,0,0,0,0,1,1,1,1,0},\n\t\t{0,1,1,1,0,0,1,0,1,0},\n\t\t{0,0,0,0,0,1,1,1,1,1},\n\t\t{0,1,1,1,0,0,0,0,0,0},\n\t\t{0,0,0,0,0,1,1,1,1,1},\n\t\t{0,1,1,1,0,1,0,0,0,1},\n\t\t{0,1,0,1,0,1,0,0,0,1},\n\t\t{0,1,1,1,0,1,1,1,1,1}\n\t}\n \nif y==-5 then return ORANGE end\nif x==-5 then return LIGHTGREEN end\nif z==-5 then return RED end\nif z==2 and x\u003e=-3 and x~=0 then \n\treturn lang_data[abs(y-5)+1][x+4] -- btw, lua tables start at 1 not zero\nend\n\n-- Arthur likes ice cream!\n\n]]--\n",
         "s4": "-- Replicube now has 12 languages!\n-- Thank you to everyone for playing!\n\n-- Walaber says: Replicube now has 12 languages!\n--               Thank you to everyone for playing!\n--\n-- I say: Thank you Walaber, this game is so fun\n--        Never thought I could have this much fun\n--        all while learning math, voxel shaders, and lua!\n\n--75\n--7.938\n\nreturn \ny == -5 and ORANGE or\nx == -5 and LIGHTGREEN or\nz == -5 and RED or\n-- oneliner bitshift for the entire grid\nz==2 and (\n\ttonumber(x \u003c 1 and \n\t\t\t\t\t\t\t\"4y\"..\"o8\"..\"yy\"..\"tz\"..\"9g\" or \n\t\t\t\t\t\t\t\"9p\"..\"r2\"..\"hc\"..\"kg\"..\"gk\"..\"g\"\n\t\t\t\t\t,36) \n) \u003e\u003e29+x-5*y\u00261\n\n--[[ Original solution:\n\n-- Binary SOLO!!! BEEP BOOP BEEP\nlocal lang_data = {\n\t\t{0,0,1,0,0,1,1,1,1,1},\n\t\t{0,1,1,1,0,0,1,0,0,0},\n\t\t{0,0,0,0,0,1,1,1,1,0},\n\t\t{0,1,1,1,0,0,1,0,1,0},\n\t\t{0,0,0,0,0,1,1,1,1,1},\n\t\t{0,1,1,1,0,0,0,0,0,0},\n\t\t{0,0,0,0,0,1,1,1,1,1},\n\t\t{0,1,1,1,0,1,0,0,0,1},\n\t\t{0,1,0,1,0,1,0,0,0,1},\n\t\t{0,1,1,1,0,1,1,1,1,1}\n\t}\n \nif y==-5 then return ORANGE end\nif x==-5 then return LIGHTGREEN end\nif z==-5 then return RED end\nif z==2 and x\u003e=-3 and x~=0 then \n\treturn lang_data[abs(y-5)+1][x+4] -- btw, lua tables start at 1 not zero\nend\n\n-- Arthur likes ice cream!\n\n]]--\n",
         "s5": "-- Replicube now has 12 languages!\n-- Thank you to everyone for playing!\n\n-- Walaber says: Replicube now has 12 languages!\n--               Thank you to everyone for playing!\n--\n-- I say: Thank you Walaber, this game is so fun\n--        Never thought I could have this much fun\n--        all while learning math, voxel shaders, and lua!\n\n--75\n--7.938\n\n--if x==0 and y==0 then print(10/z) end\n\nreturn\ny==-5 and ORANGE or\nx==-5 and LIGHTGREEN or\nz==-5 and RED or\n-- oneliner bitshifting two different numebrs for the entire grid\nz==2 and (\n\ttonumber(x\u003c1 and \n\t\t\t\t\t\t\t\"4y\"..\"o8\"..\"yy\"..\"tz\"..\"9g\" or \n\t\t\t\t\t\t\t\"9p\"..\"r2\"..\"hc\"..\"kg\"..\"gk\"..\"g\"\n\t\t\t\t\t,36) \n) \u003e\u003e29+x-5*y\u0026 WHITE\n\n--[[ Original solution:\n\n-- Binary SOLO!!! BEEP BOOP BEEP\nlocal lang_data = {\n\t\t{0,0,1,0,0,1,1,1,1,1},\n\t\t{0,1,1,1,0,0,1,0,0,0},\n\t\t{0,0,0,0,0,1,1,1,1,0},\n\t\t{0,1,1,1,0,0,1,0,1,0},\n\t\t{0,0,0,0,0,1,1,1,1,1},\n\t\t{0,1,1,1,0,0,0,0,0,0},\n\t\t{0,0,0,0,0,1,1,1,1,1},\n\t\t{0,1,1,1,0,1,0,0,0,1},\n\t\t{0,1,0,1,0,1,0,0,0,1},\n\t\t{0,1,1,1,0,1,1,1,1,1}\n\t}\n \nif y==-5 then return ORANGE end\nif x==-5 then return LIGHTGREEN end\nif z==-5 then return RED end\nif z==2 and x\u003e=-3 and x~=0 then \n\treturn lang_data[abs(y-5)+1][x+4] -- btw, lua tables start at 1 not zero\nend\n\n-- Arthur likes ice cream!\n\n]]--\n",
-        "s6": "-- Walaber says: Replicube now has 12 languages!\n--               Thank you to everyone for playing!\n--\n-- I reply: Thank you Walaber, this game is so fun.\n--        I never thought I could have this much fun\n--        all while learning math, voxel shaders, and lua!\n\n--63\n--19.508\n\nreturn\ny==-5 and ORANGE or\nx==-5 and LIGHTGREEN or\nz==-5 and RED or\n-- bitshifting two big ol'numbers for the entire grid\ntonumber(x\u003c1 and\n  \"4yo8y\"..\"ytz9g\" or \n  \"9pr2h\"..\"ckg\"..\"gkg\"\n,36)\n\u003e\u003e29-5*y+x\u0026WHITE==2/z\n\n--504057832079812\n--35520789338360800\n\n--[[ Original solution:\n\n-- Binary SOLO!!! BEEP BOOP BEEP\nlocal lang_data = {\n\t\t{0,0,1,0,0,1,1,1,1,1},\n\t\t{0,1,1,1,0,0,1,0,0,0},\n\t\t{0,0,0,0,0,1,1,1,1,0},\n\t\t{0,1,1,1,0,0,1,0,1,0},\n\t\t{0,0,0,0,0,1,1,1,1,1},\n\t\t{0,1,1,1,0,0,0,0,0,0},\n\t\t{0,0,0,0,0,1,1,1,1,1},\n\t\t{0,1,1,1,0,1,0,0,0,1},\n\t\t{0,1,0,1,0,1,0,0,0,1},\n\t\t{0,1,1,1,0,1,1,1,1,1}\n\t}\n \nif y==-5 then return ORANGE end\nif x==-5 then return LIGHTGREEN end\nif z==-5 then return RED end\nif z==2 and x\u003e=-3 and x~=0 then \n\treturn lang_data[abs(y-5)+1][x+4] -- btw, lua tables start at 1 not zero\nend\n\n]]--\n",
-        "s7_no": "-- Walaber says: Replicube now has 12 languages!\n--               Thank you to everyone for playing!\n--\n-- I reply: Thank you Walaber, this game is so fun.\n--        I never thought I could have this much fun\n--        all while learning math, voxel shaders, and lua!\n\n--68\n--19.508\n\nreturn\ny==-5 and ORANGE or\nx==-5 and LIGHTGREEN or\nz==-5 and RED or\n-- returning 2 or 0\ntonumber(x\u003c1 and \n\t\"9xchn\"..\"b2f4s\" or\n\t\"jfi4y\"..\"oux\"..\"oe8\"\n\t,36)\n\u003e\u003e(x-1)%5+5*(y%11)\u00262==4/z\n\n--1008115021541404\n--71041578659960768\n\n--[[ Original solution:\n\n-- Binary SOLO!!! BEEP BOOP BEEP\nlocal lang_data = {\n\t\t{0,0,1,0,0,1,1,1,1,1},\n\t\t{0,1,1,1,0,0,1,0,0,0},\n\t\t{0,0,0,0,0,1,1,1,1,0},\n\t\t{0,1,1,1,0,0,1,0,1,0},\n\t\t{0,0,0,0,0,1,1,1,1,1},\n\t\t{0,1,1,1,0,0,0,0,0,0},\n\t\t{0,0,0,0,0,1,1,1,1,1},\n\t\t{0,1,1,1,0,1,0,0,0,1},\n\t\t{0,1,0,1,0,1,0,0,0,1},\n\t\t{0,1,1,1,0,1,1,1,1,1}\n\t}\n \nif y==-5 then return ORANGE end\nif x==-5 then return LIGHTGREEN end\nif z==-5 then return RED end\nif z==2 and x\u003e=-3 and x~=0 then \n\treturn lang_data[abs(y-5)+1][x+4] -- btw, lua tables start at 1 not zero\nend\n\n]]--\n"
+        "s6": "-- Walaber says: Replicube now has 12 languages!\n--               Thank you to everyone for playing!\n--\n-- I reply: Thank you Walaber, this game is so fun.\n--        I never thought I could have this much fun\n--        all while learning math, voxel shaders, and lua!\n\n--63\n--19.508\n\n--if x|y|z==0 then\n--print(tonumber(\"4yo8y\"..\"ytz9g\",36))\n--print(tonumber( \"9pr2h\"..\"ckg\"..\"gkg\",36))\n--end\n\nreturn\ny==-5 and ORANGE or\nx==-5 and LIGHTGREEN or\nz==-5 and RED or\n-- bitshifting two big ol'numbers for the entire grid\ntonumber(x\u003c1 and\n  \"4yo8y\"..\"ytz9g\" or \n  \"9pr2h\"..\"ckg\"..\"gkg\"\n,36)\n\u003e\u003e29-5*y+x\u0026WHITE==2/z\n\n--504057832079812\n--35520789338360800\n\n--[[ Original solution:\n\n-- Binary SOLO!!! BEEP BOOP BEEP\nlocal lang_data = {\n\t\t{0,0,1,0,0,1,1,1,1,1},\n\t\t{0,1,1,1,0,0,1,0,0,0},\n\t\t{0,0,0,0,0,1,1,1,1,0},\n\t\t{0,1,1,1,0,0,1,0,1,0},\n\t\t{0,0,0,0,0,1,1,1,1,1},\n\t\t{0,1,1,1,0,0,0,0,0,0},\n\t\t{0,0,0,0,0,1,1,1,1,1},\n\t\t{0,1,1,1,0,1,0,0,0,1},\n\t\t{0,1,0,1,0,1,0,0,0,1},\n\t\t{0,1,1,1,0,1,1,1,1,1}\n\t}\n \nif y==-5 then return ORANGE end\nif x==-5 then return LIGHTGREEN end\nif z==-5 then return RED end\nif z==2 and x\u003e=-3 and x~=0 then \n\treturn lang_data[abs(y-5)+1][x+4] -- btw, lua tables start at 1 not zero\nend\n\n]]--\n",
+        "s7_no": "-- Walaber says: Replicube now has 12 languages!\n--               Thank you to everyone for playing!\n--\n-- I reply: Thank you Walaber, this game is so fun.\n--        I never thought I could have this much fun\n--        all while learning math, voxel shaders, and lua!\n\n--68\n--19.508\n\nreturn\ny==-5 and ORANGE or\nx==-5 and LIGHTGREEN or\nz==-5 and RED or\n-- returning 2 or 0\ntonumber(x\u003c1 and \n\t\"9xchn\"..\"b2f4s\" or\n\t\"jfi4y\"..\"oux\"..\"oe8\"\n\t,36)\n\u003e\u003e(x-1)%5+5*(y%11)\u00262==4/z\n\n--1008115021541404\n--71041578659960768\n\n--[[ Original solution:\n\n-- Binary SOLO!!! BEEP BOOP BEEP\nlocal lang_data = {\n\t\t{0,0,1,0,0,1,1,1,1,1},\n\t\t{0,1,1,1,0,0,1,0,0,0},\n\t\t{0,0,0,0,0,1,1,1,1,0},\n\t\t{0,1,1,1,0,0,1,0,1,0},\n\t\t{0,0,0,0,0,1,1,1,1,1},\n\t\t{0,1,1,1,0,0,0,0,0,0},\n\t\t{0,0,0,0,0,1,1,1,1,1},\n\t\t{0,1,1,1,0,1,0,0,0,1},\n\t\t{0,1,0,1,0,1,0,0,0,1},\n\t\t{0,1,1,1,0,1,1,1,1,1}\n\t}\n \nif y==-5 then return ORANGE end\nif x==-5 then return LIGHTGREEN end\nif z==-5 then return RED end\nif z==2 and x\u003e=-3 and x~=0 then \n\treturn lang_data[abs(y-5)+1][x+4] -- btw, lua tables start at 1 not zero\nend\n\n]]--\n",
+        "s8": "-- Walaber says: Replicube now has 12 languages!\n--               Thank you to everyone for playing!\n--\n-- I reply: Thank you Walaber, this game is so fun.\n--        I never thought I could have this much fun\n--        all while learning math, voxel shaders, and lua!\n\n--63\n--19.508\n\nif x|y==0 then\n--print(tonumber(\"4yo8y\"..\"ytz9g\",36))\n--print(tonumber( \"9pr2h\"..\"ckg\"..\"gkg\",36))\nprint(\"2/z: \".. 2/z ..\", 4/z: \".. 4/z)\nend\n\nreturn\ny==-5 and ORANGE or\nx==-5 and LIGHTGREEN or\nz==-5 and RED or\n-- bitshifting two big ol'numbers for the entire grid\ntonumber(x\u003c1 and\n  \"4yo8y\"..\"ytz9g\" or \n  \"9pr2h\"..\"ckg\"..\"gkg\"\n,36)\n\u003e\u003e29-5*y+x\u0026WHITE==2/z\n\n--504057832079812\n--35520789338360800\n\n--[[ Original solution:\n\n-- Binary SOLO!!! BEEP BOOP BEEP\nlocal lang_data = {\n\t\t{0,0,1,0,0,1,1,1,1,1},\n\t\t{0,1,1,1,0,0,1,0,0,0},\n\t\t{0,0,0,0,0,1,1,1,1,0},\n\t\t{0,1,1,1,0,0,1,0,1,0},\n\t\t{0,0,0,0,0,1,1,1,1,1},\n\t\t{0,1,1,1,0,0,0,0,0,0},\n\t\t{0,0,0,0,0,1,1,1,1,1},\n\t\t{0,1,1,1,0,1,0,0,0,1},\n\t\t{0,1,0,1,0,1,0,0,0,1},\n\t\t{0,1,1,1,0,1,1,1,1,1}\n\t}\n \nif y==-5 then return ORANGE end\nif x==-5 then return LIGHTGREEN end\nif z==-5 then return RED end\nif z==2 and x\u003e=-3 and x~=0 then \n\treturn lang_data[abs(y-5)+1][x+4] -- btw, lua tables start at 1 not zero\nend\n\n]]--\n"
       },
       "completed": true,
       "fps": 12,
@@ -4263,6 +4266,7 @@
         "s5",
         "s6",
         "s7_no",
+        "s8",
         "f1",
         "f2",
         "f3",
@@ -4348,6 +4352,62 @@
       "source": 300,
       "variant_order": [
         "code"
+      ]
+    },
+    {
+      "active_variant": "first_pass",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 7.72201,
+      "code_size": 164,
+      "code_variants": {
+        "first_pass": "-- 164\n--7.722\nif y\u003c=-4 then return BROWN end\nif y==-3 then return GREEN end\nif y==-2 then return LIGHTGREEN end\nif y==5 then return LIGHTBLUE end\nif y==4 then \n\tif z\u003e=-5 and z\u003c=-4 and x\u003e=-4 and x\u003c=-1 then return WHITE end\n\tif z\u003e=-1 and z\u003c=0 and x\u003e=-1 and x\u003c=2 then return WHITE end\n\tif z\u003e=4 and z\u003c=5 and x\u003e=1 and x\u003c=4 then return WHITE end\nend\nif y==-1 then\n\tif z==-3 and x==1 then return YELLOW end\n\tif z==-2 and x==-3 then return PINK end\n\tif z==1 and x==-1 then return RED end\n\tif z==3 and x==4 then return ORANGE end\n\tif z==4 and x==0 then return PURPLE end\t\nend"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "earth-and-skybox.weekly",
+      "size": 5,
+      "source": 400,
+      "variant_order": [
+        "first_pass"
+      ]
+    },
+    {
+      "active_variant": "fast3",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 10.7445,
+      "code_size": 65,
+      "code_variants": {
+        "fast1": "--130\n--13.006\n\nif y\u003e=4 or y\u003c=-4 then return end\n\nlocal yy = (y-round(sin(t)))^2\nlocal xx = x^2\nif x\u003e=3 then\n\txx=(x+abs(t-5)-10)^2\nelseif x \u003c= -3 then\n\txx=(-x+abs(t-5)-10)^2\nend\n\nif xx + yy + (z-10)^2 \u003c= 6 then\n\treturn PEACH\nelseif xx + yy + (z-4)^2 \u003c= 6 then \n\treturn WHITE\nelseif xx + yy + (z+2)^2 \u003c= 6 then\n\treturn GREEN\nelseif xx==0 and yy==0 then \n\treturn ORANGE\nend\n",
+        "fast2": "--120\n--12.359\n\nif y\u003e=4 or y\u003c=-4 then return end\n\nif x\u003e=3 then\n\tx= (x+abs(t-5)-10)^2\nelseif x \u003c= -3 then\n\tx= (-x+abs(t-5)-10)^2\nelse\n\tx= x^2\nend\nlocal v = x+round(y-sin(t))^2\n\nif z\u003e=-4 and v + (z+2)^2%12 \u003c= 6 then\n\treturn ({GREEN,WHITE,PEACH})[1-z//-6]\nelseif v==0 then \n\treturn ORANGE\nend\n",
+        "fast3": "--111\n--10.745\n\n--empty space\nif y\u003e=4 or y\u003c=-4 then return end\n\n-- setup x_component and y_component\nlocal x_component= x\u003e=3 and (x+abs(t-5)-10)^2 or x\u003c=-3 and (-x+abs(t-5)-10)^2 or x^2\nlocal y_component= round(y-sin(t))^2\nlocal xy_comp = x_component + y_component \n-- remember, for a sphere: x^2 + y^2 +z^2 \u003c= r^2\n\n--local color_lookup={GREEN,WHITE,PEACH}\n\n-- maths\nif z\u003e=-4 and xy_comp + (z-4)^2%12 \u003c= 6 then\n\treturn ({GREEN,WHITE,PEACH})[(z+11)//6]\nelseif xy_comp==0 then\n\treturn ORANGE\nend\n",
+        "first_pass": "if y\u003e=4 or y\u003c=-4 then return end\n\nlocal yy = y-round(sin(t))\n\nlocal xx = (x\u003e=3 or x\u003c=-3) and abs(x)+abs(t-5)-10 or x\n\nlocal function ball(xx,yy,zz)\n\treturn xx^2 + yy^2 + zz^2 \u003c= 6\nend\n\nreturn \nball(xx,yy,z-10) and PEACH or\nball(xx,yy,z-4) and WHITE or\nball(xx,yy,z+2) and GREEN or\nxx|yy==0 and ORANGE\n",
+        "small1": "--95\n--45.829\ny = y-round(sin(t))\nx = abs(x)\u003e=3 and abs(x)+abs(t-5)-10 or x\nreturn \nx^2 + y^2 + (z-10)^2 \u003c= 6 and PEACH or\nx^2 + y^2 + (z-4)^2 \u003c= 6 and WHITE or\nx^2 + y^2 + (z+2)^2 \u003c= 6 and GREEN or\nx|y==0 and ORANGE\n",
+        "small2": "--86\n--42.722\ny = round(y-sin(t))^2\nx = min(x^2, (abs(x)+abs(t-5)-10)^2)\n--x = abs(x)\u003e=3 and abs(x)+abs(t-5)-10 or x\nreturn \nx + y + (z-10)^2 \u003c= 6 and PEACH or\nx + y + (z-4)^2 \u003c= 6 and WHITE or\nx + y + (z+2)^2 \u003c= 6 and GREEN or\nx|y==0 and ORANGE\n",
+        "small3": "--small3\n--71\n--34.437\ny = round(y-sin(t))^2\nx = min(x^2, (abs(x)+abs(t-5)-10)^2)\n--x = abs(x)\u003e=3 and abs(x)+abs(t-5)-10 or x\nreturn \n--x^2 + y + (z+2)^2%12 \u003c= 6 and \nx + y + (z+2)^2%12 \u003c= 6 and \n({GREEN,WHITE,PEACH})[(z+11)//6] or\nx|y==0 and ORANGE\n",
+        "small4": "--small4\n--70\n--34.501\ny = round(y-sin(t))^2\nx = min(x^2, (abs(x)+abs(t-5)-10)^2)\n--x = abs(x)\u003e=3 and abs(x)+abs(t-5)-10 or x\nreturn \n--x^2 + y + (z+2)^2%12 \u003c= 6 and \nx + y + (z+2)^2%12 \u003c= 6 and \n({GREEN,WHITE,PEACH})[1-z//-6] or\nx|y==0 and ORANGE\n",
+        "small5": "--small5\n--65\n--35.501\n--y = round(y-sin(t))^2\n--x = min(x^2, (abs(x)+abs(t-5)-10)^2)\n--x = abs(x)\u003e=3 and abs(x)+abs(t-5)-10 or x\nv = min(x^2, (abs(x)+abs(t-5)-10)^2) + round(y-sin(t))^2\nreturn\n--x^2 + y + (z+2)^2%12 \u003c= 6 and \n--x + y + (z+2)^2%12 \u003c= 6 and \nv + (z+2)^2%12 \u003c= 6 and\n--({GREEN,WHITE,PEACH})[(z+11)//6] or\n({GREEN,WHITE,PEACH})[1-z//-6] or\nv==0 and ORANGE\n",
+        "small_final": "--65\n--35.501\nv = min(x^2, (abs(x)+abs(t-5)-10)^2) + round(y-sin(t))^2\nreturn\n\tv + (z+2)^2%12 \u003c= 6 and\n\t({GREEN,WHITE,PEACH})[1-z//-6] or\n\tv==0 and ORANGE\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 10,
+      "id": "dango-forever.weekly",
+      "size": 12,
+      "source": 400,
+      "variant_order": [
+        "first_pass",
+        "small1",
+        "small2",
+        "small3",
+        "small4",
+        "small5",
+        "small_final",
+        "fast1",
+        "fast2",
+        "fast3"
       ]
     }
   ]

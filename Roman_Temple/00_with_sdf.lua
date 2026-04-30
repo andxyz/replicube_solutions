@@ -1,6 +1,8 @@
 -- homage to this famous video
 -- https://www.youtube.com/watch?v=-pdSjBPH3zM
 --
+-- 335
+-- 41.700
 -- see also:https://iquilezles.org/articles/distfunctions2d/
 --
 -- Box - exact

@@ -1,6 +1,8 @@
 -- homage to this famous video
 -- https://www.youtube.com/watch?v=-pdSjBPH3zM
 --
+-- 335
+-- 44.856
 -- see also:https://iquilezles.org/articles/distfunctions2d/
 --
 -- Box - exact
@@ -25,8 +27,8 @@
 --    float h = clamp( dot(pa,ba)/dot(ba,ba), 0.0, 1.0 );
 --    return length( pa - ba*h );
 --}
-if y==-extent then return 15 end
-if y==-extent+1 then return 11 end
+if y==-extent then return BROWN end
+if y==-extent+1 then return GREEN end
 if x*x>=16 then return end
 --
 -- Converting the above glsl to lua:
@@ -51,9 +53,9 @@ end
 
 --rooftop
 if y==-3 or inrange(y,3,extent) then
-	local xx = y==-3 and 3 or 6-y%6
+	local bx = y==-3 and 3 or 6-y%6
 	-- local zz=extent
-	return inigo_sdBox(x,z,xx,extent) <= 0
+	return inigo_sdBox(x,z,bx,extent) <= 0
 end
 
 --columns
