@@ -1,3 +1,6 @@
+--267
+--12.260
+
 -- good luck!
 
 -- road and dirt
@@ -6,9 +9,9 @@ if y<=-3 then
 	if X<=9 and y==-3 then
 		if X==4 then
 			local tx = t%7
-			local v1 = (z+7-tx)//3%7
-			local v2 = (z-tx)//3%7
-			if v1==0 or v2==0 then return YELLOW else return DARKBLUE end
+			local stripe_v1 = (z+7-tx)//3%7
+			local stripe_v2 = (z-tx)//3%7
+			if stripe_v1==0 or stripe_v2==0 then return YELLOW else return DARKBLUE end
 		else
 			return DARKBLUE
 		end
