@@ -840,13 +840,13 @@
       ]
     },
     {
-      "active_variant": "code",
+      "active_variant": "strange_waffle",
       "animated": false,
       "challenge_complete": false,
       "code_instructions": 0.0,
       "code_size": 0,
       "code_variants": {
-        "code": "return 1"
+        "strange_waffle": "local function f(x,y,z)\n\treturn \n\t(\t\n\t\t(y==abs(x) or y==abs(z)) \n\t\tand (y-1\u003cabs(x) and y-1\u003cabs(z)) \n\t\tand abs(y)\u003c=6\n\t)\n\tand ({4,8,9,14})[clamp(y+round((x*z)/34),1,4)]\nend\n\nt=3-t\nreturn f(x/t,y,z/t)\n"
       },
       "completed": false,
       "fps": 12,
@@ -855,7 +855,7 @@
       "size": 3,
       "source": 200,
       "variant_order": [
-        "code"
+        "strange_waffle"
       ]
     },
     {
@@ -4638,18 +4638,19 @@
       ]
     },
     {
-      "active_variant": "s1",
+      "active_variant": "f4",
       "animated": true,
       "challenge_complete": false,
-      "code_instructions": 99.3901,
-      "code_size": 191,
+      "code_instructions": 81.3072,
+      "code_size": 175,
       "code_variants": {
         "code": "--[[\nHi there! Thanks for trying my puzzle.\n\nThis is an execice in using Matrices to generate a \n3-Dimensional Object. We'll use the SO(3,R) group,\nto ensure all the edges stay orthogonal and the volume\nstays constant. I even made all the necessary math for you.\nTo start, try incorporating following function.\n\n  f_phi: R^3 ---\u003e R^3\n\t\n           / cos(phi)   -sin(phi)   0  \\\n v |----\u003e |  sin(phi)    cos(phi)   0   | * v\n           \\    0           0       1  /\n\nGood luck and have fun.\n~ Zin\n]]\n\nphi=0.9553166   --pi/2 - arctan(1/sqrt(2)) (Rotates the cube upright)\nxi=pi/4\nsize=4.9\n\nif inrange(x,-size,size) and inrange(y,-size,size) and inrange(z,-size,size) then\n return x/1.8+10\nend",
-        "f1": "-- Angles\nlocal xi=pi/4\nlocal phi_z=xi\nlocal phi_x=asin(1/sqrt(3))\nlocal phi_y=-pi/3 - t*xi/4\nlocal size=4.9\n-- Transforms\nlocal function rz(p)\n\treturn { p[1], p[2]*cos(phi_z) - p[3]*sin(phi_z), p[2]*sin(phi_z) + p[3]*cos(phi_z) }\nend\nlocal function rx(p) \n\treturn { p[1]*cos(phi_x)-p[2]*sin(phi_x), p[1]*sin(phi_x)+ p[2]*cos(phi_x) , p[3] }\nend\nlocal function ry(p)\n\treturn { p[1]*cos(phi_y) + p[3]*sin(phi_y), p[2] , - p[1]*sin(phi_y) + p[3]*cos(phi_y) }\nend\n\nox,oy,oz= x,y,z -- backup orig x,y,z\n-- main()\nx,y,z= unpack(\n\trz(rx(ry({x, y, z})))\n)\n\nif x\u003e=-size and x\u003c=size and y\u003e=-size and y\u003c=size and z\u003e=-size and z\u003c=size then\n--\treturn x/1.8+10\n\tlocal c= x/1.8+10\n--\tif (t==4 or t==12 or t==20) and (oy\u003c=2) and (ox\u003c4 and oz\u003c4) then\n--\t\tprint(\"x=\"..x..\" c=\"..c)\n--\tend\n\tif oy\u003c=-1 and c==10 and x \u003c= 0 then return YELLOW end\n  return c\nend\n",
+        "f1": "-- Angles\nlocal xi=pi/4\nlocal phi_z=xi\nlocal phi_x=atan(1/sqrt(2))-- asin(1/sqrt(3))\nlocal phi_y=-pi/3 - t*xi/4\nlocal size=4.9\n-- Transforms\nlocal function rx(p)\n\treturn { p[1], p[2]*cos(phi_z) - p[3]*sin(phi_z), p[2]*sin(phi_z) + p[3]*cos(phi_z) }\nend\nlocal function rz(p) \n\treturn { p[1]*cos(phi_x)-p[2]*sin(phi_x), p[1]*sin(phi_x)+ p[2]*cos(phi_x) , p[3] }\nend\nlocal function ry(p)\n\treturn { p[1]*cos(phi_y) + p[3]*sin(phi_y), p[2] , - p[1]*sin(phi_y) + p[3]*cos(phi_y) }\nend\n\nox,oy,oz= x,y,z -- backup orig x,y,z\n-- main()\nx,y,z= unpack(\n\trx(rz(ry({x, y, z})))\n)\n\nif x\u003e=-size and x\u003c=size and y\u003e=-size and y\u003c=size and z\u003e=-size and z\u003c=size then\n--\treturn x/1.8+10\n\tlocal c= x/1.8+10\n--\tif (t==4 or t==12 or t==20) and (oy\u003c=2) and (ox\u003c4 and oz\u003c4) then\n--\t\tprint(\"x=\"..x..\" c=\"..c)\n--\tend\n\tif oy\u003c=-1 and c==10 and x \u003c= 0 then return YELLOW end\n  return c\nend\n",
         "f2": "--f2\n--236\n--118.582\n-- Angles\nlocal xi=pi/4\nlocal phi_z=xi\nlocal phi_x=asin(1/sqrt(3))\nlocal phi_y=-pi/3 - t*xi/4\nlocal size=4.9\nox,oy,oz= x,y,z -- backup orig x,y,z\n\n-- main()\n-- Transforms applied in order firstly y then x then z\nlocal p = { x*cos(phi_y) + z*sin(phi_y), y , -x*sin(phi_y) + z*cos(phi_y) }\np = { p[1]*cos(phi_x) - p[2]*sin(phi_x), p[1]*sin(phi_x)+ p[2]*cos(phi_x) , p[3] }\nx,y,z= unpack(\n { p[1], p[2]*cos(phi_z) - p[3]*sin(phi_z), p[2]*sin(phi_z) + p[3]*cos(phi_z) }\n)\n\n-- render()\nif x\u003e=-size and x\u003c=size and y\u003e=-size and y\u003c=size and z\u003e=-size and z\u003c=size then\n--\treturn x/1.8+10\n\tlocal c= x/1.8+10\n--\tif (t==4 or t==12 or t==20) and (oy\u003c=2) and (ox\u003c4 and oz\u003c4) then\n--\t\tprint(\"x=\"..x..\" c=\"..c)\n--\tend\n\tif oy\u003c=-1 and c==10 and x \u003c= 0 then return YELLOW end\n  return c\nend\n",
         "f3": "--f3\n--204\n--99.390\n-- setup()\n-- local xi= pi/4\nlocal phi_z= pi/4\nlocal phi_x= asin(1/sqrt(3))\nlocal phi_y= -pi/3 - t*phi_z/4\nlocal size= 4.9\n-- main()\n-- Transforms applied in order firstly y then x then z\nlocal p= { x*cos(phi_y) + z*sin(phi_y), y , -x*sin(phi_y) + z*cos(phi_y) }\np= { p[1]*cos(phi_x) - p[2]*sin(phi_x), p[1]*sin(phi_x) + p[2]*cos(phi_x) , p[3] }\nlocal nx,ny,nz= unpack(\n\t{ p[1], p[2]*cos(phi_z) - p[3]*sin(phi_z), p[2]*sin(phi_z) + p[3]*cos(phi_z) }\n)\n-- render()\nif nx\u003e=-size and nx\u003c=size and ny\u003e=-size and ny\u003c=size and nz\u003e=-size and nz\u003c=size then\n--\treturn x/1.8+10\n\tlocal color= nx/1.8+10\n--\tif (t==4 or t==12 or t==20) and (y\u003c=2) and (x\u003c4 and z\u003c4) then\n--\t\tprint(\"x=\"..p[1]..\" c=\"..c)\n--\tend\n\tif y\u003c=-1 and color==10 and nx \u003c= 0 then -- strange exception due to rounding error\n\t\treturn YELLOW\n\tend\n  return color\nend\n",
+        "f4": "--f3\n--175\n--81.307\n-- setup()\n-- local xi= pi/4\nlocal phi_z= pi/4 -- 45 degrees\nlocal phi_x= atan(1/sqrt(2)) -- asin(1/sqrt(3))\nlocal phi_y= -pi/3 - t*phi_z/4\nlocal size= 4.9\n-- main()\n-- Transforms applied in order firstly y then x then z\nlocal px= x*cos(phi_y) + z*sin(phi_y)\nlocal py= px*sin(phi_x) + y*cos(phi_x)\nlocal pz= -x*sin(phi_y) + z*cos(phi_y)\npx,py,pz= px*cos(phi_x) - y*sin(phi_x), py*cos(phi_z) - pz*sin(phi_z), py*sin(phi_z) + pz*cos(phi_z)\n-- render()\nif px\u003e=-size and px\u003c=size and py\u003e=-size and py\u003c=size and pz\u003e=-size and pz\u003c=size then\n--  original: return x/1.8+10\n\tlocal color= px/1.8+10\n--\tif (t==20) and (y==2 and x==-2 and z==-2) then\n--\t\tprint(\"px=\"..px.. \" color=\"..color)\n--\tend\n\t\tif color==10 and y\u003c=-1 and px\u003c=0 then -- strange exception due to rounding error\n\t\t\treturn YELLOW\n\t\tend\n  return color\nend\n",
         "first_pass": "-- Angles\n--phi=0.9553166   --pi/2 - arctan(1/sqrt(2)) (Rotates the cube upright)\n--phi=pi/2 - atan(1/sqrt(2)) -- (Rotates the cube upright)\n\nlocal xi=pi/4\nlocal phi_z=xi\nlocal phi_x=asin(1/sqrt(3))\nlocal phi_y=-pi/3 - t*xi/4\nlocal size=4.9\n-- Transforms\nlocal RZ = { -- z-axis\n    { 1 ,     0     ,       0    },\n    { 0 , cos(phi_z), -sin(phi_z)},\n    { 0 , sin(phi_z),  cos(phi_z)}\n}\nlocal RX = { -- x-axis\n    {cos(phi_x), -sin(phi_x), 0},\n    {sin(phi_x),  cos(phi_x), 0},\n    {     0    ,      0     , 1}\n}\nlocal RY = { -- y-axis\n    {  cos(phi_y), 0 , sin(phi_y)},\n    {    0       , 1 ,     0     },\n    { -sin(phi_y), 0 , cos(phi_y)}\n}\n-- function \"f\" apply transform matrix \"R\" to a point \"p\"\nlocal function f(R, p)\n\treturn {\n    R[1][1]*p[1] + R[1][2]*p[2] + R[1][3]*p[3],\n    R[2][1]*p[1] + R[2][2]*p[2] + R[2][3]*p[3],\n    R[3][1]*p[1] + R[3][2]*p[2] + R[3][3]*p[3]\n\t}\nend\nox,oy,oz= x,y,z\n-- main()\nx,y,z= unpack(\n\tf(RZ, f(RX, f(RY, {x, y, z})))\n)\n\nif inrange(x,-size,size) and inrange(y,-size,size) and inrange(z,-size,size) then\n\tlocal c= x/1.8+10\n--\tif (t==4 or t==12 or t==20) and (oy\u003c=2) and (ox\u003c4 and oz\u003c4) then\n--\t\tprint(\"x=\"..x..\" c=\"..c)\n--\tend\n\tif oy\u003c=-1 and c==10 and x \u003c= 0 then return YELLOW end\n  return c\nend\n",
-        "s1": "-- s1\n-- 191\n-- 120.780\n-- setup()\n-- local xi= pi/4\nphi_z= pi/4\nphi_x= asin(1/sqrt(3))\nphi_y= -pi/3 - t*phi_z/4\nsize= 4.9\n-- main()\n-- Transforms applied in order firstly y then x then z\np= { x*cos(phi_y) + z*sin(phi_y), y , -x*sin(phi_y) + z*cos(phi_y) }\np= { p[1]*cos(phi_x) - p[2]*sin(phi_x), p[1]*sin(phi_x) + p[2]*cos(phi_x) , p[3] }\np= { p[1], p[2]*cos(phi_z) - p[3]*sin(phi_z), p[2]*sin(phi_z) + p[3]*cos(phi_z) }\n\n-- render()\nif abs(p[1])\u003c=size and abs(p[2])\u003c=size and abs(p[3])\u003c=size then\n--\treturn x/1.8+10\n\tcolor= p[1]/1.8+10\n--\tif (t==4 or t==12 or t==20) and (y\u003c=2) and (x\u003c4 and z\u003c4) then\n--\t\tprint(\"x=\"..p[1]..\" c=\"..c)\n--\tend\n\tif y\u003c=-1 and color==10 and p[1] \u003c= 0 then -- strange exception due to rounding error\n\t\treturn YELLOW\n\tend\n  return color\nend\n"
+        "s1": "-- s1\n-- 191\n-- 120.780\n-- setup()\n-- local xi= pi/4\nphi_z= pi/4\nphi_x= atan(1/sqrt(2)) -- asin(1/sqrt(3))\nphi_y= -pi/3 - t*phi_z/4\nsize= 4.9\n-- main()\n-- Transforms applied in order firstly y then x then z\np= { x*cos(phi_y) + z*sin(phi_y), y , -x*sin(phi_y) + z*cos(phi_y) }\np= { p[1]*cos(phi_x) - p[2]*sin(phi_x), p[1]*sin(phi_x) + p[2]*cos(phi_x) , p[3] }\np= { p[1], p[2]*cos(phi_z) - p[3]*sin(phi_z), p[2]*sin(phi_z) + p[3]*cos(phi_z) }\n\n-- render()\nif abs(p[1])\u003c=size and abs(p[2])\u003c=size and abs(p[3])\u003c=size then\n--\treturn x/1.8+10\n\tcolor= p[1]/1.8+10\n--\tif (t==4 or t==12 or t==20) and (y\u003c=2) and (x\u003c4 and z\u003c4) then\n--\t\tprint(\"x=\"..p[1]..\" c=\"..c)\n--\tend\n\tif y\u003c=-1 and color==10 and p[1] \u003c= 0 then -- strange exception due to rounding error\n\t\treturn YELLOW\n\tend\n  return color\nend\n"
       },
       "completed": true,
       "fps": 14,
@@ -4660,10 +4661,11 @@
       "variant_order": [
         "code",
         "first_pass",
+        "s1",
         "f1",
         "f2",
         "f3",
-        "s1"
+        "f4"
       ]
     },
     {
@@ -5009,13 +5011,13 @@
       ]
     },
     {
-      "active_variant": "small_mainstory",
+      "active_variant": "_fun_comments",
       "animated": true,
       "challenge_complete": false,
       "code_instructions": 17.7901,
       "code_size": 87,
       "code_variants": {
-        "_fun_comments": "--[[\n\tThe Menger Sponge! Wait, it looks a little different?\n\t\n\tWe are zoomed in here, so we can not see too much of the \"Menger Sponge\"\n\tbut, that is ok!\n\tIt makes things easier to work with when our working area is smaller.\n\t\n\tSome understanding of \"signed distance functions\" \n  may help, thanks to https://iquilezles.org/articles/distfunctions/\n]]--\n\n--[[\n\t1. Okay, first things first\n\t\n\tWe setup a signed distance function (sdf) \n\tthis will help us to create our mini menger boxes.\n\tTogether, we can use the \"sdMengerBox\" function to make \n\ta bunch of boxes and then combine\tthem in interesting ways.\n]]--\n\n-- \"signed distance function\" for \"MengerBox\" (let us keep this function handy)\nlocal function sdMengerBox(px, py, pz, size, holeWidth)\n  -- Distance to the base Cube\n  local apx = abs(px)\n  local apy = abs(py)\n  local apz = abs(pz)\t\n  local adx = apx - size\n  local ady = apy - size\n  local adz = apz - size\n  local dBox = max(adx, ady, adz)\n\n  -- Define the cross-shaped holes (3 intersecting prisms)\n  -- hole through X-Y (Z-axis opening)\n  local hZ = max(apx - holeWidth, apy - holeWidth)\n  -- hole through Y-Z (X-axis opening)\n  local hX = max(apy - holeWidth, apz - holeWidth)\n  -- hole through Z-X (Y-axis opening)\n  local hY = max(apz - holeWidth, apx - holeWidth)\n\n  -- Union all the holes with min()\n  local crossHoles = min(hZ, hX, hY)\n  -- in SDFs, subtracting is, max(shape, -otherShape)\n  return max(dBox, -crossHoles)\nend\n-- this a helper function, we need it later to demo some things\nlocal function demoHelper(demo_name,a,b,color1,color2)\n  --## Subtraction examples:\n  if demo_name==\"subtraction_2\" then return max(-a,b)\u003c=0 and color1 end\n\tif demo_name==\"outer_subtraction_2\" then return max(-b,a)\u003e0 and color2 end\n  --## Union examples\n\tif demo_name==\"union\" then return min(a,b)\u003c=0 and color1 end\n\tif demo_name==\"outer_union\" then return min(a,b)\u003e0 and color2 end\n  --## Intersection examples:\n\tif demo_name==\"intersection\" then return max(a,b)\u003c=0 and color1 end\n\tif demo_name==\"outer_intersection\" then return max(a,b)\u003e0 and color2 end\n  --## Some other examples I enjoyed:\n\t if demo_name==\"wacky_subtraction_1\" then return max(-a,b)\u003e0 and color2 end\n  --## Fun with \"multiple combinations\"\n  --## You can keep on combining shapes together!\n  --## I enjoyed \"xor + outer union\":\n  if demo_name==\"xor_plus_outer_union\" then\n    if max(min(a,b),-max(a,b))\u003c=0 then\n    \treturn color1\n    elseif min(a,b)\u003e0 then\n    \treturn color2\n\t\telse \n\t\t\treturn 0\n    end\n  end\n  --## this one I call \"Subtraction + reversal Subtraction\":\n\tif demo_name==\"subtraction_plus_reversal_subtraction\" then return max(-b,a)\u003c=0 and color1 or max(-a,b)\u003c=0 and color2 end\n\t\n\treturn BROWN -- debug color incase our helper goes wrong somehow\nend\n\n--[[\n\t2. Okay, second things second\n\t\n\tWe will setup two variables: \"a=\" and \"b=\"\n\tThese will be our two \"shapes\".\n\t\n\tWe can combine our \"shapes\" in simple ways with\n\ta little bit of math, all thanks to our signed distance function above.\n]]--\n\n-- a, the big box:\n--\n-- Remember: above we have \"sdMengerBox(px, py, pz, size, holeWidth)\"\n-- Note: all sizes are \"half-sizes\", so we divide by 2.\nlocal a = sdMengerBox(x, y, z, 9/2, 3/2)\n\n-- b, little boxes everywhere:\n--\n-- Remember: sdMengerBox(px, py, pz, size, holeWidth)\n-- Note: we use mod() math here with our sdf to make \n--       a bunch of repeating mini menger boxes\nlocal b = sdMengerBox(\n\t((x + 3/2) % 3) - 3/2,\n\t((y + 3/2) % 3) - 3/2,\n\t((z + 3/2) % 3) - 3/2,\n\t3/2, 1/2\n)\n\n-- 3. Time to get really elaborate!\n--\n-- Now we setup a custom colorwheel to be a subset of the 16 colors\n-- with \"counter_part_colors\" chosen for some symmetry\n--\n-- The colors we will end up working with are: 6,7,9,10,11,13,14\n-- starting at purple and ending over in the blues\nlocal original_color_wheel = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16}\nlocal counter_part_color_wheel = {1,2,3,4,5, 8,7,6, 11,10,9, 14,13,12, 16,15}\n\n-- The following periodic number changes with \"y\"\n-- hopefully it stays between 7 and 13\n-- I hope it doesnt run away on us (heh heh)\nlocal our_periodic_number = (y+3)%7+7 \nif t==0 and x==0 and z==0 then print(our_periodic_number) end\n\n-- Using our periodic number and our custom color wheels\n-- we can setup two colors that change with y\nlocal color1 = original_color_wheel[our_periodic_number]\nlocal color2 = counter_part_color_wheel[our_periodic_number]\n\n--[[ \n\t4. Okay! time for the fun part (heh heh)\n\n\tNow we go looking for a fun \"mengerspongey-ishy shape\" \n\tusing Primitive combinations with our \"sdfs\", \"a\" and \"b\"\n\n\tPrimitive combinations for two shapes using signed distance functions:\n  \toperation Union:        min(a,b)\n  \toperation Subtraction:  max(-a,b)\n  \toperation Intersection: max(a,b)\n  \toperation Xor:          max(min(a,b),-max(a,b))\n\n\tFor more visual examples of \"primitive combinations\" using \"a\" and \"b\"\n  Comment and Uncomment the \"return\" statements below to see new shapes!\n\t\n\tNote: make sure to only have one \"return\" statement uncommented\n]]--\n\n--## Our very first example at t==0 is \"basic subtraction\":\n\nreturn \nt==0 and max(-b,a)\u003c=0 and color1 or\nt==1 and  demoHelper(\"subtraction_2\", a, b, color1, color2) or\nt==2 and  demoHelper(\"outer_subtraction_2\", a, b, color1, color2) or\nt==3 and  demoHelper(\"union\", a, b, color1, color2) or\nt==4 and  demoHelper(\"outer_union\", a, b, color1, color2) or\nt==5 and  demoHelper(\"intersection\", a, b, color1, color2) or\nt==6 and  demoHelper(\"outer_intersection\", a, b, color1, color2) or\nt==7 and  demoHelper(\"wacky_subtraction_1\", a, b, color1, color2) or\nt==8 and  demoHelper(\"xor_plus_outer_union\", a, b, color1, color2) or\nt==8 and  demoHelper(\"subtraction_plus_reversal_subtraction\", a, b, color1, color2)\n--\n--[[ \n\tbtw, Did you want to have a look at the shapes \"a\" and \"b\"?\n\t\n\tNote: because we repeated the sdf shape using mod() math above\n\tfor \"b\" we must do more mod() math to \"reveal it\" nicely\n]]-- \n\n--## Have a look at shape \"a\" (one big 9x9x9 mengercube)\n--return a\u003c=0 and 8\n\n--## Have a look at shape \"b\" (3x3x3 mengercubes)\n--return b\u003c=0 and (x-2)//3 + (y-2)//3 + (z-2)//3 + 12\n--",
+        "_fun_comments": "--[[\n\tThe Menger Sponge! Wait, it looks a little different?\n\t\n\tWe are zoomed in here, so we can not see too much of the \"Menger Sponge\"\n\tbut, that is ok!\n\tIt makes things easier to work with when our working area is smaller.\n\t\n\tSome understanding of \"signed distance functions\" \n  may help, thanks to https://iquilezles.org/articles/distfunctions/\n]]--\n\n--[[\n\t1. Okay, first things first\n\t\n\tWe setup a signed distance function (sdf) \n\tthis will help us to create our mini menger boxes.\n\tTogether, we can use the \"sdMengerBox\" function to make \n\ta bunch of boxes and then combine\tthem in interesting ways.\n]]--\n\n-- \"signed distance function\" for \"MengerBox\" (let us keep this function handy)\nlocal function sdMengerBox(px, py, pz, size, holeWidth)\n  -- Distance to the base Cube\n  local apx = abs(px)\n  local apy = abs(py)\n  local apz = abs(pz)\t\n  local adx = apx - size\n  local ady = apy - size\n  local adz = apz - size\n  local dBox = max(adx, ady, adz)\n\n  -- Define the cross-shaped holes (3 intersecting prisms)\n  -- hole through X-Y (Z-axis opening)\n  local hZ = max(apx - holeWidth, apy - holeWidth)\n  -- hole through Y-Z (X-axis opening)\n  local hX = max(apy - holeWidth, apz - holeWidth)\n  -- hole through Z-X (Y-axis opening)\n  local hY = max(apz - holeWidth, apx - holeWidth)\n\n  -- Union all the holes with min()\n  local crossHoles = min(hZ, hX, hY)\n  -- in SDFs, subtracting is, max(shape, -otherShape)\n  return max(dBox, -crossHoles)\nend\n-- this a helper function, we need it later to demo some things\nlocal function demoHelper(demo_name,a,b,color1,color2)\n  --## Subtraction examples:\n  if demo_name==\"subtraction_2\" then return max(-a,b)\u003c=0 and color1 end\n\tif demo_name==\"outer_subtraction_2\" then return max(-b,a)\u003e0 and color2 end\n  --## Union examples\n\tif demo_name==\"union\" then return min(a,b)\u003c=0 and color1 end\n\tif demo_name==\"outer_union\" then return min(a,b)\u003e0 and color2 end\n  --## Intersection examples:\n\tif demo_name==\"intersection\" then return max(a,b)\u003c=0 and color1 end\n\tif demo_name==\"outer_intersection\" then return max(a,b)\u003e0 and color2 end\n  --## Some other examples I enjoyed:\n\t if demo_name==\"wacky_subtraction_1\" then return max(-a,b)\u003e0 and color2 end\n  --## Fun with \"multiple combinations\"\n  --## You can keep on combining shapes together!\n  --## I enjoyed \"xor + outer union\":\n  if demo_name==\"xor_plus_outer_union\" then\n    if max(min(a,b),-max(a,b))\u003c=0 then\n    \treturn color1\n    elseif min(a,b)\u003e0 then\n    \treturn color2\n\t\telse \n\t\t\treturn 0\n    end\n  end\n  --## this one I call \"Subtraction + reversal Subtraction\":\n\tif demo_name==\"subtraction_plus_reversal_subtraction\" then return max(-b,a)\u003c=0 and color1 or max(-a,b)\u003c=0 and color2 end\n\t\n\treturn BROWN -- debug color incase our helper goes wrong somehow\nend\n\n--[[\n\t2. Okay, second things second\n\t\n\tWe will setup two variables: \"a=\" and \"b=\"\n\tThese will be our two \"shapes\".\n\t\n\tWe can combine our \"shapes\" in simple ways with\n\ta little bit of math, all thanks to our signed distance function above.\n]]--\n\n-- a, the big box:\n--\n-- Remember: above we have \"sdMengerBox(px, py, pz, size, holeWidth)\"\n-- Note: all sizes are \"half-sizes\", so we divide by 2.\nlocal a = sdMengerBox(x, y, z, 9/2, 3/2)\n\n-- b, little boxes everywhere:\n--\n-- Remember: sdMengerBox(px, py, pz, size, holeWidth)\n-- Note: we use mod() math here with our sdf to make \n--       a bunch of repeating mini menger boxes\nlocal b = sdMengerBox(\n\t((x + 3/2) % 3) - 3/2,\n\t((y + 3/2) % 3) - 3/2,\n\t((z + 3/2) % 3) - 3/2,\n\t3/2, 1/2\n)\n\n-- 3. Time to get really elaborate!\n--\n-- Now we setup a custom colorwheel to be a subset of the 16 colors\n-- with \"counter_part_colors\" chosen for some symmetry\n--\n-- The colors we will end up working with are: 6,7,9,10,11,13,14\n-- starting at purple and ending over in the blues\nlocal original_color_wheel = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16}\nlocal counter_part_color_wheel = {1,2,3,4,5, 8,7,6, 11,10,9, 14,13,12, 16,15}\n\n-- The following periodic number changes with \"y\"\n-- hopefully it stays between 7 and 13\n-- I hope it doesnt run away on us (heh heh)\nlocal our_periodic_number = (y+3)%7+7 \n\n-- Using our periodic number and our custom color wheels\n-- we can setup two colors that change with y\nlocal color1 = original_color_wheel[our_periodic_number]\nlocal color2 = counter_part_color_wheel[our_periodic_number]\n\nprint(\"color1=\"..color1..\" color2=\"..color2..\" PEACH=4\")\n\n--[[ \n\t4. Okay! time for the fun part (heh heh)\n\n\tNow we go looking for a fun \"mengerspongey-ishy shape\" \n\tusing Primitive combinations with our \"sdfs\", \"a\" and \"b\"\n\n\tPrimitive combinations for two shapes using signed distance functions:\n  \toperation Union:        min(a,b)\n  \toperation Subtraction:  max(-a,b)\n  \toperation Intersection: max(a,b)\n  \toperation Xor:          max(min(a,b),-max(a,b))\n\n\tFor more visual examples of \"primitive combinations\" using \"a\" and \"b\"\n  Comment and Uncomment the \"return\" statements below to see new shapes!\n\t\n\tNote: make sure to only have one \"return\" statement uncommented\n]]--\n\n--## Our very first example at t==0 is \"basic subtraction\":\n\nreturn\n--max(-a,b)\u003c=0 and color2 \n--or \n--a\u003e0 and PEACH\n--or\n--max(-b,a)\u003c=0 and color1 \n\n--t==0 and max(-b,a)\u003c=0 and color1 or\n--t==1 and  demoHelper(\"subtraction_2\",        a, b, color1, nil) or\n--t==2 and  demoHelper(\"outer_subtraction_2\",  a, b, nil, color2) or\n--t==3 and  demoHelper(\"union\",                a, b, color1, nil) or\n--t==4 and  demoHelper(\"outer_union\",          a, b, nil, color2) or\n--t==5 and  demoHelper(\"intersection\",         a, b, color1, nil) or\n--t==6 and  demoHelper(\"outer_intersection\",   a, b, nil, color2) or\n--t==7 and  demoHelper(\"wacky_subtraction_1\",  a, b, nil, color2) or\n--t==8 and  demoHelper(\"xor_plus_outer_union\", a, b, color1, color2) or\n--t==8 and  \ndemoHelper(\"subtraction_plus_reversal_subtraction\", a, b, color1, color2)\nor demoHelper(\"outer_union\", a, b, nil, PEACH)\n\n--[[ \n\tbtw, Did you want to have a look at the shapes \"a\" and \"b\"?\n\t\n\tNote: because we repeated the sdf shape using mod() math above\n\tfor \"b\" we must do more mod() math to \"reveal it\" nicely\n]]-- \n\n--## Have a look at shape \"a\" (one big 9x9x9 mengercube)\n--return a\u003c=0 and 8\n\n--## Have a look at shape \"b\" (3x3x3 mengercubes)\n--return b\u003c=0 and (x-2)//3 + (y-2)//3 + (z-2)//3 + 12\n--",
         "f1": "-- 310\n-- 152.102\n\nlocal function sdMengerBox(px, py, pz, size, holeWidth)\n  -- Distance to the base Cube\n  local apx = abs(px)\n  local apy = abs(py)\n  local apz = abs(pz)\t\n  local adx = apx - size\n  local ady = apy - size\n  local adz = apz - size\n  local dBox = max(adx, ady, adz)\n\n  -- Define the cross-shaped holes (3 intersecting prisms)\n  -- hole through X-Y (Z-axis opening)\n  local hZ = max(apx - holeWidth, apy - holeWidth)\n  -- hole through Y-Z (X-axis opening)\n  local hX = max(apy - holeWidth, apz - holeWidth)\n  -- hole through Z-X (Y-axis opening)\n  local hY = max(apz - holeWidth, apx - holeWidth)\n\n  -- Union all the holes with min()\n  local crossHoles = min(hZ, hX, hY)\n  -- in SDFs, subtracting is, max(shape, -otherShape)\n  return max(dBox, -crossHoles)\nend\nlocal a = sdMengerBox(x, y, z, 9/2, 3/2)\nlocal b = sdMengerBox(\n\t((x + 3/2) % 3) - 3/2,\n\t((y + 3/2) % 3) - 3/2,\n\t((z + 3/2) % 3) - 3/2,\n\t3/2, 1/2\n)\nlocal original_color_wheel = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16}\nlocal counter_part_color_wheel = {1,2,3,4,5, 8,7,6, 11,10,9, 14,13,12, 16,15}\nlocal our_periodic_number = (y+3)%7+7\nlocal color1 = original_color_wheel[our_periodic_number]\nlocal color2 = counter_part_color_wheel[our_periodic_number]\nreturn \nmax(-b,a)\u003c=0 and color1 or \nmax(-a,b)\u003c=0 and color2 or \nmin(a,b)\u003e=0 and PEACH\n",
         "f2": "-- 247\n-- 116.052\n\nlocal function sdMengerBox(px, py, pz, size, holeWidth)\n  -- Distance to the base Cube\n  local apx = abs(px)\n  local apy = abs(py)\n  local apz = abs(pz)\t\n  local adx = apx - size\n  local ady = apy - size\n  local adz = apz - size\n\tlocal dBox = max(adx, ady, adz)\n\n  -- Define the cross-shaped holes (3 intersecting prisms)\n  -- hole through X-Y (Z-axis opening)\n  local hZ = max(apx - holeWidth, apy - holeWidth)\n  -- hole through Y-Z (X-axis opening)\n  local hX = max(apy - holeWidth, apz - holeWidth)\n  -- hole through Z-X (Y-axis opening)\n  local hY = max(apz - holeWidth, apx - holeWidth)\n\n  -- Union all the holes with min()\n  local crossHoles = min(hZ, hX, hY)\n  -- in SDFs, subtracting is, max(shape, -otherShape)\n  return max(dBox, -crossHoles)\nend\n\nlocal a = sdMengerBox(x, y, z, 9/2, 3/2)\nlocal b = sdMengerBox(\n\t((x + 3/2) % 3) - 3/2,\n\t((y + 3/2) % 3) - 3/2,\n\t((z + 3/2) % 3) - 3/2,\n\t3/2, 1/2\n)\n\nlocal our_periodic_number = (y+3)%7\n\nreturn\nmax(-b,a)\u003c=0 and our_periodic_number+7 or \nmax(-a,b)\u003c=0 and ({[0]=7,6, 11,10,9, 14,13})[our_periodic_number] or\nmin(a,b)\u003e0 and PEACH\n\n--[[\nlocal function sdMengerBox(px, py, pz, size, holeWidth)\n  -- Distance to the base Cube\n  local apx = abs(px)\n  local apy = abs(py)\n  local apz = abs(pz)\t\n  local adx = apx - size\n  local ady = apy - size\n  local adz = apz - size\n  local dBox = max(adx, ady, adz)\n\n  -- Define the cross-shaped holes (3 intersecting prisms)\n  -- hole through X-Y (Z-axis opening)\n  local hZ = max(apx - holeWidth, apy - holeWidth)\n  -- hole through Y-Z (X-axis opening)\n  local hX = max(apy - holeWidth, apz - holeWidth)\n  -- hole through Z-X (Y-axis opening)\n  local hY = max(apz - holeWidth, apx - holeWidth)\n\n  -- Union all the holes with min()\n  local crossHoles = min(hZ, hX, hY)\n  -- in SDFs, subtracting is, max(shape, -otherShape)\n  return max(dBox, -crossHoles)\nend\nlocal a = sdMengerBox(x, y, z, 9/2, 3/2)\nlocal b = sdMengerBox(\n\t((x + 3/2) % 3) - 3/2,\n\t((y + 3/2) % 3) - 3/2,\n\t((z + 3/2) % 3) - 3/2,\n\t3/2, 1/2\n)\nlocal original_color_wheel = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16}\nlocal counter_part_color_wheel = {1,2,3,4,5, 8,7,6, 11,10,9, 14,13,12, 16,15}\nlocal our_periodic_number = (y+3)%7+7\nlocal color1 = original_color_wheel[our_periodic_number]\nlocal color2 = counter_part_color_wheel[our_periodic_number]\nreturn \nmax(-b,a)\u003c=0 and color1 or \nmax(-a,b)\u003c=0 and color2 or \nmin(a,b)\u003e=0 and PEACH\n]]--\n",
         "f3": "-- 247\n-- 116.052\n\n-- My version of making the sdf code \"fast\"\n\n-- btw, if you squint really hard you can notice the demo had it all!\n--return\n--demoHelper(\"subtraction_plus_reversal_subtraction\", a, b, color1, color2) or\n--demoHelper(\"outer_union\", a, b, nil, PEACH)\n\nlocal function sdMengerBox(px, py, pz, size, holeWidth)\n  local apx = abs(px)\n  local apy = abs(py)\n  local apz = abs(pz)\t\n  return max(\n\t\t\t\t\tmax(apx - size, apy - size, apz - size), \n\t\t\t\t\t-min(\n\t\t\t\t\t\tmax(apx - holeWidth, apy - holeWidth), \n\t\t\t\t\t\tmax(apy - holeWidth, apz - holeWidth), \n\t\t\t\t\t\tmax(apz - holeWidth, apx - holeWidth)\n\t\t\t\t\t)\n\t\t\t\t)\nend\n\nlocal a = sdMengerBox(x, y, z, 9/2, 3/2)\nlocal b = sdMengerBox(\n\t((x + 3/2) % 3) - 3/2,\n\t((y + 3/2) % 3) - 3/2,\n\t((z + 3/2) % 3) - 3/2,\n\t3/2, 1/2\n)\n\nreturn\nmax(-b,a)\u003c=0 and y+10 or\nmax(-a,b)\u003c=0 and ({7,6, 11,10,9, 14,13})[y+4] or\nmin(a,b)\u003e0 and PEACH\n\n--[[\n\n-- If we simplify the code from the original as much as we can before refactoring\n-- it looks something like the following:\n\nlocal function sdMengerBox(px, py, pz, size, holeWidth)\n  -- Distance to the base Cube\n  local apx = abs(px)\n  local apy = abs(py)\n  local apz = abs(pz)\t\n  local adx = apx - size\n  local ady = apy - size\n  local adz = apz - size\n  local dBox = max(adx, ady, adz)\n\n  -- Define the cross-shaped holes (3 intersecting prisms)\n  -- hole through X-Y (Z-axis opening)\n  local hZ = max(apx - holeWidth, apy - holeWidth)\n  -- hole through Y-Z (X-axis opening)\n  local hX = max(apy - holeWidth, apz - holeWidth)\n  -- hole through Z-X (Y-axis opening)\n  local hY = max(apz - holeWidth, apx - holeWidth)\n\n  -- Union all the holes with min()\n  local crossHoles = min(hZ, hX, hY)\n  -- in SDFs, subtracting is, max(shape, -otherShape)\n  return max(dBox, -crossHoles)\nend\nlocal a = sdMengerBox(x, y, z, 9/2, 3/2)\nlocal b = sdMengerBox(\n\t((x + 3/2) % 3) - 3/2,\n\t((y + 3/2) % 3) - 3/2,\n\t((z + 3/2) % 3) - 3/2,\n\t3/2, 1/2\n)\n\nlocal original_color_wheel = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16}\nlocal counter_part_color_wheel = {1,2,3,4,5, 8,7,6, 11,10,9, 14,13,12, 16,15}\nlocal our_periodic_number = (y+3)%7+7\nlocal color1 = original_color_wheel[our_periodic_number]\nlocal color2 = counter_part_color_wheel[our_periodic_number]\n\nreturn \nmax(-b,a)\u003c=0 and color1 or \nmax(-a,b)\u003c=0 and color2 or \nmin(a,b)\u003e=0 and PEACH\n\n]]--\n",
@@ -5270,7 +5272,7 @@
       ]
     },
     {
-      "active_variant": "s2",
+      "active_variant": "f1",
       "animated": true,
       "challenge_complete": false,
       "code_instructions": 8.7314,
@@ -5694,6 +5696,310 @@
       "source": 400,
       "variant_order": [
         "code"
+      ]
+    },
+    {
+      "active_variant": "f1",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 9.7994,
+      "code_size": 165,
+      "code_variants": {
+        "f1": "-- f1\n-- 6427\n-- 11.328\nif y\u003c-5 or y\u003e5 then return end -- negative space\nlocal X,Z=x*x,z*z\nlocal XZ=X+Z\nif XZ\u003e=110 or XZ\u003e=22 and XZ\u003c=57 then return end -- negative space\nlocal Y=y*y\nlocal origin_sphere=X+Y+Z \n--local in_neptune= origin_sphere \u003c= 24\n--local in_core,inner_neptune= origin_sphere\u003c=1, origin_sphere\u003c=8\nif origin_sphere\u003c=24 then\n\tif origin_sphere\u003c=8 then \n\t\tif origin_sphere\u003c=1 then return BROWN end\n\t\treturn LIGHTBLUE \n\tend\n\tif Y\u003e=5 then return BLUE end\n\tif y==-2 then\n\t\tif x\u003c0 then \n\t\t\tif z\u003e-1 and z\u003c4 then return LIGHTBLUE end\n\t\telse\n\t\t\tif z\u003c0 then return LIGHTBLUE end\n\t\tend\n\tend\n\tif y==1 then\n\t\tif x\u003e=0 then\n\t\t\tif z\u003e=0 and z\u003c4 then return LIGHTBLUE end\n\t\telse\n\t\t\tif z==4 then return LIGHTBLUE end\n\t\tend\n\tend\n\tif y==2 then\n\t\tif x\u003c0 then \n\t\t\tif z\u003c=-1 then return LIGHTBLUE end\n\t\tend\n\tend\n\treturn BLUE\nend\n\nif XZ\u003c=20 then return end -- negative space above and below planet sphere\n\n--local theta= 0.4014257 -- Angle of inclination of Triton's orbit in radians\n--print(\"cos_theta=\".. cos(theta) .. \" sin_theta=\" .. sin(theta))\n--print(\"pi_12=\".. pi/12)\n--phi= t*pi/12\nlocal phi= t*0.26179938779915\n--local cos_theta= 0.92050486437677\n--local sin_theta= 0.39073110275316\n--Rotates point relative to the y-axis by phi\n\nlocal px= 8*cos(phi)-5*sin(phi)\nlocal pxSq= (x-px*0.92050486437677)^2\nif pxSq\u003e2 then return end\nlocal pySq= (y-px*0.39073110275316)^2\nif pySq\u003e2 then return end -- negative space above and below the triton moon\nlocal pzSq= (z-(8*sin(phi)+5*cos(phi)))^2\nif pzSq\u003e2 then return end\n\n--local in_triton= pxSq + pySq + pzSq \u003c= 2\nif pxSq + pySq + pzSq \u003c= 2 then \n\treturn GREY\nend\n",
+        "f2": "-- f2\n-- 6434\n-- 10.797\nif y\u003c-5 or y\u003e5 then return end -- negative space\nlocal X,Z=x*x,z*z\nlocal XZ=X+Z\nif XZ\u003e=110 or XZ\u003e=22 and XZ\u003c=57 then return end -- negative space\nif XZ\u003c=21 then\n\tlocal Y=y*y\n\t--local in_neptune= origin_sphere \u003c= 24\n\t--local in_core,inner_neptune= origin_sphere\u003c=1, origin_sphere\u003c=8\n\tlocal origin_sphere=X+Y+Z\n\tif origin_sphere \u003c= 24 then\n\t\tif origin_sphere\u003c=8 then \n\t\t\tif origin_sphere\u003c=1 then return BROWN end\n\t\t\treturn LIGHTBLUE\n\t\tend\n\t\tif Y\u003e4 then return BLUE end -- top and bottom of planet\n\t\tif y==-2 then -- slice1\n\t\t\tif x\u003c0 then \n\t\t\t\tif z\u003e-1 and z\u003c4 then return LIGHTBLUE end\n\t\t\telse\n\t\t\t\tif z\u003c0 then return LIGHTBLUE end\n\t\t\tend\n\t\tend\n\t\tif y==1 then -- slice2\n\t\t\tif x\u003e=0 then\n\t\t\t\tif z\u003e=0 and z\u003c4 then return LIGHTBLUE end\n\t\t\telse\n\t\t\t\tif z==4 then return LIGHTBLUE end\n\t\t\tend\n\t\tend\n\t\tif y==2 then -- slice3\n\t\t\tif x\u003c0 then \n\t\t\t\tif z\u003c=-1 then return LIGHTBLUE end\n\t\t\tend\n\t\tend\n\t\treturn BLUE\n\tend\nend\n\nif XZ\u003c=20 then return end -- negative space above and below planet sphere\n\n--local theta= 0.4014257 -- Angle of inclination of Triton's orbit in radians\n--print(\"cos_theta=\".. cos(theta) .. \" sin_theta=\" .. sin(theta))\n--print(\"pi_12=\".. pi/12)\n--phi= t*pi/12\nlocal phi= t*0.26179938779915\n--local cos_theta= 0.92050486437677\n--local sin_theta= 0.39073110275316\n--Rotates point relative to the y-axis by phi\n\nlocal px= 8*cos(phi)-5*sin(phi)\nlocal pxSq= (x-px*0.92050486437677)^2\nif pxSq\u003e2 then return end\nlocal pySq= (y-px*0.39073110275316)^2\nif pySq\u003e2 then return end -- negative space above and below the triton moon\nlocal pzSq= (z-(8*sin(phi)+5*cos(phi)))^2\nif pzSq\u003e2 then return end\n\n--local in_triton= pxSq + pySq + pzSq \u003c= 2\nif pxSq + pySq + pzSq \u003c= 2 then \n\treturn GREY\nend\n",
+        "f3": "-- f3\n-- 8485\n-- 10.547\nif y\u003c-5 or y\u003e5 then return end -- negative space\nlocal X,Z=x*x,z*z\nlocal XZ=X+Z\nif XZ\u003e=110 or XZ\u003e=21 and XZ\u003c=57 then return end -- negative space\nif XZ\u003c=20 then\n\tlocal Y=y*y\n\t--local in_neptune= origin_sphere \u003c= 24\n\t--local in_core,inner_neptune= origin_sphere\u003c=1, origin_sphere\u003c=8\n\tlocal origin_sphere=X+Y+Z\n\tif origin_sphere\u003c=24 then\n\t\tif origin_sphere\u003c=8 then \n\t\t\tif origin_sphere\u003c=1 then return BROWN end\n\t\t\treturn LIGHTBLUE\n\t\tend\n\t\tif Y\u003e4 then return BLUE end -- top and bottom of planet\n\t\tif y==-2 then -- slice1\n\t\t\tif x\u003c0 then \n\t\t\t\tif z\u003e-1 and z\u003c4 then return LIGHTBLUE end\n\t\t\telse\n\t\t\t\tif z\u003c0 then return LIGHTBLUE end\n\t\t\tend\n\t\tend\n\t\tif y==1 then -- slice2\n\t\t\tif x\u003e=0 then\n\t\t\t\tif z\u003e=0 and z\u003c4 then return LIGHTBLUE end\n\t\t\telse\n\t\t\t\tif z==4 then return LIGHTBLUE end\n\t\t\tend\n\t\tend\n\t\tif y==2 then -- slice3\n\t\t\tif x\u003c0 then \n\t\t\t\tif z\u003c=-1 then return LIGHTBLUE end\n\t\t\tend\n\t\tend\n\t\treturn BLUE\n\tend\nend\n\nif XZ\u003c=20 then return end -- negative space above and below planet sphere\n\n--local theta= 0.4014257 -- Angle of inclination of Triton's orbit in radians\n--print(\"tan_theta=\".. tan(theta) .. \"cos_theta=\".. cos(theta) .. \" sin_theta=\" .. sin(theta))\n\nif x*.4245+2\u003cy or x*.4245-2\u003ey then return end -- negative space outside slanted xz plane\n\n--print(\"pi_12=\".. pi/12)\n--phi= t*pi/12\n--local cos_theta= 0.92050486437677\n--local sin_theta= 0.39073110275316\nlocal cos_t_p12= cos(t*0.26179938779915)\nlocal sin_t_p12= sin(t*0.26179938779915)\nlocal px= 8*cos_t_p12-5*sin_t_p12\nlocal pxSq= (x-px*0.92050486437677)^2\nif pxSq\u003e2 then return end\nlocal pySq= (y-px*0.39073110275316)^2\nif pySq\u003e2 then return end -- negative space above and below the triton moon\nlocal pzSq= (z-(8*sin_t_p12+5*cos_t_p12))^2\nif pzSq\u003e2 then return end\n--local in_triton= pxSq + pySq + pzSq \u003c= 2\nif pxSq + pySq + pzSq \u003e 2 then return end\nreturn GREY\n",
+        "f4": "-- f4\n-- 8485\n-- 10.547\nif y\u003c-5 or y\u003e5 then return end -- negative space\nlocal X,Z=x*x,z*z\nlocal XZ=X+Z\nif XZ\u003e=110 or XZ\u003e=21 and XZ\u003c=57 then return end -- negative space\nif XZ\u003c=20 then\n\tlocal Y=y*y\n\t--local in_neptune= origin_sphere \u003c= 24\n\t--local in_core,inner_neptune= origin_sphere\u003c=1, origin_sphere\u003c=8\n\tlocal origin_sphere=X+Y+Z\n\tif origin_sphere\u003c=24 then\n\t\tif origin_sphere\u003c=8 then \n\t\t\tif origin_sphere\u003c=1 then return BROWN end\n\t\t\treturn LIGHTBLUE\n\t\tend\n\t\tif Y\u003e4 then return BLUE end -- top and bottom of planet\n\t\tif y==-2 then -- slice1\n\t\t\tif x\u003c0 then \n\t\t\t\tif z\u003e-1 and z\u003c4 then return LIGHTBLUE end\n\t\t\telse\n\t\t\t\tif z\u003c0 then return LIGHTBLUE end\n\t\t\tend\n\t\tend\n\t\tif y==1 then -- slice2\n\t\t\tif x\u003e=0 then\n\t\t\t\tif z\u003e=0 and z\u003c4 then return LIGHTBLUE end\n\t\t\telse\n\t\t\t\tif z==4 then return LIGHTBLUE end\n\t\t\tend\n\t\tend\n\t\tif y==2 then -- slice3\n\t\t\tif x\u003c0 then \n\t\t\t\tif z\u003c=-1 then return LIGHTBLUE end\n\t\t\tend\n\t\tend\n\t\treturn BLUE\n\tend\nend\n\nif XZ\u003c=20 then return end -- negative space above and below planet sphere\n\n--local theta= 0.4014257 -- Angle of inclination of Triton's orbit in radians\n--print(\"tan_theta=\".. tan(theta) .. \"cos_theta=\".. cos(theta) .. \" sin_theta=\" .. sin(theta))\n\nif x*.4245+2\u003cy or x*.4245-2\u003ey then return end -- negative space outside slanted xz plane\n\n--print(\"pi_12=\".. pi/12)\n--phi= t*pi/12\n--local cos_theta= 0.92050486437677\n--local sin_theta= 0.39073110275316\n\nlocal cos_t_atan58= cos(t*0.26179938779915+atan(5/8))\nlocal cos_t_atan85= cos(t*0.26179938779915-atan(8/5))\n--local px= 8*cos_t_p12-5*sin_t_p12\n-- 9.43*cos(phi+atan(5/8))\n--sqrt(89)*cos(phi-atan(8/5))\nlocal px= 9.43*cos_t_atan58\nlocal pxSq= (x-px*0.92050486437677)^2\nif pxSq\u003e2 then return end\nlocal pySq= (y-px*0.39073110275316)^2\nif pySq\u003e2 then return end -- negative space above and below the triton moon\nlocal pzSq= (z-9.43*cos_t_atan85)^2\nif pzSq\u003e2 then return end\n--local in_triton= pxSq + pySq + pzSq \u003c= 2\nif pxSq + pySq + pzSq \u003e 2 then return end\nreturn GREY\n",
+        "first_pass": "if y\u003c-5 or y\u003e5 then return end -- negative space\n\nlocal X,Y,Z=x*x,y*y,z*z\nlocal origin_sphere=X+Y+Z \n--local in_neptune= origin_sphere \u003c= 24\n--local in_core,inner_neptune= origin_sphere\u003c=1, origin_sphere\u003c=8\nif origin_sphere \u003c= 24 then\n\tif origin_sphere\u003c=8 then \n\t\tif origin_sphere\u003c=1 then return BROWN end\n\t\treturn LIGHTBLUE \n\tend\n\tif Y\u003e4 then return BLUE end\n\tif y==-2 then\n\t\tif x\u003c0 then \n\t\t\tif z\u003e-1 and z\u003c4 then return LIGHTBLUE end\n\t\telse\n\t\t\tif z\u003c0 then return LIGHTBLUE end\n\t\tend\n\tend\n\tif y==1 then\n\t\tif x\u003e=0 then\n\t\t\tif z\u003e=0 and z\u003c4 then return LIGHTBLUE end\n\t\telse\n\t\t\tif z==4 then return LIGHTBLUE end\n\t\tend\n\tend\n\tif y==2 then\n\t\tif x\u003c0 then \n\t\t\tif z\u003c=-1 then return LIGHTBLUE end\n\t\tend\n\tend\n\treturn BLUE\nend\n--local theta= 0.4014257 -- Angle of inclination of Triton's orbit in radians\n--print(\"cos_theta=\".. cos(theta) .. \" sin_theta=\" .. sin(theta))\n--print(\"pi_12=\".. pi/12)\nlocal cos_theta,sin_theta,pi_12= 0.92050486437677, 0.39073110275316, 0.26179938779915\nlocal phi= t*pi_12\n\n--Rotates point relative to the y-axis by phi\nlocal px,py,pz= 8*cos(phi)-5*sin(phi), 0, 8*sin(phi) + 5*cos(phi)\n--px,py,pz= px*cos(theta)-py*sin(theta), px*sin(theta)+py*cos(theta), pz -- z-axis by theta\n--local in_triton= (x-px*cos_theta-py*sin_theta)^2 + (y-px*sin_theta+py*cos_theta)^2 + (z-pz)^2 \u003c= 2\nif (x-px*cos_theta-py*sin_theta)^2 + (y-px*sin_theta+py*cos_theta)^2 + (z-pz)^2 \u003c= 2 then \n\treturn GREY\nend\n",
+        "s1": "X,Y,Z=x*x,y*y,z*z\norigin_sphere=X+Y+Z \n--local in_neptune= origin_sphere \u003c= 24\n--local in_core,inner_neptune= origin_sphere\u003c=1, origin_sphere\u003c=8\nif origin_sphere \u003c= 24 then\n\tif origin_sphere\u003c=8 then \n\t\tif origin_sphere\u003c=1 then return BROWN end\n\t\treturn LIGHTBLUE \n\tend\n\tif Y\u003e4 then return BLUE end\n\tif y==-2 then\n\t\tif x\u003c0 then \n\t\t\tif z\u003e-1 and z\u003c4 then return LIGHTBLUE end\n\t\telse\n\t\t\tif z\u003c0 then return LIGHTBLUE end\n\t\tend\n\tend\n\tif y==1 then\n\t\tif x\u003e=0 then\n\t\t\tif z\u003e=0 and z\u003c4 then return LIGHTBLUE end\n\t\telse\n\t\t\tif z==4 then return LIGHTBLUE end\n\t\tend\n\tend\n\tif y==2 then\n\t\tif x\u003c0 then \n\t\t\tif z\u003c=-1 then return LIGHTBLUE end\n\t\tend\n\tend\n\treturn BLUE\nend\n--theta= 0.4014257 -- Angle of inclination of Triton's orbit in radians\ntheta= 0.401\n--local cos_theta,sin_theta,pi_12= 0.92050486437677, 0.39073110275316, 0.26179938779915\nphi= t*pi/12\n\n--Rotates point relative to the y-axis by phi\npx,py,pz= 8*cos(phi)-5*sin(phi), 0, 8*sin(phi) + 5*cos(phi)\n--px,py,pz= px*cos(theta)-py*sin(theta), px*sin(theta)+py*cos(theta), pz -- z-axis by theta\n--local in_triton= (x-px*cos_theta-py*sin_theta)^2 + (y-px*sin_theta+py*cos_theta)^2 + (z-pz)^2 \u003c= 2\nif (x-px*cos(theta)-py*sin(theta))^2 + (y-px*sin(theta)+py*cos(theta))^2 + (z-pz)^2 \u003c= 2 then \n\treturn GREY\nend\n",
+        "s2": "-- s2\n-- 189\norigin_sphere=x*x+y*y+z*z \n--local in_neptune= origin_sphere \u003c= 24\n--local in_core,inner_neptune= origin_sphere\u003c=1, origin_sphere\u003c=8\nif origin_sphere\u003c=24 then\n\tif origin_sphere\u003c=8 then \n\t\tif origin_sphere\u003c=1 then return BROWN end\n\t\treturn LIGHTBLUE \n\tend\n\tif y==-2 then --slice1\n\t\tif x\u003c0 then \n\t\t\tif z\u003e-1 and z\u003c4 then return LIGHTBLUE end\n\t\telse\n\t\t\tif z\u003c0 then return LIGHTBLUE end\n\t\tend\n\tend\n\tif y==1 then --slice2\n\t\tif x\u003e=0 then\n\t\t\tif z\u003e=0 and z\u003c4 then return LIGHTBLUE end\n\t\telse\n\t\t\tif z==4 then return LIGHTBLUE end\n\t\tend\n\tend\n\tif y==2 then --slice3\n\t\tif x\u003c0 then \n\t\t\tif z\u003c=-1 then return LIGHTBLUE end\n\t\tend\n\tend\n\treturn BLUE\nend\n--theta= 0.4014257 -- Angle of inclination of Triton's orbit in radians\n--cos_theta=0.92\n--sin_theta=0.3907\n--local cos_theta,sin_theta,pi_12= 0.92050486437677, 0.39073110275316, 0.26179938779915\nphi= t*pi/12\npx= 8*cos(phi)-5*sin(phi)\nif (x-px*.92)^2 + (y-px*.3907)^2 + (z-8*sin(phi)-5*cos(phi))^2 \u003c= 2 then \n\treturn GREY\nend\n",
+        "s3": "-- s3\n-- 169\nphi= t*pi/12\norigin_sphere= x*x+y*y+z*z\npx= 8*cos(phi)+5*cos(phi+pi/2)\nreturn \norigin_sphere\u003c=1 and BROWN\nor origin_sphere\u003c=8 and LIGHTBLUE\nor origin_sphere\u003c=24 and BLUE + btoi(\n\ty==-2 and (x\u003c0 and z\u003e-1 and z\u003c4 or x\u003e=0 and z\u003c0)\n\tor y==1 and (x\u003e=0 and z\u003e=0 and z\u003c4 or x\u003c0 and z==4)\n\tor y==2 and (x\u003c0 and z\u003c=-1)\n)\nor (x-px*9.2e-1)^2 \n\t + (y-px*3.91e-1)^2 \n\t + (z+8*cos(phi+pi/2)-5*cos(phi))^2 \u003c 2 \n\t and GREY\n",
+        "s4": "-- s4\n-- 165\norigin_sphere= x*x+y*y+z*z\npx= 9.43*cos(t*pi/12+atan(5/8))\nreturn\norigin_sphere\u003c=1 and BROWN\nor origin_sphere\u003c=8 and LIGHTBLUE\nor origin_sphere\u003c=24 and BLUE + btoi(\n\ty==-2 and (x\u003c0 and z\u003e-1 and z\u003c4 or x\u003e=0 and z\u003c0)\n\tor y==1 and (x\u003e=0 and z\u003e=0 and z\u003c4 or x\u003c0 and z==4)\n\tor y==2 and (x\u003c0 and z\u003c=-1)\n)\nor (x-px*9.2e-1)^2 \n\t + (y-px*3.91e-1)^2 \n\t + (z-9.43*cos(t*pi/12-atan(1.6)))^2 \u003c= 2 \n\t and GREY"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 24,
+      "id": "neptune-triton.weekly",
+      "size": 10,
+      "source": 400,
+      "variant_order": [
+        "first_pass",
+        "s1",
+        "s2",
+        "f1",
+        "f2",
+        "f3",
+        "f4",
+        "s3",
+        "s4"
+      ]
+    },
+    {
+      "active_variant": "s6",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 5.81748,
+      "code_size": 36,
+      "code_variants": {
+        "f1": "-- f1\n-- 109\n-- 9.563\n--\nif x-8==z then return end\nif x+8==z then return end\nif y \u003c= 0 then\n\tif x \u003c= 0 and z \u003c= 0 then\n\t\treturn ORANGE\n\tend\n\treturn\nend\nif y\u003c=4 then\n\tif x\u003e=2 or z\u003e=2 then return end\n\tif x\u003c=-7 or z\u003c=-7 then return end\n\treturn PEACH\nend\nif y\u003c=6 then\n\tif x\u003e=4 or z\u003e=4 then return end\n\tif x\u003c=-5 or z\u003c=-5 then return end\n\treturn GREY\nend\nif x\u003e=0 and z\u003e=0 then \n\treturn WHITE\nend\n",
+        "f2": "-- f2\n-- 91\n-- 5.834\n--\nif y\u003c=0 then\n\tif x\u003e=1 then return end\n\tif z\u003e=1 then return end\n\treturn ORANGE\nend\nif y\u003c=4 then\n\tif x\u003e=2 then return end\n\tif z\u003e=2 then return end\n\tif x\u003c=-7 then return end\n\tif z\u003c=-7 then return end\n\treturn PEACH\nend\nif y\u003c=6 then\n\tif x\u003e=4 then return end\n\tif x\u003c=-5 then return end \n\tif z\u003e=4 then return end\n\tif z\u003c=-5 then return end\n\treturn GREY\nend\nif x\u003c=-1 then return end\nif z\u003c=-1 then return end\nreturn WHITE\n",
+        "f3": "-- f3\n-- 118\n-- 6.055\n\nif y\u003c=0 then\n\tif x\u003e=1 then return end\n\tif z\u003e=1 then return end\n\treturn ORANGE\nend\nif y==7 then\n\tif x\u003c=-1 then return end\n\tif z\u003c=-1 then return end\n\treturn WHITE\nend\nif y\u003e=5 then \n\tif x\u003e=4 then return end\n\tif x\u003c=-5 then return end \n\tif z\u003e=4 then return end\n\tif z\u003c-4 then return end\n\treturn GREY\nend\nif x\u003c=z then\n\tif z\u003e=2 then return end\n\tif x\u003c=-7 then return end\n\treturn PEACH\nend\nif x\u003e=2 then return end\nif z\u003c=-7 then return end\nreturn PEACH",
+        "f4": "-- f4\n-- 118\n-- 5.824\n\nif y\u003c=0 then\n\tif x\u003e=1 then return end\n\tif z\u003e=1 then return end\n\treturn ORANGE\nend\nif y\u003c=4 then\n\tif x\u003e=2 then return end\n\tif z\u003e=2 then return end\n\tif x\u003c=-7 then return end\n\tif z\u003c=-7 then return end\n\treturn PEACH\nend\nif y==7 then\n\tif x\u003c=-1 then return end\n\tif z\u003c=-1 then return end\n\treturn WHITE\nend\nif x\u003e=z then \n\tif x\u003e=4 then return end\n\tif z\u003c-4 then return end\n\treturn GREY\nend\nif x\u003c=-5 then return end \nif z\u003e=4 then return end\nreturn GREY\n\n",
+        "f5": "-- f5\n-- 118\n-- 5.817\n\nif y\u003c=0 then\n\tif x\u003e=1 then return end\n\tif z\u003e=1 then return end\n\treturn ORANGE\nend\nif y\u003c=4 then\n\tif x\u003e=2 then return end\n\tif z\u003e=2 then return end\n\tif x\u003c=-7 then return end\n\tif z\u003c=-7 then return end\n\treturn PEACH\nend\nif y==7 then\n\tif x\u003c=-1 then return end\n\tif z\u003c=-1 then return end\n\treturn WHITE\nend\nif x\u003e=z then\n\tif x\u003e=4 then return end\n\tif z\u003c-4 then return end\n\treturn GREY\nend\nif z\u003e=4 then return end\nif x\u003c=-5 then return end\nreturn GREY\n\n",
+        "first_pass": "local i= 1\nwhile i\u003c=8 do\n\tlocal next_i= i*2\n\tif x\u003c=8-i and x\u003e8-next_i and z\u003c=8-i and z\u003e8-next_i then\n--\t\treturn 8/i\n\t\tif y\u003c=8-i and y\u003e8-next_i then return i end \n\tend\n\ti= next_i\nend\n",
+        "s1": "-- s1\n-- 70\n-- 23.018\n\n-- square(width)\nfunction s(w)\n\treturn max(abs(x-w),abs(z-w)) \u003c= 4\nend\nif y\u003c=0 then return s(-4) and ORANGE end\nif y\u003c=4 then return s(-2.5) and PEACH end\nif y\u003c=6 then return s(-.5) and GREY end\nif y\u003c=8 then return s(4) and WHITE end\n",
+        "s2": "--s2\n--72\n--not working yet\ni= 1\nwhile i\u003c=8 do\n\tlocal next_i= i*2\n\tif x\u003c=8-i and x\u003e8/i-next_i-8/i and z\u003c=8-i and z\u003e8/i-next_i-8/i then\n\t\tif y\u003c=8-i and y\u003e8-next_i then return i end \n\tend\n\ti= next_i\nend\n",
+        "s3": "--s3\n--80\n--print(\"log(\".. y .. \")= \" .. log(y))\n--print(\"log(\".. y .. \")= \" .. log(y)//.69)\n--print(\"log(\".. 8-y .. \")= \" .. log(8-y)//.69)\nv= log(8-y)//.69\nxzmin=-(8-2^(3-v))\nxzmax=2^(3-v)-1\nprint(\" v=\"..v .. \" xzmin=\"..xzmin ..\" xzmax=\"..xzmax)\nif x\u003c=xzmax and x\u003e=xzmin then\n\tif z\u003c=xzmax and z\u003e=xzmin then\n\t\tif y\u003c=8-2^v and y\u003e=8-(2^(v+1)-1) then return 2^v end\n\tend\nend\n\n--x-min or z-min\n-- 0 --  0 =8-8 =8-2^3 =-(8-2^(3-v))\n-- 1 -- -4 =8-4 =8-2^2 \n-- 2 -- -6 =8-2 =8-2^1\n-- 3 -- -7 =8-1 =8-2^0\n\n--x-max or z-max\n-- 7 =8-1 =2^3-1 =2^(3-v)-1\n-- 3 =4-1 =2^2-1\n-- 1 =2-1 =2^1-1\n-- 0 =1-1 =2^0-1\n\n--y-max=8-2^v, y-min=8-(2^(v+1)-1)\n-- 7 =8-1 -,-  7 =8-1  =8-(2^1-1)  2,4,8,16\n-- 6 =8-2 -,-  5 =8-3  =8-(2^2-1)\n-- 4 =8-4 -,-  1 =8-7  =8-(2^3-1)\n-- 0 =8-8 -,- -7 =8-15 =8-(2^4-1)",
+        "s4": "--s4\n--72\n--print(\"log(\".. y .. \")= \" .. log(y))\n--print(\"log(\".. y .. \")= \" .. log(y)//.69)\n--print(\"log(\".. 8-y .. \")= \" .. log(8-y)//.69)\nv= log(8-y)//.69 -- floor(log(8-y,2))\nxzmin=-8+2^(3-v)\nxzmax=2^(3-v)-1\n--print(\" v=\"..v .. \" xzmin=\"..xzmin ..\" xzmax=\"..xzmax)\nreturn\n\t\tx\u003c=xzmax and z\u003c=xzmax\nand x\u003e=xzmin and z\u003e=xzmin\nand y\u003c=8-2^v and y\u003e=8-(2^(v+1)-1) and 2^v\n\n--x-min or z-min\n-- 0 --  0 =8-8 =8-2^3 =-(8-2^(3-v))\n-- 1 -- -4 =8-4 =8-2^2 \n-- 2 -- -6 =8-2 =8-2^1\n-- 3 -- -7 =8-1 =8-2^0\n\n--x-max or z-max\n-- 7 =8-1 =2^3-1 =2^(3-v)-1\n-- 3 =4-1 =2^2-1\n-- 1 =2-1 =2^1-1\n-- 0 =1-1 =2^0-1\n\n--y-max=8-2^v , y-min=8-(2^(v+1)-1)\n-- 7 =8-1 -,-  7 =8-1  =8-(2^1-1)  2,4,8,16\n-- 6 =8-2 -,-  5 =8-3  =8-(2^2-1)\n-- 4 =8-4 -,-  1 =8-7  =8-(2^3-1)\n-- 0 =8-8 -,- -7 =8-15 =8-(2^4-1)\n",
+        "s5": "--s5\n--44\n--print(\"log(\".. y .. \")= \" .. log(y))\n--print(\"log(\".. y .. \")= \" .. log(y)//.69)\n--print(\"log(\".. 8-y .. \")= \" .. log(8-y)//.69)\nv= log(8-y)//.69\n--v2= log(8-y,2)//1\n--print(\" v1=\"..v .. \" v2=\"..v2)\nxzmin=-8+2^(3-v)\n--xzmax=2^(3-v)-1\n--xzmax=xzmin+7\n--print(\" v=\"..v .. \" xzmin=\"..xzmin ..\" xzmax=\"..xzmax)\nreturn\n\t\tx\u003c=xzmin+7 and z\u003c=xzmin+7\nand x\u003e=xzmin and z\u003e=xzmin\n--and y\u003c=8-2^v and y\u003e=8-(2^(v+1)-1) and 2^v\nand 2^v\n\n--x-min or z-min\n-- 0 --  0 =8-8 =8-2^3 =-(8-2^(3-v))\n-- 1 -- -4 =8-4 =8-2^2 \n-- 2 -- -6 =8-2 =8-2^1\n-- 3 -- -7 =8-1 =8-2^0\n\n--x-max or z-max\n-- 7 =8-1 =2^3-1 =2^(3-v)-1\n-- 3 =4-1 =2^2-1\n-- 1 =2-1 =2^1-1\n-- 0 =1-1 =2^0-1\n\n--y-max=8-2^v , y-min=8-(2^(v+1)-1)\n-- 7 =8-1 -,-  7 =8-1  =8-(2^1-1)  2,4,8,16\n-- 6 =8-2 -,-  5 =8-3  =8-(2^2-1)\n-- 4 =8-4 -,-  1 =8-7  =8-(2^3-1)\n-- 0 =8-8 -,- -7 =8-15 =8-(2^4-1)\n",
+        "s6": "--s6\n--36\n--v1= 1\u003c\u003clog(8-y,2)//1 -- one extra token compared to //.69 trick below\n--v2= log(8-y)//.69\n\nv1= 1\u003c\u003clog(8-y)//.69 --=2^v2\nreturn min(x,z)\u003e=8/v1-8 and max(x,z)\u003c8/v1 and v1\n\n--x-min or z-min\n--  0 =8-8 =8-2^3 =-(8-2^(3-v2)) =2^(3-v2)-8 =8/v1 - 8\n-- -4 =8-4 =8-2^2 \n-- -6 =8-2 =8-2^1\n-- -7 =8-1 =8-2^0\n\n--x-max or z-max\n-- 7 =8-1 =2^3-1 =2^(3-v2)-1 =8/v1 - 1\n-- 3 =4-1 =2^2-1\n-- 1 =2-1 =2^1-1\n-- 0 =1-1 =2^0-1\n\n--y-max=8-2^v2 , y-min=8-(2^(v2+1)-1)\n-- 7 =8-1 -,-  7 =8-1  =8-(2^1-1)  2,4,8,16\n-- 6 =8-2 -,-  5 =8-3  =8-(2^2-1)\n-- 4 =8-4 -,-  1 =8-7  =8-(2^3-1)\n-- 0 =8-8 -,- -7 =8-15 =8-(2^4-1)\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "probable-tower.weekly",
+      "size": 7,
+      "source": 400,
+      "variant_order": [
+        "first_pass",
+        "f1",
+        "f2",
+        "f3",
+        "f4",
+        "f5",
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5",
+        "s6"
+      ]
+    },
+    {
+      "active_variant": "f1",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 5.85778,
+      "code_size": 73,
+      "code_variants": {
+        "f1": "-- f1\n-- 193\n-- 5.858\n\n-- negative space trimming\nif z\u003e1 or y\u003e1 then return end\nif z\u003c-1 or y\u003c-1 then return end\nif z==0 and y==0 then return end\n\n--print(pi/8) -- 0.39269908169872 -- 0.39\nlocal x_pi_8= x*0.39 -- x*pi/8\n\n-- max(-1,min(1,(value_here)) is faster than clamp(value_here,-1,1)\nif  y==max(-1,min(1,(2*cos(x_pi_8+7)+.5)//1))\nand z==max(-1,min(1,(2*cos(x_pi_8-7)+.5)//1)) then return RED end\nif  y==max(-1,min(1,(2*cos(x_pi_8-22)+.5)//1))\nand z==max(-1,min(1,(2*cos(x_pi_8+14)+.5)//1)) then return LIGHTBLUE end \nif  y==max(-1,min(1,(2*cos(x_pi_8-20)+.5)//1))\nand z==max(-1,min(1,(2*cos(x_pi_8+16)+.5)//1)) then return LIGHTGREEN end\n\n-- We can keep adding 2*pi to our offset \n-- until we find a nice round number\n-- that way we can avoid decimals\n--print(pi/8) -- 0.39269908169872\n--print(4*pi +pi*13/12) -- 15.9697626557481 -- 16\n--print(2*pi +pi/4) -- 7.06858347057703 -- 7\n--print(4*pi +pi/2) -- 14.1371669411541 -- 14\n--print(6*pi +pi/3) -- 19.8967534727354 -- 20\n--print(6*pi +pi) -- 21.9911485751286 -- 22",
+        "first_pass": "-- first_pass\n-- 152\n-- 68.762\n\nlocal xpi8= x*pi/8\nreturn\n    y==clamp((3*cos(xpi8+pi/4)+.5)//1,-1,1)\nand z==clamp((3*cos(xpi8-pi/4)+.5)//1,-1,1) and RED\nor  y==clamp((3*cos(xpi8-pi)+.5)//1,-1,1)\nand z==clamp((3*cos(xpi8+pi/2)+.5)//1,-1,1) and LIGHTBLUE \nor  y==clamp((3*cos(xpi8-pi/3)+.5)//1,-1,1)\nand z==clamp((3*cos(xpi8+pi*13/12)+.5)//1,-1,1) and LIGHTGREEN\n",
+        "s1": "-- s1\n-- 73\n-- 109.713\n\nfunction f(offset1, offset2)\n\treturn y==v(offset1) and z==v(offset2)\nend\nfunction v(offset)\n\treturn clamp((2*cos(x*pi/8+offset)+.5)//1,-1,1)\nend\n\nreturn\n\t  f(  7, -7) and RED\nor  f( 22, 14) and LIGHTBLUE\nor  f(-20, 16) and LIGHTGREEN\n\n--print(pi/8) -- 0.39269908169872\n--print(4*pi +pi*13/12) -- 15.9697626557481 -- 16\n--print(2*pi +pi/4) -- 7.06858347057703 -- 7\n--print(4*pi +pi/2) -- 14.1371669411541 -- 14\n--print(6*pi +pi/3) -- 19.8967534727354 -- 20\n--print(6*pi +pi) -- 21.9911485751286 -- 22\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "triple-helix.weekly",
+      "size": 7,
+      "source": 400,
+      "variant_order": [
+        "first_pass",
+        "s1",
+        "f1"
+      ]
+    },
+    {
+      "active_variant": "first_pass",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 7.75337,
+      "code_size": 263,
+      "code_variants": {
+        "first_pass": "-- first_pass\n-- 263\n-- 7.753\n\nif y\u003e-5 then\n\tif (x\u003e2 or z\u003e2 or z\u003c-2 or x\u003c-2) then return end\n\tif y\u003e1 and (x\u003e1 or z\u003e1 or z\u003c-1 or x\u003c-1) then return end\nend\nif y==-10 then return YELLOW end\nlocal c= x*x+z*z\nif y==-9 and c\u003c=164 then return YELLOW end\nif y==-8 and c\u003c=109 then return YELLOW end\nif y==-7 and c\u003c=53 then return YELLOW end\nif y==-6 and c\u003c=20 then return GREY end\nif y==-5 and c\u003e=10 and c\u003c=16 then return GREY end\nif y\u003e0 and y\u003c9 and c\u003c=2 then\n\tif y\u003c8 then\n\t\tif y\u003e2 then\n\t\t\tif c==0 then\n\t\t\t\treturn RED\n\t\t\telseif (x+z)%2==y%2 then\n\t\t\t\treturn RED\n\t\t\telse\n\t\t\t\treturn WHITE \n\t\t\tend\n\t\tend\n\t\treturn RED\n\tend\n\tif c\u003c=1 then return RED end\nend\nif y\u003e-3 and y\u003c2 then\n\tif z\u003e0 and c==8 then\n\t\treturn RED\n\telseif z\u003c0 then\n\t\tif x==0 and c==4 then return RED end\n\tend\nend\nif c==0 then\n\tif y\u003e0 then return RED end\n\tif y%2==0 then return YELLOW else return ORANGE end \nend\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "tintin-rocket.weekly",
+      "size": 10,
+      "source": 400,
+      "variant_order": [
+        "first_pass"
+      ]
+    },
+    {
+      "active_variant": "s2",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 8.68184,
+      "code_size": 54,
+      "code_variants": {
+        "f1": "-- f1\n-- 71\n-- 8.983\n\nif y\u003e4 then return end\nlocal c=x*x+z*z\nif y==4 and c\u003c=20 then return BLACK end\nif c\u003e=13 then\n\tif c\u003c=20 and y\u003e-6 then\n\t\t\tif y\u003e=-3 then \n\t\t\t\treturn BLACK\n\t\t\telse\n\t\t\t\treturn RED\n\t\tend\n\tend\n\tif y==-6 and c\u003c=41 then return BLACK end\nend",
+        "f2": "-- f2\n-- 75\n-- 8.727\n\nif y\u003e4 then return end\nlocal c=x*x+z*z\nif y\u003e-6 then\n\tif y==4 and c\u003c=21 then return BLACK end\n\tif c\u003e20 then return end\n\tif c\u003c13 then return end\n\tif y\u003e=-3 then\n\t\treturn BLACK\n\telse\n\t\treturn RED\n\tend\nend\nif c\u003e=13 and c\u003c=41 then return BLACK end\n",
+        "f3": "-- f3\n-- 77\n-- 8.862\n\nif y\u003e4 then return end -- negative space\nlocal c=x*x+z*z\nif y\u003e-6 then\n\tif y==4 then if c\u003c=21 then return BLACK else return end end\n\tif c\u003e20 then return end -- negative space\n\tif c\u003c13 then return end -- negative space\n\tif y\u003e=-3 then\n\t\treturn BLACK\n\telse\n\t\treturn RED\n\tend\nend\nif c\u003c13 then return end -- negative space\nif c\u003e41 then return end -- negative space\nreturn BLACK\n",
+        "first_pass": "-- first_pass\n-- 72\n-- 9.076\n\nif y\u003e4 then return end\nlocal c=x*x+z*z\nif y==4 and c\u003c=20 then return BLACK end\nif y\u003e-6 then\n\tif c\u003e=13 and c\u003c=20 then\n\t\tif y\u003e=-3 then \n\t\t\treturn BLACK\n\t\telse\n\t\t\treturn RED\n\t\tend\n\tend\n\treturn\nend\nif c\u003e=13 and c\u003c=41 then return BLACK end",
+        "s1": "-- s1\n-- 58\n-- 12.660\n\nc=x*x+z*z\nreturn\ny==-6 and c\u003e=13 and c\u003c=41 and BLACK\nor \ny\u003c5 and (\n\ty==4 and c\u003c=21 and BLACK\n\tor c\u003c=21 and c\u003e=13 and (y\u003e=-3 and BLACK or RED)\n)\n",
+        "s2": "-- s2\n-- 54\n-- 13.239\n\nc=x*x+z*z\nreturn\ny==4 and c\u003c=21 and BLACK\nor\nc\u003e=13 and (\n\ty==-6 and c\u003c=41 and BLACK\n\tor\n\ty\u003c5 and c\u003c=21 and (y\u003e=-3 and BLACK or RED)\n)\n",
+        "s4": "-- s2\n-- 54\n-- 13.239\n\nc=x*x+z*z\nreturn\ny==4 and c\u003c=21 and BLACK\nor\nc\u003e=13 and (\n\ty==-6 and c\u003c=41 and BLACK\n\tor\n\ty\u003c5 and c\u003c=21 and (y\u003e=-3 and BLACK or RED)\n)\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "silkhat.weekly",
+      "size": 6,
+      "source": 400,
+      "variant_order": [
+        "first_pass",
+        "f1",
+        "f2",
+        "f3",
+        "s1",
+        "s2",
+        "s4"
+      ]
+    },
+    {
+      "active_variant": "first_pass",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 24.8783,
+      "code_size": 76,
+      "code_variants": {
+        "first_pass": "-- first_pass\n-- 76\n-- 24.878\n\nX= abs(x)\nY= abs(y)\nZ= abs(z)\nreturn \nmax(X,Y,Z)==4 and (\n\t(X==Y or Y==Z or X==Z) and WHITE \n\tor\n\t(\n\t\tY==4 and X\u003eZ and LIGHTBLUE \n\t\tor Y\u003eX and RED\n\t\tor X\u003cZ and LIGHTGREEN \n\t\tor Y\u003eZ and LIGHTBLUE\n\t\tor Y\u003cX and LIGHTGREEN\n\t)\n)\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "hourglass-crate.weekly",
+      "size": 5,
+      "source": 400,
+      "variant_order": [
+        "first_pass"
+      ]
+    },
+    {
+      "active_variant": "sphere",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 9.91142,
+      "code_size": 44,
+      "code_variants": {
+        "f1": "--f4\n--94\n--10.827\n\n--A hyperball before it begins rolling backward through \n--the X and T dimension.\n--the ball colors match the distance to the 4D center.\n\n-- some negative spaces, early exits\nif y\u003e3 or x\u003c-3 then return end\n--let's center t like the other dimensions:\nlocal nt= t-5\n--Use T like X Y and Z to transform this 3D scene into 4D!\nlocal xt= x+nt/2\nif y+6\u003c=xt then return xt end\n-- easy negative spaces, early exits\nif t\u003c=1 or t\u003e=9 then return end -- ball missing entirely\nif z\u003e3 or z\u003c-3 then return end -- outer-maximum of z\n-- sphere calculations\nlocal d= x^2+y^2+z^2\nif d\u003c16 then\n\td= nt^2+d\n\tif d\u003c16 then return d^.5 end\nend\n",
+        "f2": "--f2\n--118\n--11.884\n\n--A hyperball before it begins rolling backward through \n--the X and T dimension.\n--the ball colors match the distance to the 4D center.\n\n-- some negative spaces, early exits\nif y\u003e3 then return end\nif x\u003c-3 then return end\nif y\u003c-3 and x\u003c-1 then return end\nif y\u003e1 and x\u003e3 then return end\n\n--let's center t like the other dimensions:\nlocal nt= t-5\n\n--Use T like X Y and Z to transform this 3D scene into 4D!\n\nlocal xt= x+nt/2\nif y+6\u003c=xt then\n\treturn xt\nelse\n\t-- easy negative spaces, early exits\n\tif t\u003c=1 then return end\n\tif t\u003e=9 then return end\n\tif z\u003e3 then return end \n\tif z\u003c-3 then return end\n\t\n\tlocal d= (nt^2+x^2+y^2+z^2)^.5\n\tif d\u003c4 then return\n\t\td\n\tend\nend\n",
+        "f3": "--f3\n--109\n--11.884\n\n--A hyperball before it begins rolling backward through \n--the X and T dimension.\n--the ball colors match the distance to the 4D center.\n\n-- some negative spaces, early exits\nif y\u003e3 or x\u003c-3 then return end\nif y\u003c-3 and x\u003c-1 then return end\nif y\u003e1 and x\u003e3 then return end\n\n--let's center t like the other dimensions:\nlocal nt= t-5\n\n--Use T like X Y and Z to transform this 3D scene into 4D!\n\nlocal xt= x+nt/2\nif y+6\u003c=xt then\n\treturn xt\nelse\n\t-- easy negative spaces, early exits\n\tif t\u003c=1 or t\u003e=9 then return end -- ball missing entirely\n\tif z\u003e3 or z\u003c-3 then return end -- outer-maximum of z\n\t\n\tlocal d= (nt^2+x^2+y^2+z^2)^.5\n\tif d\u003c4 then return\n\t\td\n\tend\nend\n",
+        "f4": "--f4\n--94\n--10.827\n\n--A hyperball before it begins rolling backward through \n--the X and T dimension.\n--the ball colors match the distance to the 4D center.\n\n-- some negative spaces, early exits\nif y\u003e3 or x\u003c-3 then return end\n--let's center t like the other dimensions:\nlocal nt= t-5\n--Use T like X Y and Z to transform this 3D scene into 4D!\nlocal xt= x+nt/2\nif y+6\u003c=xt then return xt end\n-- easy negative spaces, early exits\nif t\u003c=1 or t\u003e=9 then return end -- ball missing entirely\nif z\u003e3 or z\u003c-3 then return end -- outer-maximum of z\n-- sphere calculations\nlocal d= x^2+y^2+z^2\nif d\u003c16 then\n\td= nt^2+d\n\tif d\u003c16 then return d^.5 end\nend\n",
+        "f5": "--f5\n--111\n--10.107\n\n--A hyperball before it begins rolling backward through \n--the X and T dimension.\n--the ball colors match the distance to the 4D center.\n--btw, center t like the other dimensions:\n--Use T like X Y and Z to transform this 3D scene into 4D!\n\n-- some negative space, early exits\nif y\u003e3 then return end\nif x\u003c-3 then return end\n\n-- the corner thingy\t\nif y+4\u003c=x then\n\tlocal nt= t-5\n\tlocal xt= x+nt/2\n\tif y+6\u003c=xt then return xt end\nend\n\n-- In terms of the sphere these are negative spaces, early exits\nif t\u003c=1 or t\u003e=9 then return end -- sphere missing entirely\nif z\u003e3 or z\u003c-3 then return end -- outer-maximum of z\n\n-- sphere calculations\nlocal sphere= x^2+y^2+z^2\nif sphere\u003c16 then\n\tlocal nt= t-5\n\tsphere= nt^2+sphere\n\tif sphere\u003c16 then \n\t\treturn sphere^0.5\n\tend\nend\n",
+        "f6": "--f6\n--112\n--9.931\n\n--A hyperball before it begins rolling backward through \n--the X and T dimension.\n--the ball colors match the distance to the 4D center.\n--btw, center t like the other dimensions:\n--Use T like X Y and Z to transform this 3D scene into 4D!\n\n-- some negative space, early exits\nif x\u003c=-4 then return end\nif y\u003e=4 then return end\n\n-- the corner thingy\nif y+4\u003c=x then -- Only do the work once inside this slanted area\n\tlocal nt= t-5\n\tlocal xt= x+nt/2\n\tif y+6\u003c=xt then return xt end\nend\n\n-- In terms of the sphere these are negative spaces, early exits\nlocal Z= z^2\nif Z\u003e9 then return end -- outer-maximum of z for sphere\n-- Also, now we can reuse Z calculation below\nif t\u003c=1 or t\u003e=9 then return end -- sphere missing entirely\n\n-- sphere calculations\nlocal sphere= x^2+y^2+Z\nif sphere\u003c=14 then -- trick where we pre-check bounds before calculating nt\n\tlocal nt= t-5 -- This lets us define nt within our \"if\" blocks\n\t-- This way we do less calculation, pretty sure setting up nt as a local var doesnt hurt due to the Jit in \"Luajit\"\n\tsphere= nt^2+sphere\n\tif sphere\u003c=15 then \n\t\treturn sphere^0.5\n\tend\nend\n",
+        "first_pass": "--A hyperball before it begins rolling backward through \n--the X and T dimension.\n--the ball colors match the distance to the 4D center.\n\n--let's center t like the other dimensions:\nt=t-5\n\n--Use T like X Y and Z to transform this 3D scene into 4D!\nlocal xt=x+t/2\nlocal slope = y\u003c=(xt-6)\nlocal ball = (t^2+x^2+y^2+z^2)^.5\nreturn (slope and xt or ball\u003c4 and floor(ball))",
+        "s1": "--s1\n--46\n--20.923\n\n--A hyperball before it begins rolling backward through \n--the X and T dimension.\n--the ball colors match the distance to the 4D center.\n--let's center t like the other dimensions:\n--Use T like X Y and Z to transform this 3D scene into 4D!\n\nt= t-5\nd= (t^2+x^2+y^2+z^2)^.5\nxt= x+t/2\nreturn d\u003c4 and d or y+6\u003c=xt and xt\n",
+        "s2": "--s2\n--45\n--19.884\n\n--A hyperball before it begins rolling backward through \n--the X and T dimension.\n--the ball colors match the distance to the 4D center.\n--let's center t like the other dimensions:\n--Use T like X Y and Z to transform this 3D scene into 4D!\n\nt= t-5\nxt= x+t/2\nreturn y+6\u003c=xt and xt or min((t^2+x^2+y^2+z^2)^.5,4)%4\n",
+        "s3": "--s3\n--44\n--20.773\n\n--A hyperball before it begins rolling backward through \n--the X and T dimension.\n--the ball colors match the distance to the 4D center.\n--let's center t like the other dimensions:\n--Use T like X Y and Z to transform this 3D scene into 4D!\n\nnt= t-5\nxt= x+nt/2\nreturn\ny+6\u003c=xt and xt\nor min(sqrt(nt*nt+x*x+y*y+z*z), 4)%4\n",
+        "sphere": "--A hyperball before it begins rolling backward through \n--the X and T dimension.\n--the ball colors match the distance to the 4D center.\n\n--let's center t like the other dimensions:\nnt=t-5\n--Use T like X Y and Z to transform this 3D scene into 4D!\n\nreturn min(sqrt(nt*nt+x*x+y*y+z*z), 4)%4"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 10,
+      "id": "hyperball-on-slope.weekly",
+      "size": 5,
+      "source": 400,
+      "variant_order": [
+        "first_pass",
+        "f1",
+        "f2",
+        "f3",
+        "s1",
+        "s2",
+        "s3",
+        "f4",
+        "f5",
+        "f6",
+        "sphere"
+      ]
+    },
+    {
+      "active_variant": "f8",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 4.65604,
+      "code_size": 16,
+      "code_variants": {
+        "f1": "-- f1\n-- 87\n-- 5.690\nif y\u003e9 then return end\nif y\u003c0 then return end\n\nif x\u003e0 then\n\tif z\u003e0 then\n\t\treturn x+y\u003c10 and z+y\u003c10\n\telse\n\t\treturn x+y\u003c10 and -z+y\u003c10\n\tend\nelse\n\tif z\u003e0 then\n\t\treturn -x+y\u003c10 and z+y\u003c10\n\telse\n\t\treturn -x+y\u003c10 and -z+y\u003c10\n\tend\nend\n",
+        "f2": "-- f2\n-- 58 \n-- 5.917\nif y\u003c0 then return end\nif y\u003e9 then return end\nif -y+10\u003c=-x then return end\nif y-10\u003e=-x then return end\nif -y+10\u003c=-z then return end\nif y-10\u003e=-z then return end\nreturn WHITE\n",
+        "f3": "-- f3\n-- 50\n-- 5.139\n\nif y\u003c0 then return end\nif y\u003e=10 then return end\n\nif x+y\u003c10 then\n\tif z+y\u003c10 then\n\t\tif -x+y\u003c10 then\n\t\t\tif -z+y\u003c10 then\n\t\t\t\treturn WHITE\n\t\t\tend\n\t\tend\n\tend\nend\n\n",
+        "f4": "-- f4\n-- 78\n-- 4.983\nif y\u003c0 then return end\nif y\u003e9 then return end\n \nif x\u003e=0 then\n\tif x+y\u003c10 then\n\t\tif z\u003e=0 then return z+y\u003c10 else return -z+y\u003c10 end\n\tend\nelse\n\tif -x+y\u003c10 then\n\t\tif z\u003e=0 then return z+y\u003c10 else return -z+y\u003c10 end\n\tend\nend\n",
+        "f5": "-- f5\n-- 52 \n-- 4.866\nif y\u003c0 then return end\nif y\u003e9 then return end\nif y+x\u003e= 10 then return end\nif x-y\u003c=-10 then return end\nif y+z\u003e= 10 then return end\nif z-y\u003c=-10 then return end\nreturn WHITE\n",
+        "f6b": "-- f6\n-- 46 \n-- 4.682\n\nif y\u003c0 then return end\nif y\u003e9 then return end\nlocal y9= y-9\nif x\u003e=y9 and z\u003e=y9 then\n\ty9= -y9\n\tif x\u003c=y9 and z\u003c=y9 then\n\t\treturn WHITE\n\tend\nend\n",
+        "f7": "-- f7\n-- 60 \n-- 4.723\n\nif y\u003c0 then return end\nif y\u003e9 then return end\n\nlocal y9= y-9\nif x\u003ez then\n\tif z\u003cy9 then return end\n\tif x\u003e-y9 then return end\n\treturn WHITE\nend\n\nif x\u003cy9 then return end\nif z\u003e-y9 then return end\nreturn WHITE\n",
+        "f8": "-- f8\n-- 74 \n-- 4.656\n\nif 0\u003ey then return end\nif y\u003e9 then return end\n\nif x\u003ez then\n\tif -9\u003ez then return end\n\tif y+x\u003e9 then return end\n\tif y-z\u003e9 then return end\n\treturn WHITE\nend\n\nif -9\u003ex then return end\nif y+z\u003e9 then return end\nif y-x\u003e9 then return end\nreturn WHITE\n",
+        "first_pass": "-- first_pass\n-- 30\n-- 8.978\n\nif y\u003e=0 then\n\treturn abs(x)+abs(y)+6\u003c16 and abs(z)+abs(y)+6\u003c16\nend\n",
+        "s1": "-- s1\n-- 25\n-- 12.769\nfunction f(v)\n\treturn abs(v)+y\u003c10\nend\n\nreturn y\u003e=0 and f(x) and f(z)\n",
+        "s2": "-- s2\n-- 24\n-- 8.856\nreturn y\u003e=0 and abs(x)+abs(y)\u003c10 and abs(z)+abs(y)\u003c10",
+        "s3": "-- s3\n-- 20\n-- 7.035\n\nreturn y\u003e=0 and abs(x)+y\u003c10 and abs(z)+y\u003c10",
+        "s4a": "-- s4a\n-- 18\n-- 9.152\n\nreturn y\u003e=0 and max(abs(x),abs(z))+y\u003c10",
+        "s4b": "-- s4b\n-- 17\n-- 15.000\n\nreturn max(abs(x),abs(z))\u003c10-y%32",
+        "s5": "-- s5\n-- 16\n-- 16.000\n\nreturn max(abs(x),abs(z))\u003c10-y%maxinteger"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "simple-pyramid.weekly",
+      "size": 16,
+      "source": 400,
+      "variant_order": [
+        "first_pass",
+        "s1",
+        "s2",
+        "s3",
+        "s4a",
+        "s4b",
+        "s5",
+        "f1",
+        "f2",
+        "f3",
+        "f4",
+        "f5",
+        "f6b",
+        "f7",
+        "f8"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- good luck!\nreturn 1"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "wonky_couch.vox",
+      "size": 9,
+      "source": 200,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "first_pass",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 5.22816,
+      "code_size": 35,
+      "code_variants": {
+        "f1": "-- f1\n-- 70\n-- 5.397\n\n-- negative space\nif x+y+z~=0 then return end\nif x\u003c-5 or z\u003c-5 or y\u003c-5 then return end\nif x==-5 or z==-5 then return WHITE end\nlocal n= 11-y\nif x==-4 or z==-4 then return n-1 end\nlocal cnk= 1\nfor k= 1,x+5 do\n\tcnk= cnk*(n-k)/k\nend\nreturn cnk\n\n-- pascals_triangle\n--local function pt(x,y,z)\t\n--\tlocal k= x+5\n--\tlocal cnk= f(n)/(f(k)*f(n-k))\n--\tprint(cnk)\n--\treturn cnk%16\n--end\n\n-- factorial\n--local function f(n)\n--  local accum = 1\n--  for i= 2, n do\n--  \taccum= accum * i\n--  end\n--\treturn accum\n--end\n\n--return pt(x,y,z)\n\n-- special thanks to https://oeis.org/search\n-- 6,10,15,5,12,4,13,7,2,14 -- k(k+1)/2 (mod 2^n) -- A329278 Irregular table read by rows. The n-th row is the permutation of {0, 1, 2, ..., 2^n-1} given by T(n,k) = k(k+1)/2 (mod 2^n).\n-- 4,3,8,4,8,5,12,14,12,7 -- 20,35,56,84,120,165,220,286,364,455 -- A000292 Tetrahedral (or triangular pyramidal) numbers: a(n) = C(n+2,3) = n*(n+1)*(n+2)/6.\n-- 6,14,2,10,15,11,9,5 -- 70,126,210,330,495,715,1001,1365 -- A000332 Binomial coefficient binomial(n,4) = n*(n-1)*(n-2)*(n-3)/24\n-- 12,14,8,7,2,11 -- 252,462,792,1287,2002,3003 -- A000389 Binomial coefficients C(n,5). a(n) = n*(n-1)*(n-2)*(n-3)*(n-4)/120\n-- 12,4,11,13 -- 924,1716,3003,5005 -- A000579 Figurate numbers or binomial coefficients C(n,6). a(n) = (n^6 - 15*n^5 + 85*n^4 - 225*n^3 + 274*n^2 - 120*n)/720.\n-- 8,3\n\n--[[\nEach number is the sum of the two numbers above it.\nStart with 1 in the top row and treat empty space as 0.\n\n                   01\n                 01  01\n               01  02  01\n             01  03  03  01\n           01  04  06  04  01\n         01  05  10  10  05  01\n       01  06  15  20  15  06  01\n     01  07  21  35  35  21  07  01\n   ..  ..  ..  ..  ..  ..  ..  ..  ..\n\nBonus: try including %2 at the end to see a familiar fractal!\n]]",
+        "first_pass": "-- first_pass\n-- 295\n-- 5.228\n\n-- negative space\nif x+y+z~=0 then return end\nif x\u003c-5 or z\u003c-5 or y\u003c-5 then return end\n\n-- pascals_triangle\nif x==-5 or z==-5 then return WHITE end\n\nif x==-4 or z==-4 then\n\tlocal n= 10-y\n\treturn n\nend\nif x==-3 or z==-3 then\n\tlocal n= 10-y\n\treturn n*(n-1)/2\n  -- if y==6 then return 6 end -- slower\n  -- if y==5 then return 10 end\n  -- if y==4 then return 15 end\n  -- if y==3 then return 5 end\n  -- if y==2 then return 12 end\n  -- if y==1 then return 4 end\n  -- if y==0 then return 13 end\n  -- if y==-1 then return 7 end\n  -- if y==-2 then return 2 end\n  -- if y==-3 then return 14 end\n  -- if y==-4 then return 11 end\n  -- if y==-5 then return 9 end\nend\nif x==-2 or z==-2 then\n\t-- return ({4,3,8,4,8,5,12,14,12,7})[n-5] -- slower\n\tlocal n= 10-y\n  return n*(n-1)*(n-2)/6\n\t-- if y==4 then return 4 end -- slower\n\t-- if y==3 then return 3 end\n\t-- if y==2 then return 8 end\n\t-- if y==1 then return 4 end\n\t-- if y==0 then return 8 end\n\t-- if y==-1 then return 5 end\n\t-- if y==-2 then return 12 end\n\t-- if y==-3 then return 14 end\n\t-- if y==-4 then return 12 end\n\t-- if y==-5 then return 7 end\nend\nif x==-1 or z==-1 then\n\t-- return ({6,14,2,10,15,11,9,5})[n-7] -- slower\n\t-- return n*(n-1)*(n-2)*(n-3)/24 -- slower\n\tif y==2 then return 6 end\n\tif y==1 then return 14 end\n\tif y==0 then return 2 end\n\tif y==-1 then return 10 end\n\tif y==-2 then return 15 end\n\tif y==-3 then return 11 end\n\tif y==-4 then return 9 end\n\tif y==-5 then return 5 end\nend\nif x==0 or z==0 then\n\t-- return ({12,14,8,7,2,11})[n-9] -- same speed, so strange\n\t-- return n*(n-1)*(n-2)*(n-3)*(n-4)/120 -- slower\n\tif y==0 then return 12 end\n\tif y==-1 then return 14 end\n\tif y==-2 then return 8 end\n\tif y==-3 then return 7 end\n\tif y==-4 then return 2 end\n\tif y==-5 then return 11 end\nend\nif x==1 or z==1 then\n\t-- return ({12,4,11,13})[-1-y]\n\t-- return n*(n-1)*(n-2)*(n-3)*(n-4)*(n-5)/720 -- slower\n\tif y==-2 then return 12 end\n\tif y==-3 then return 4 end\n\tif y==-4 then return 11 end\n\tif y==-5 then return 13 end\nend\n -- return ({8,3})[n-13] -- slower\nif y==-4 then return ORANGE end\nreturn BLACK\n\n-- Special thanks to The On-Line Encyclopedia of Integer Sequences (OEIS)\n-- see https://oeis.org/search\n--\n-- I calculated the value for pascals triangle and printed it\n-- I then entered the values in order when walking down the sides of the triangle\n-- into oeis.\n-- Overtime I realized the the pattern, \n-- they are all related to calculating the \"Binomial coefficients\"\n--\n-- 6,10,15,5,12,4,13,7,2,14 -- k(k+1)/2 (mod 2^n) -- A329278 Irregular table read by rows. The n-th row is the permutation of {0, 1, 2, ..., 2^n-1} given by T(n,k) = k(k+1)/2 (mod 2^n).\n-- 4,3,8,4,8,5,12,14,12,7 -- 20,35,56,84,120,165,220,286,364,455 -- A000292 Tetrahedral (or triangular pyramidal) numbers: a(n) = C(n+2,3) = n*(n+1)*(n+2)/6.\n-- 6,14,2,10,15,11,9,5 -- 70,126,210,330,495,715,1001,1365 -- A000332 Binomial coefficient binomial(n,4) = n*(n-1)*(n-2)*(n-3)/24\n-- 12,14,8,7,2,11 -- 252,462,792,1287,2002,3003 -- A000389 Binomial coefficients C(n,5). a(n) = n*(n-1)*(n-2)*(n-3)*(n-4)/120\n-- 12,4,11,13 -- 924,1716,3003,5005 -- A000579 Figurate numbers or binomial coefficients C(n,6). a(n) = (n^6 - 15*n^5 + 85*n^4 - 225*n^3 + 274*n^2 - 120*n)/720.\n-- 8,3\n\n-- function pascals_triangle\n--local function pt(x,y,z)\n--\tlocal k= x+5\n--\tlocal cnk= f(n)/(f(k)*f(n-k))\n--\tprint(cnk)\n--\treturn cnk%16\n--end\n\n-- factorial\n--local function f(n)\n--  local accum= 1\n--  for i= 2, n do\n--  \taccum= accum * i\n--  end\n--\treturn accum\n--end\n\n--return pt(x,y,z)\n\n--[[\nEach number is the sum of the two numbers above it.\nStart with 1 in the top row and treat empty space as 0.\n\n                   01\n                 01  01\n               01  02  01\n             01  03  03  01\n           01  04  06  04  01\n         01  05  10  10  05  01\n       01  06  15  20  15  06  01\n     01  07  21  35  35  21  07  01\n   ..  ..  ..  ..  ..  ..  ..  ..  ..\n\nBonus: try including %2 at the end to see a familiar fractal!\n]]\n",
+        "s1": "-- s1\n-- 79\n-- 6.757\n\nif x+y+z~=0 or x\u003c-5 or z\u003c-5 or y\u003c-5 then return end\n\n-- factorial\nfunction f(n)\n  accum = 1\n  for i= 2, n do\n  \taccum= accum*i\n  end\n\treturn accum\nend\n\nn= 15-(y+5)%15\nk= x+5\nreturn (f(n)/(f(k)*f(n-k)))%16\n",
+        "s2": "-- s2\n-- 42\n-- 57.915\n\nc= WHITE\nfor v=1,x+5 do\n\tc= c*(11-y-v)/v\nend\nreturn y+z==-x and min(x,y)\u003e=-5 and c\n",
+        "s3": "-- s3\n-- 40\n-- 63.493\n\nc= WHITE\nfor v=1,x+5 do\n\tc= c*(11-y-v\u002615)/v\nend\nreturn y+z==-x and x\u003e=-5 and c\n",
+        "s4": "-- s4\n-- 37\n-- 61.493\n\nfor k= 1,x+5 do\n\tWHITE= WHITE*(11-y-k\u002615)/k\nend\nreturn y+z==-x and x\u003e=-5 and WHITE\n",
+        "s5": "-- s5\n-- 35\n-- 90.321\n\nfor k= 1,z+5\u002615 do\n\tWHITE= WHITE*(11-y-k\u002615)/k\nend\nreturn z==-x-y and WHITE\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "pascals-triangle.weekly",
+      "size": 10,
+      "source": 400,
+      "variant_order": [
+        "first_pass",
+        "f1",
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5"
       ]
     }
   ]

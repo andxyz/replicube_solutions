@@ -115,12 +115,13 @@ local counter_part_color_wheel = {1,2,3,4,5, 8,7,6, 11,10,9, 14,13,12, 16,15}
 -- hopefully it stays between 7 and 13
 -- I hope it doesnt run away on us (heh heh)
 local our_periodic_number = (y+3)%7+7 
-if t==0 and x==0 and z==0 then print(our_periodic_number) end
 
 -- Using our periodic number and our custom color wheels
 -- we can setup two colors that change with y
 local color1 = original_color_wheel[our_periodic_number]
 local color2 = counter_part_color_wheel[our_periodic_number]
+
+print("color1="..color1.." color2="..color2.." PEACH=4")
 
 --[[ 
 	4. Okay! time for the fun part (heh heh)
@@ -142,18 +143,26 @@ local color2 = counter_part_color_wheel[our_periodic_number]
 
 --## Our very first example at t==0 is "basic subtraction":
 
-return 
-t==0 and max(-b,a)<=0 and color1 or
-t==1 and  demoHelper("subtraction_2", a, b, color1, color2) or
-t==2 and  demoHelper("outer_subtraction_2", a, b, color1, color2) or
-t==3 and  demoHelper("union", a, b, color1, color2) or
-t==4 and  demoHelper("outer_union", a, b, color1, color2) or
-t==5 and  demoHelper("intersection", a, b, color1, color2) or
-t==6 and  demoHelper("outer_intersection", a, b, color1, color2) or
-t==7 and  demoHelper("wacky_subtraction_1", a, b, color1, color2) or
-t==8 and  demoHelper("xor_plus_outer_union", a, b, color1, color2) or
-t==8 and  demoHelper("subtraction_plus_reversal_subtraction", a, b, color1, color2)
---
+return
+--max(-a,b)<=0 and color2 
+--or 
+--a>0 and PEACH
+--or
+--max(-b,a)<=0 and color1 
+
+--t==0 and max(-b,a)<=0 and color1 or
+--t==1 and  demoHelper("subtraction_2",        a, b, color1, nil) or
+--t==2 and  demoHelper("outer_subtraction_2",  a, b, nil, color2) or
+--t==3 and  demoHelper("union",                a, b, color1, nil) or
+--t==4 and  demoHelper("outer_union",          a, b, nil, color2) or
+--t==5 and  demoHelper("intersection",         a, b, color1, nil) or
+--t==6 and  demoHelper("outer_intersection",   a, b, nil, color2) or
+--t==7 and  demoHelper("wacky_subtraction_1",  a, b, nil, color2) or
+--t==8 and  demoHelper("xor_plus_outer_union", a, b, color1, color2) or
+--t==8 and  
+demoHelper("subtraction_plus_reversal_subtraction", a, b, color1, color2)
+or demoHelper("outer_union", a, b, nil, PEACH)
+
 --[[ 
 	btw, Did you want to have a look at the shapes "a" and "b"?
 	
