@@ -4433,7 +4433,7 @@
       ]
     },
     {
-      "active_variant": "s99sphere",
+      "active_variant": "f9_ai",
       "animated": false,
       "challenge_complete": false,
       "code_instructions": 8.5223,
@@ -5332,7 +5332,7 @@
       ]
     },
     {
-      "active_variant": "s2",
+      "active_variant": "f2",
       "animated": false,
       "challenge_complete": false,
       "code_instructions": 4.75371,
@@ -5396,7 +5396,7 @@
       ]
     },
     {
-      "active_variant": "s4",
+      "active_variant": "first_pass",
       "animated": false,
       "challenge_complete": false,
       "code_instructions": 6.99077,
@@ -5620,7 +5620,7 @@
       ]
     },
     {
-      "active_variant": "f7",
+      "active_variant": "s2",
       "animated": true,
       "challenge_complete": false,
       "code_instructions": 4.23616,
@@ -5775,7 +5775,7 @@
       ]
     },
     {
-      "active_variant": "f1",
+      "active_variant": "first_pass",
       "animated": false,
       "challenge_complete": false,
       "code_instructions": 5.85778,
@@ -5867,7 +5867,7 @@
       ]
     },
     {
-      "active_variant": "sphere",
+      "active_variant": "s2",
       "animated": true,
       "challenge_complete": false,
       "code_instructions": 9.91142,
@@ -6000,6 +6000,96 @@
         "s3",
         "s4",
         "s5"
+      ]
+    },
+    {
+      "active_variant": "first_pass",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "--[[ From Wikipedia: Xicalcoliuhqui is a common motif in Mesoamerican art.\nIt is composed of three or more steps connected to a hook or spiral,\nreminiscent of a \"greek-key\" meander. Pre-Columbian examples may be\nfound on everything from jewelry, masks, ceramics, sculpture, textiles\nand featherwork to painted murals, codices and architectural elements\nof buildings.The motif has been in continual use from the pre-Columbian era\nto the present.]]\n\nif z\u003c7 or y%7==0 then return 2 end\nif y\u003c0 then\n\tx=-x\n\ty=-y\nend\nreturn y\u003cx+7 and x\u003c7 and 9 ",
+        "first_pass": "--\n--\n--\n\n--[[ From Wikipedia: Xicalcoliuhqui is a common motif in Mesoamerican art.\nIt is composed of three or more steps connected to a hook or spiral,\nreminiscent of a \"greek-key\" meander. Pre-Columbian examples may be\nfound on everything from jewelry, masks, ceramics, sculpture, textiles\nand featherwork to painted murals, codices and architectural elements\nof buildings.The motif has been in continual use from the pre-Columbian era\nto the present.]]\nZ= abs(z)\nX= abs(x)\nY= abs(y)\nif (Z\u003c7 and X\u003c7) or y%7==0 then return 2 end\n\nif Z==7 and X\u003c7 then\n\tif y\u003c0 then x=-x end\n\tif z\u003c0 then x=-x end\n\treturn Y\u003cx+7 and YELLOW\nend\n\nif X==7 and Z\u003c7 then\n\tif y\u003c0 then z=-z end\n  if x\u003e0 then z=-z end\n\treturn Y\u003cz+7 and YELLOW\nend\n"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "xicalcoliuhqui.weekly",
+      "size": 7,
+      "source": 400,
+      "variant_order": [
+        "code",
+        "first_pass"
+      ]
+    },
+    {
+      "active_variant": "f1",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 14.2878,
+      "code_size": 197,
+      "code_variants": {
+        "f1": "-- f1\n-- 215\n-- 14.288\nif abs(y)\u003e3 then return end\nlocal X= abs(x)\nif X\u003e3 then return end\nlocal Z= abs(z)\nif Z\u003e4 then return end\n\nif y==2 then\n  if X\u003c=1 and Z\u003c=3 then return end\n  if X==2 then return YELLOW end\n\tif X\u003c2 and Z==4 then return BROWN end\nend\nif y==3 and X\u003c=1 then\n\treturn Z%2==0 and z~=0 and YELLOW or BROWN\nend\nif y==1 and X\u003c=2 and Z\u003c=3 then return end\nif z==0 and x==3 and (y==1 or y==0) then return BLACK end\nif y==-3 and (X==3 or Z==4) then return YELLOW end\nlocal Y= abs(y+1)\nif X\u003c=2 and Y\u003c=2 and Z\u003c=3 and y~=-3 then return WHITE end\nif X==3 and Z==4 and Y\u003c3 then return YELLOW end\nif X\u003c=3 and Y\u003c=2 and Z\u003c=4 then return Z==2 and YELLOW or BROWN end\n",
+        "first_pass": "-- first_pass\n-- 197\n-- 14.907\nif abs(y)\u003e3 then return end\nlocal X= abs(x)\nif X\u003e3 then return end\nlocal Z= abs(z)\nif Z\u003e4 then return end\nlocal Y= abs(y+1)\n\nreturn\ny==3 and X\u003c=1 and (Z%2==0 and z~=0 and YELLOW or BROWN)\nor y==2 and (X\u003c=1 and Z\u003c=3 and 0 or X==2 and 9 or X\u003c2 and Z==4 and BROWN)\nor z==0 and (y==1 or y==0) and x==3 and BLACK\nor y==1 and (X\u003c=2 and Z\u003c=3 and 0)\nor X\u003c=2 and Y\u003c=2 and Z\u003c=3 and y~=-3\nor X==3 and Z==4 and Y\u003c3 and YELLOW\nor y==-3 and (X==3 or Z==4) and YELLOW\nor X\u003c=3 and Y\u003c=2 and Z\u003c=4 and (Z==2 and YELLOW or BROWN)\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "treasure-chest.weekly",
+      "size": 5,
+      "source": 400,
+      "variant_order": [
+        "first_pass",
+        "f1"
+      ]
+    },
+    {
+      "active_variant": "first_pass",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 42.2847,
+      "code_size": 199,
+      "code_variants": {
+        "first_pass": "-- first_pass\n\nm1n= min(x, y, z)\nmx= max(x, y, z)\nif m1n\u003c=-1 then\n\tif abs(x)==5 and abs(y)==5 and abs(z)==5\n\t\t or abs(x-2)==3 and abs(y-2)==3 and abs(z-2)==3 then\n\t\treturn WHITE\n\tend\n\tmx= max(x, y, z)\n\tif m1n==-1 and (mx==5 or (x==-1 and y==-1\n\t\t\t\t\t\t\t\t\t\t\t\t  or x==-1 and z==-1\n\t\t                      or y==-1 and z==-1)) then return ORANGE end\n\tif m1n==-5 and (mx==5 or (\n\t\tx==-5 and y==-5\n\t\tor x==-5 and z==-5\n\t\tor y==-5 and z==-5)) or (x==5 and y==5\n\t\t\t\t\t\t\t\t\t\t\t\t  or x==5 and z==5\n\t\t                      or y==5 and z==5)\n\t\t then return ORANGE end\n\treturn (m1n==-1 or m1n==-5 or m1n\u003c=-1 and mx\u003e=5) and DARKBLUE\nend"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "vert-edge-face.weekly",
+      "size": 5,
+      "source": 400,
+      "variant_order": [
+        "first_pass"
+      ]
+    },
+    {
+      "active_variant": "s2",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 7.3227,
+      "code_size": 54,
+      "code_variants": {
+        "f1": "-- f1\n-- 114\n-- 8.736\n\nif z==-16 then return WHITE end\n\n-- simple negative space early exit\nif x\u003c=-9 or x\u003e=9 or y\u003e=11 or y\u003c=-11 then return end\n\nlocal i= z/5\nlocal X= (x-i)^2\nlocal Y= (y-i*3)^2\nlocal c= X+Y\nif c\u003e=53 then return end -- early exit on bigger than circle \nif z==-5 or z==0 or z==5 then\n\tif c\u003e=11 then return BLACK end -- black circles on special locations\nend\nif c\u003e5 then return end -- weird tunnel the line happens to go thru\nif x==y//2.9 and y==z//1.5 then return YELLOW end -- the line\n\n-- fancy negative space attempt\n--local slant= z*3/5\n--if slant-8\u003e=y or slant+8\u003c=y then return end\n--slant= z/5\n--if slant-8\u003e=x or slant+8\u003c=x then return end\n",
+        "f2": "-- f2\n-- 111\n-- 7.464\n\nif z==-16 then return WHITE end\n\n-- simple negative space early exit\nif x\u003c=-9 or x\u003e=9 or y\u003e=11 or y\u003c=-11 then return end\n\nif z==-5 or z==0 or z==5 then\n\tlocal i= z/5 \n\tlocal X= (x-i)^2 --x_component\n\tlocal Y= (y-i*3)^2 --y_component\n\tlocal c= X+Y --circle\n\tif c\u003c=52 and c\u003e=11 then return BLACK end -- black circles on special locations\n\tif c\u003e5 then return end -- tiny weird tunnel the line is within\n\tend\nif x==y//2.9 and y==z//1.5 then return YELLOW end -- the line\n\n-- Note: finding the intersecting planes for the line was extremely difficult and errorprone.\n-- I didnt have a good way to find it and there was some fiddling and hoping\n\n-- fancy negative space attempt\n--local slant= z*3/5\n--if slant-8\u003e=y or slant+8\u003c=y then return end\n--slant= z/5\n--if slant-8\u003e=x or slant+8\u003c=x then return end\n\n",
+        "f3": "-- f3\n-- 174\n-- 7.323\n\nif z==-16 then return WHITE end -- wall\n\n-- simple negative space early exit\nif x\u003c=-9 or x\u003e=9 or y\u003e=11 or y\u003c=-11 then return end\n\nif x==y//2.9 and y==z//1.5 then return YELLOW end -- the line\n\n-- Doing \"the line\" first is expensive but good \n-- because then we can do this simple bounds check for negative space\nif z\u003e5 or z\u003c-5 then return end\n\nif z==0 then\n\tlocal c= x^2+y^2 --circle\n\tif c\u003c=52 and c\u003e=11 then return BLACK end -- black circle on special locations\n\treturn\nend\nif z==-5 then\n\tlocal X= (x+1)^2 --x_component\n\tlocal Y= (y+3)^2 --y_component\n\tlocal c= X+Y --circle\n\tif c\u003c=52 and c\u003e=11 then return BLACK end -- black circle on special locations\n\treturn\nend\nif z==5 then\n\tlocal X= (x-1)^2 --x_component\n\tlocal Y= (y-3)^2 --y_component\n\tlocal c= X+Y --circle\n\tif c\u003c=52 and c\u003e=11 then return BLACK end -- black circle on special locations\n\treturn\nend\n\n-- Note: finding the intersecting planes for the line was extremely difficult and errorprone.\n-- I didnt have a good way to find it and there was some fiddling and hoping\n\n-- fancy negative space attempt\n--local slant= z*3/5\n--if slant-8\u003e=y or slant+8\u003c=y then return end\n--slant= z/5\n--if slant-8\u003e=x or slant+8\u003c=x then return end\n",
+        "first_pass": "-- first_pass\n-- 95\n-- 11.417\n\nif z==-16 then return WHITE end\n\nlocal i=z/5\nlocal X= (x-i)^2\nlocal Y= (y-i*3)^2\nlocal c= X+Y\nif c\u003e=53 then return end -- early exit on bigger than circle \nif z==-5 or z==0 or z==5 then\n\tif c\u003e=11 then return BLACK end -- black circles on special locations\nend\nif c\u003e5 then return end -- weird tunnel the line happens to go thru\nif x==y//2.9 and y==z//1.5 then return YELLOW end -- the line\n\n-- fancy negative space attempt\n--local slant= z*3/5\n--if slant-8\u003e=y or slant+8\u003c=y then return end\n--slant= z/5\n--if slant-8\u003e=x or slant+8\u003c=x then return end\n",
+        "s1": "-- s1\n-- 61\n-- 10.317\n\nreturn \nz==-16\nor z%5==0 and abs(z)\u003c6 and inrange((x-z/5)^2+(y-z/5*3)^2,11,52) and BLACK\nor x==y//2.9 and y==z//1.5 and YELLOW\n",
+        "s2": "-- s2\n-- 54\n-- 22.480\n\nreturn\nz==-16\nor ((x-z/5)^2+(y-z*.6)^2-11)//42==tan(z)%tan(5) and BLACK\nor x==y//2.7 and y==z//1.5 and YELLOW\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "shadowplay.weekly",
+      "size": 16,
+      "source": 400,
+      "variant_order": [
+        "first_pass",
+        "s1",
+        "s2",
+        "f1",
+        "f2",
+        "f3"
       ]
     }
   ]
