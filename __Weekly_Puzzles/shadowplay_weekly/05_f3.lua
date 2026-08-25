@@ -7,7 +7,7 @@ if z==-16 then return WHITE end -- wall
 -- simple negative space early exit
 if x<=-9 or x>=9 or y>=11 or y<=-11 then return end
 
-if x==y//2.9 and y==z//1.5 then return YELLOW end -- the line
+if x==y//2.7 and y==z//1.5 then return YELLOW end -- the line
 
 -- Doing "the line" first is expensive but good 
 -- because then we can do this simple bounds check for negative space
