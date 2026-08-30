@@ -6385,13 +6385,15 @@
       ]
     },
     {
-      "active_variant": "first_pass",
+      "active_variant": "f1",
       "animated": false,
       "challenge_complete": false,
-      "code_instructions": 8.36414,
-      "code_size": 124,
+      "code_instructions": 8.11765,
+      "code_size": 43,
       "code_variants": {
-        "first_pass": "--first_pass\n--127 \n--8.364\n\nif y\u003e2 or y\u003c-2 then return end -- negative space\n-- Note: round() without the function call + .5)//1\nif y==(cos(x*pi/4)+(cos(z*pi/4))+ .5)//1 then\n\tlocal c= x^2+z^2\n\tif c\u003c=0 then return 5 end\n\tif c\u003c=2 then return 6 end\n\tif c\u003c=9 then return 7 end\n\tif c\u003c=18 then return 8 end\n\tif c\u003c=29 then return 9 end\n\tif c\u003c=45 then return 10 end\n\tif c\u003c=65 then return 11 end\n\tif c\u003c=85 then return 12 end\n\tif c\u003c=100 then return 13 end\n\treturn 14\nend\n"
+        "f1": "--f1\n--53\n--8.118\n\nif y\u003e2 or y\u003c-2 then return end -- negative space\n\n-- Note: round() without the function call + .5)//1\nif y==(cos(x*pi/4)+(cos(z*pi/4))+ .5)//1 then\n\treturn (x*x+z*z)^.5*.8+5.5\nend\n",
+        "first_pass": "--first_pass\n--127 \n--8.364\n\nif y\u003e2 or y\u003c-2 then return end -- negative space\n-- Note: round() without the function call + .5)//1\nif y==(cos(x*pi/4)+(cos(z*pi/4))+ .5)//1 then\n\tlocal c= x^2+z^2\n\tif c\u003c=0 then return 5 end\n\tif c\u003c=2 then return 6 end\n\tif c\u003c=9 then return 7 end\n\tif c\u003c=18 then return 8 end\n\tif c\u003c=29 then return 9 end\n\tif c\u003c=45 then return 10 end\n\tif c\u003c=65 then return 11 end\n\tif c\u003c=85 then return 12 end\n\tif c\u003c=100 then return 13 end\n\treturn 14\nend\n",
+        "s1": "--s1\n--43\n--12.353\n\nreturn \nabs(y)\u003c=2 \nand  \ny==round(cos(x*pi/4)+(cos(z*pi/4))) \nand\n(x*x+z*z)^.5*.8+5.5\n"
       },
       "completed": true,
       "fps": 12,
@@ -6400,17 +6402,21 @@
       "size": 8,
       "source": 400,
       "variant_order": [
-        "first_pass"
+        "first_pass",
+        "s1",
+        "f1"
       ]
     },
     {
-      "active_variant": "first_pass",
+      "active_variant": "s1",
       "animated": true,
       "challenge_complete": false,
       "code_instructions": 5.52041,
-      "code_size": 56,
+      "code_size": 43,
       "code_variants": {
-        "first_pass": "--first_pass\n--56\n--5.520\n\nif y\u003e=1 then return end -- negative space\nif y\u003c=-2 then return GREY end -- bottompart\nif t==0 and y==0 then return end -- first_frame early escape\n\n-- the button\nlocal sq= x*x+z*z\nif sq\u003c=2 then return RED end\nif y==-1 and sq\u003c= 8 then return WHITE end\n"
+        "first_pass": "--first_pass\n--56\n--5.520\n\nif y\u003e=1 then return end -- negative space\nif y\u003c=-2 then return GREY end -- bottompart\nif t==0 and y==0 then return end -- first_frame early escape\n\n-- the button\nlocal sq= x*x+z*z\nif sq\u003c=2 then return RED end\nif y==-1 and sq\u003c= 8 then return WHITE end\n",
+        "s1": "--s1\n--43\n--11.376\nsq= x*x+z*z\nreturn\ny\u003c=-2 and GREY\nor \nt==0 and y==0 and EMPTY\nor\ny\u003c=0 and sq\u003c=2 and RED\nor\ny==-1 and sq\u003c= 8\n",
+        "s2try": "--s2try\n--\n-- \nreturn cos(x*pi/4)+cos(z*pi/4)\u003e=1.1\n"
       },
       "completed": true,
       "fps": 10,
@@ -6419,7 +6425,59 @@
       "size": 3,
       "source": 400,
       "variant_order": [
+        "first_pass",
+        "s1",
+        "s2try"
+      ]
+    },
+    {
+      "active_variant": "first_pass",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 11.2156,
+      "code_size": 163,
+      "code_variants": {
+        "first_pass": "-- first_pass\n-- 175\n-- 11.216\n\nif x\u003c0 then return end -- negative space\n\n-- unique stuff on x==0 and z==0 \nif x==0 and z==0 then\n\tif y==4 then return WHITE end\n\tif y\u003c=0 and y\u003e=-2 then\n\t\tif t==0 and y==0 then return WHITE end\n\t\tif t==1 and y==-1 then return WHITE end\n\t\tif t==2 and y==-2 then return WHITE end\n\t\treturn\n\tend\nend\n\n-- criss cross\nif x==0 and (z==y or z==-y)  \n\tor z==0 and (x==y or x==-y) then \n\treturn GREY\nend\n\n-- half circle\nlocal c= (x*x+z*z)^.5\nif (y==5 or y==-5) and c\u003c=5.5 and c\u003e=5 then \n\treturn GREY\nend\n\nif y+c/3+3\u003c=0 and c\u003c5.5 then return WHITE end -- bottom sand\nif c\u003c=y and y\u003c4 and c\u003c5.5 then return WHITE end -- top sand\n"
+      },
+      "completed": true,
+      "fps": 5,
+      "frames": 3,
+      "id": "cutaway-hourglass.weekly",
+      "size": 5,
+      "source": 400,
+      "variant_order": [
         "first_pass"
+      ]
+    },
+    {
+      "active_variant": "f5",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 13.0047,
+      "code_size": 55,
+      "code_variants": {
+        "f2": "--f2\n--137\n--13.773\n\nif (x\u003c5 and x\u003e-5) and (\n\t  (y\u003c5 and y\u003e-5) or (z\u003c5 and z\u003e-5)\n\t) or (y\u003c5 and y\u003e-5) and (z\u003c5 and z\u003e-5) then \nreturn end -- negative space, empty tunnels thru middle\n\nif x~=7 and y~=7 and z~=7 and x~=-7 and y~=-7 and z~=-7 \n\tthen return -- negative space, a point on the line always has a 7 or -7\nend\n \nlocal offset= sign(x+y+z)|1 \nlocal data= {abs(x+offset),abs(y+offset),abs(z+offset)}\nsort(data)\n\nif data[2]~=6 or data[3]~=8 then return end\nif data[1]\u003e=5 then\n\treturn YELLOW else return BLACK\nend\n",
+        "f3": "--f3\n--139\n--13.537\n\nif (x\u003c5 and x\u003e-5) and (\n\t  (y\u003c5 and y\u003e-5) or (z\u003c5 and z\u003e-5)\n\t) or (y\u003c5 and y\u003e-5) and (z\u003c5 and z\u003e-5) then \nreturn end -- negative space, empty tunnels thru middle\n\nif x~=7 and y~=7 and z~=7 and x~=-7 and y~=-7 and z~=-7 \n\tthen return -- negative space, a point on the line always has a 7 or -7\nend\n \nlocal offset= sign(x+y+z)|1 \nlocal data= {abs(x+offset),abs(y+offset),abs(z+offset)}\nsort(data)\n\nif data[2]==6 and data[3]==8 then\n\tif data[1]\u003e=5 then \n\t\treturn YELLOW else return BLACK\n\tend\nend\n",
+        "f4": "--f4\n--147\n--13.005\n\nlocal X= x*x\nlocal Y= y*y\nlocal Z= z*z\nif X\u003c=16 and (Y\u003c=16 or Z\u003c=16) or Y\u003c=16 and Z\u003c=16 then return end  -- negative space, empty tunnels thru middle\nif X~=49 and Y~=49 and Z~=49 then return end -- negative space, a point on the line always has a 7 or -7\nif x*y\u003e=36 or x*z\u003e=36 or y*z\u003e=36 then return end -- negative space, the tiny cubes in corners\n\nlocal offset= sign(x+y+z)|1\nlocal data= {abs(x+offset),abs(y+offset),abs(z+offset)}\nsort(data)\n\nif data[2]==6 and data[3]==8 then\n\tif data[1]\u003e=5 then\n\t\treturn YELLOW else return BLACK\n\tend\nend\n",
+        "f5": "--f5-inprogress\n--147\n--13.005\n\nlocal X= x*x\nlocal Y= y*y\nlocal Z= z*z\nif X\u003c=16 and (Y\u003c=16 or Z\u003c=16) or Y\u003c=16 and Z\u003c=16 then return end  -- negative space, empty tunnels thru middle\nif X~=49 and Y~=49 and Z~=49 then return end -- negative space, a point on the line always has a 7 or -7\nif x*y\u003e=36 or x*z\u003e=36 or y*z\u003e=36 then return end -- negative space, the tiny cubes in corners\n\nlocal offset= sign(x+y+z)|1\n-- this was slower\n--local d1= x+offset\n--local d2= y+offset\n--local d3= z+offset\n--if d1\u003c0 then d1=-d1 end\n--if d2\u003c0 then d2=-d2 end\n--if d3\u003c0 then d3=-d3 end\n--local data= {d1,d2,d3}\nlocal data= {abs(x+offset),abs(y+offset),abs(z+offset)}\nsort(data)\n\nif data[2]==6 and data[3]==8 then\n\tif data[1]\u003e=5 then\n\t\treturn YELLOW else return BLACK\n\tend\nend\n",
+        "s1": "--s1\n--58\n--34.211\n\noffset= sign(x+y+z)|1\ndata= {abs(x+offset),abs(y+offset),abs(z+offset)}\nsort(data)\n\nreturn\n(data[2]==6 and data[3]==8)\nand (data[1]\u003e=5 and YELLOW or BLACK)\n",
+        "s2": "--s2\n--56\n--35.783\n\noffset= sign(x+y+z)|1\ndata= {abs(x+offset),abs(y+offset),abs(z+offset)}\nsort(data)\n\nif data[2]|data[3]==14 then -- union of 6 and 8\n\treturn data[1]\u003e=5 and YELLOW or BLACK\nend",
+        "s3": "--s3\n--55\n--36.767\n\noffset= sign(x+y+z)|1\ndata= {abs(x+offset),abs(y+offset),abs(z+offset)}\nsort(data)\n\nreturn \ndata[2]|data[3]==14 -- union of 6 and 8\nand (data[1]\u003e=5 and YELLOW or BLACK)"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "another-wired-cube.weekly",
+      "size": 7,
+      "source": 400,
+      "variant_order": [
+        "s1",
+        "s2",
+        "s3",
+        "f2",
+        "f3",
+        "f4",
+        "f5"
       ]
     }
   ]
