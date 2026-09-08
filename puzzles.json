@@ -6479,6 +6479,96 @@
         "f4",
         "f5"
       ]
+    },
+    {
+      "active_variant": "f2",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 7.58002,
+      "code_size": 130,
+      "code_variants": {
+        "f1": "--f1\n--163\n--7.768\n\nif z\u003e2 or z\u003c-2 then return end\nif x\u003e3 or x\u003c-3 then return end\nif y\u003e1 and z~=0 then return end\n\n-- lock u-shape\nif z==0 and floor(x^2/4+y^2/22-1)==0 then\n\tif y\u003c=-1 then\n\t\tif x\u003e0 and y~=-5 then \n\t\t\treturn GREY \n\t\telse \n\t\t\treturn YELLOW\n\t\tend\n\tend\n\treturn GREY\nend\n\n-- combinations\nif x\u003e=1 and x\u003c=3 and z\u003c=1 and z\u003e=-1 then\n\tif y==0 or y==-2 or y==-4 then\n\t\tif y==-2 then\n\t\t\tz=z+1\n\t\tend\n\t\treturn (z+x+t)%2==1 and GREY or BLACK\n\tend\nend\n\n-- lock body\nif y\u003c=1 and x^2/15+z^2/8-1\u003c=0 then\n\treturn YELLOW\nend\n",
+        "f2": "--f2\n--162\n--7.580\n\nif z\u003e2 or z\u003c-2 then return end\nlocal X= x*x\nif X\u003e9 then return end\nif y\u003e1 and z~=0 then return end\n\n-- lock u-shape\nif z==0 and (X/4+y^2/22-1)//1==0 then\n\tif y\u003c=-1 then\n\t\tif x\u003e0 and y~=-5 then \n\t\t\treturn GREY \n\t\telse \n\t\t\treturn YELLOW\n\t\tend\n\tend\n\treturn GREY\nend\n\n-- combinations\nif x\u003e=1 and x\u003c=3 and z\u003c=1 and z\u003e=-1 then\n\tif y==0 or y==-2 or y==-4 then\n\t\tif y==-2 then z= z+1 end\n\t\treturn (z+x+t)%2==1 and GREY or BLACK\n\tend\nend\n\n-- lock body\nif y\u003c=1 and X/15+z^2/8-1\u003c=0 then\n\treturn YELLOW\nend\n",
+        "firstr_pass": "--first_pass\n--141\n--8.598\n\nif z\u003e2 or z\u003c-2 then return end\n\n-- lock u-shape\nif z==0 and y\u003e=-4 and floor(x^2/4+y^2/22-1)==0 then\n\tif y\u003c=-1 then\n\t\tif x\u003e0 then return GREY else return YELLOW end\n\tend\n\treturn GREY\nend\n\n-- combinations\nif x\u003e=1 and x\u003c=3 and z\u003c=1 and z\u003e=-1 then\n\tif y==0 or y==-2 or y==-4 then\n\t\tif y==-2 then\n\t\t\tz=z+1\n\t\tend\n\t\treturn (z+x+t)%2==1 and GREY or BLACK\n\tend\nend\n\n-- lock body\nif y\u003c=1 and x^2/15+z^2/8-1\u003c=0 then\n\treturn YELLOW\nend\n"
+      },
+      "completed": true,
+      "fps": 2,
+      "frames": 2,
+      "id": "combo-lock.weekly",
+      "size": 5,
+      "source": 400,
+      "variant_order": [
+        "firstr_pass",
+        "f1",
+        "f2"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "return 1"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "tv-head.weekly",
+      "size": 5,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "first_pass",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "first_pass": "\nif y==-11 then return DARKBLUE end\n\nlocal X=abs(x)\nlocal Z=abs(z)\nif X==-y+9 and Z==-y+9 \n\tor -X==-y-13 and -Z==-y-13 then \n\treturn (y+2)//4+7\nend\n"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "colored-beams.weekly",
+      "size": 11,
+      "source": 400,
+      "variant_order": [
+        "first_pass"
+      ]
+    },
+    {
+      "active_variant": "s3",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 15.6676,
+      "code_size": 41,
+      "code_variants": {
+        "f1": "--f1\n--93\n--20.420\nlocal x= abs(x)\nlocal y= abs(y)\nlocal z= abs(z)\nif x==y and z==y then return BLACK end\nif z==0 and x==y then return BLACK end\nif y==0 and x==z then return BLACK end\nif x==0 and y==z then return BLACK end\nif x==-y then return BLACK end\nif y==-z then return BLACK end\nif x==-z then return BLACK end\n",
+        "f2": "--f2\n--105\n--15.668\n\nif x\u003c0 then x=-x end\nif y\u003c0 then y=-y end\nif z==0 and x==y then return BLACK end\nif z\u003c0 then z=-z end\nif x==y and z==y then return BLACK end\nif y==0 and x==z then return BLACK end\nif x==0 and y==z then return BLACK end\nif x==-y then return BLACK end\nif y==-z then return BLACK end\nif x==-z then return BLACK end\n",
+        "first_pass": "--first_pass\n--73\n--30.641\n\nreturn \n(\nx*x==y*y and z*z==y*y \nor x|y==0 \nor y|z==0 \nor x|z==0\nor abs(x)==abs(y) and z==0\nor abs(z)==abs(y) and x==0\nor abs(x)==abs(z) and y==0\n) and BLACK",
+        "s1": "--s1\n--68\n--24.997\nx=abs(x)\ny=abs(y)\nz=abs(z)\nreturn\n(\nx==y and z==y\nor x|y==0 \nor y|z==0 \nor x|z==0\nor x==y and z==0\nor x==z and y==0\nor y==z and x==0\n) and BLACK\n",
+        "s2": "--s1\n--65\n--24.420\nx= abs(x)\ny= abs(y)\nz= abs(z)\nreturn\n(\nx==y and z==y\nor z==0 and x==y\nor y==0 and x==z \nor x==0 and y==z\nor x==-y \nor y==-z\nor x==-z\n \n) and BLACK\n",
+        "s3": "--s3\n--41\n--24.924\n\nfunction f(u,v)\n\treturn\n\t\tu*u==v*v\n\t\tor u*v==0\nend\nreturn\n    f(x,y)\nand f(y,z)\nand f(z,x)\nand BLACK\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "urchin.weekly",
+      "size": 3,
+      "source": 400,
+      "variant_order": [
+        "first_pass",
+        "s1",
+        "s2",
+        "s3",
+        "f1",
+        "f2"
+      ]
     }
   ]
 }
