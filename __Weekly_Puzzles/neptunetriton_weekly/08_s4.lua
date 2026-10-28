@@ -1,5 +1,6 @@
 -- s4
 -- 165
+--if x==10 and y==10 and z==10 then return BLUE end
 origin_sphere= x*x+y*y+z*z
 px= 9.43*cos(t*pi/12+atan(5/8))
 return
@@ -13,4 +14,4 @@ or origin_sphere<=24 and BLUE + btoi(
 or (x-px*9.2e-1)^2 
 	 + (y-px*3.91e-1)^2 
 	 + (z-9.43*cos(t*pi/12-atan(1.6)))^2 <= 2 
-	 and GREY
+	 and ORANGE

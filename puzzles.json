@@ -360,7 +360,7 @@
       ]
     },
     {
-      "active_variant": "code 3",
+      "active_variant": "code",
       "animated": false,
       "challenge_complete": false,
       "code_instructions": 6.1895,
@@ -1285,7 +1285,7 @@
       ]
     },
     {
-      "active_variant": "fastest",
+      "active_variant": "theDerelict",
       "animated": false,
       "challenge_complete": false,
       "code_instructions": 21.2058,
@@ -1993,7 +1993,7 @@
       ]
     },
     {
-      "active_variant": "_original_comment",
+      "active_variant": "small_and_cool",
       "animated": true,
       "challenge_complete": false,
       "code_instructions": 9.11541,
@@ -5020,6 +5020,7 @@
       "code_size": 87,
       "code_variants": {
         "_fun_comments": "--[[\n\tThe Menger Sponge! Wait, it looks a little different?\n\t\n\tWe are zoomed in here, so we can not see too much of the \"Menger Sponge\"\n\tbut, that is ok!\n\tIt makes things easier to work with when our working area is smaller.\n\t\n\tSome understanding of \"signed distance functions\" \n  may help, thanks to https://iquilezles.org/articles/distfunctions/\n]]--\n\n--[[\n\t1. Okay, first things first\n\t\n\tWe setup a signed distance function (sdf) \n\tthis will help us to create our mini menger boxes.\n\tTogether, we can use the \"sdMengerBox\" function to make \n\ta bunch of boxes and then combine\tthem in interesting ways.\n]]--\n\n-- \"signed distance function\" for \"MengerBox\" (let us keep this function handy)\nlocal function sdMengerBox(px, py, pz, size, holeWidth)\n  -- Distance to the base Cube\n  local apx = abs(px)\n  local apy = abs(py)\n  local apz = abs(pz)\t\n  local adx = apx - size\n  local ady = apy - size\n  local adz = apz - size\n  local dBox = max(adx, ady, adz)\n\n  -- Define the cross-shaped holes (3 intersecting prisms)\n  -- hole through X-Y (Z-axis opening)\n  local hZ = max(apx - holeWidth, apy - holeWidth)\n  -- hole through Y-Z (X-axis opening)\n  local hX = max(apy - holeWidth, apz - holeWidth)\n  -- hole through Z-X (Y-axis opening)\n  local hY = max(apz - holeWidth, apx - holeWidth)\n\n  -- Union all the holes with min()\n  local crossHoles = min(hZ, hX, hY)\n  -- in SDFs, subtracting is, max(shape, -otherShape)\n  return max(dBox, -crossHoles)\nend\n-- this a helper function, we need it later to demo some things\nlocal function demoHelper(demo_name,a,b,color1,color2)\n  --## Subtraction examples:\n  if demo_name==\"subtraction_2\" then return max(-a,b)\u003c=0 and color1 end\n\tif demo_name==\"outer_subtraction_2\" then return max(-b,a)\u003e0 and color2 end\n  --## Union examples\n\tif demo_name==\"union\" then return min(a,b)\u003c=0 and color1 end\n\tif demo_name==\"outer_union\" then return min(a,b)\u003e0 and color2 end\n  --## Intersection examples:\n\tif demo_name==\"intersection\" then return max(a,b)\u003c=0 and color1 end\n\tif demo_name==\"outer_intersection\" then return max(a,b)\u003e0 and color2 end\n  --## Some other examples I enjoyed:\n\t if demo_name==\"wacky_subtraction_1\" then return max(-a,b)\u003e0 and color2 end\n  --## Fun with \"multiple combinations\"\n  --## You can keep on combining shapes together!\n  --## I enjoyed \"xor + outer union\":\n  if demo_name==\"xor_plus_outer_union\" then\n    if max(min(a,b),-max(a,b))\u003c=0 then\n    \treturn color1\n    elseif min(a,b)\u003e0 then\n    \treturn color2\n\t\telse \n\t\t\treturn 0\n    end\n  end\n  --## this one I call \"Subtraction + reversal Subtraction\":\n\tif demo_name==\"subtraction_plus_reversal_subtraction\" then return max(-b,a)\u003c=0 and color1 or max(-a,b)\u003c=0 and color2 end\n\t\n\treturn BROWN -- debug color incase our helper goes wrong somehow\nend\n\n--[[\n\t2. Okay, second things second\n\t\n\tWe will setup two variables: \"a=\" and \"b=\"\n\tThese will be our two \"shapes\".\n\t\n\tWe can combine our \"shapes\" in simple ways with\n\ta little bit of math, all thanks to our signed distance function above.\n]]--\n\n-- a, the big box:\n--\n-- Remember: above we have \"sdMengerBox(px, py, pz, size, holeWidth)\"\n-- Note: all sizes are \"half-sizes\", so we divide by 2.\nlocal a = sdMengerBox(x, y, z, 9/2, 3/2)\n\n-- b, little boxes everywhere:\n--\n-- Remember: sdMengerBox(px, py, pz, size, holeWidth)\n-- Note: we use mod() math here with our sdf to make \n--       a bunch of repeating mini menger boxes\nlocal b = sdMengerBox(\n\t((x + 3/2) % 3) - 3/2,\n\t((y + 3/2) % 3) - 3/2,\n\t((z + 3/2) % 3) - 3/2,\n\t3/2, 1/2\n)\n\n-- 3. Time to get really elaborate!\n--\n-- Now we setup a custom colorwheel to be a subset of the 16 colors\n-- with \"counter_part_colors\" chosen for some symmetry\n--\n-- The colors we will end up working with are: 6,7,9,10,11,13,14\n-- starting at purple and ending over in the blues\nlocal original_color_wheel = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16}\nlocal counter_part_color_wheel = {1,2,3,4,5, 8,7,6, 11,10,9, 14,13,12, 16,15}\n\n-- The following periodic number changes with \"y\"\n-- hopefully it stays between 7 and 13\n-- I hope it doesnt run away on us (heh heh)\nlocal our_periodic_number = (y+3)%7+7 \n\n-- Using our periodic number and our custom color wheels\n-- we can setup two colors that change with y\nlocal color1 = original_color_wheel[our_periodic_number]\nlocal color2 = counter_part_color_wheel[our_periodic_number]\n\nprint(\"color1=\"..color1..\" color2=\"..color2..\" PEACH=4\")\n\n--[[ \n\t4. Okay! time for the fun part (heh heh)\n\n\tNow we go looking for a fun \"mengerspongey-ishy shape\" \n\tusing Primitive combinations with our \"sdfs\", \"a\" and \"b\"\n\n\tPrimitive combinations for two shapes using signed distance functions:\n  \toperation Union:        min(a,b)\n  \toperation Subtraction:  max(-a,b)\n  \toperation Intersection: max(a,b)\n  \toperation Xor:          max(min(a,b),-max(a,b))\n\n\tFor more visual examples of \"primitive combinations\" using \"a\" and \"b\"\n  Comment and Uncomment the \"return\" statements below to see new shapes!\n\t\n\tNote: make sure to only have one \"return\" statement uncommented\n]]--\n\n--## Our very first example at t==0 is \"basic subtraction\":\n\nreturn\n--max(-a,b)\u003c=0 and color2 \n--or \n--a\u003e0 and PEACH\n--or\n--max(-b,a)\u003c=0 and color1 \n\n--t==0 and max(-b,a)\u003c=0 and color1 or\n--t==1 and  demoHelper(\"subtraction_2\",        a, b, color1, nil) or\n--t==2 and  demoHelper(\"outer_subtraction_2\",  a, b, nil, color2) or\n--t==3 and  demoHelper(\"union\",                a, b, color1, nil) or\n--t==4 and  demoHelper(\"outer_union\",          a, b, nil, color2) or\n--t==5 and  demoHelper(\"intersection\",         a, b, color1, nil) or\n--t==6 and  demoHelper(\"outer_intersection\",   a, b, nil, color2) or\n--t==7 and  demoHelper(\"wacky_subtraction_1\",  a, b, nil, color2) or\n--t==8 and  demoHelper(\"xor_plus_outer_union\", a, b, color1, color2) or\n--t==8 and  \ndemoHelper(\"subtraction_plus_reversal_subtraction\", a, b, color1, color2)\nor demoHelper(\"outer_union\", a, b, nil, PEACH)\n\n--[[ \n\tbtw, Did you want to have a look at the shapes \"a\" and \"b\"?\n\t\n\tNote: because we repeated the sdf shape using mod() math above\n\tfor \"b\" we must do more mod() math to \"reveal it\" nicely\n]]-- \n\n--## Have a look at shape \"a\" (one big 9x9x9 mengercube)\n--return a\u003c=0 and 8\n\n--## Have a look at shape \"b\" (3x3x3 mengercubes)\n--return b\u003c=0 and (x-2)//3 + (y-2)//3 + (z-2)//3 + 12\n--",
+        "code": "--[[\n\tThe Menger Sponge! Wait, it looks a little different?\n\t\n\tWe are zoomed in here, so we can not see too much of the \"Menger Sponge\"\n\tbut, that is ok!\n\tIt makes things easier to work with when our working area is smaller.\n\t\n\tSome understanding of \"signed distance functions\" \n  may help, thanks to https://iquilezles.org/articles/distfunctions/\n]]--\n\n--[[\n\t1. Okay, first things first\n\t\n\tWe setup a signed distance function (sdf) \n\tthis will help us to create our mini menger boxes.\n\tTogether, we can use the \"sdMengerBox\" function to make \n\ta bunch of boxes and then combine\tthem in interesting ways.\n]]--\n\n-- \"signed distance function\" for \"MengerBox\" (let us keep this function handy)\nlocal function sdMengerBox(px, py, pz, size, holeWidth)\n  -- Distance to the base Cube\n  local apx = abs(px)\n  local apy = abs(py)\n  local apz = abs(pz)\t\n  local adx = apx - size\n  local ady = apy - size\n  local adz = apz - size\n  local dBox = max(adx, ady, adz)\n\n  -- Define the cross-shaped holes (3 intersecting prisms)\n  -- hole through X-Y (Z-axis opening)\n  local hZ = max(apx - holeWidth, apy - holeWidth)\n  -- hole through Y-Z (X-axis opening)\n  local hX = max(apy - holeWidth, apz - holeWidth)\n  -- hole through Z-X (Y-axis opening)\n  local hY = max(apz - holeWidth, apx - holeWidth)\n\n  -- Union all the holes with min()\n  local crossHoles = min(hZ, hX, hY)\n  -- in SDFs, subtracting is, max(shape, -otherShape)\n  return max(dBox, -crossHoles)\nend\n-- this a helper function, we need it later to demo some things\nlocal function demoHelper(demo_name,a,b,color1,color2)\n  --## Subtraction examples:\n  if demo_name==\"subtraction_2\" then return max(-a,b)\u003c=0 and color1 end\n\tif demo_name==\"outer_subtraction_2\" then return max(-b,a)\u003e0 and color2 end\n  --## Union examples\n\tif demo_name==\"union\" then return min(a,b)\u003c=0 and color1 end\n\tif demo_name==\"outer_union\" then return min(a,b)\u003e0 and color2 end\n  --## Intersection examples:\n\tif demo_name==\"intersection\" then return max(a,b)\u003c=0 and color1 end\n\tif demo_name==\"outer_intersection\" then return max(a,b)\u003e0 and color2 end\n  --## Some other examples I enjoyed:\n\t if demo_name==\"wacky_subtraction_1\" then return max(-a,b)\u003e0 and color2 end\n  --## Fun with \"multiple combinations\"\n  --## You can keep on combining shapes together!\n  --## I enjoyed \"xor + outer union\":\n  if demo_name==\"xor_plus_outer_union\" then\n    if max(min(a,b),-max(a,b))\u003c=0 then\n    \treturn color1\n    elseif min(a,b)\u003e0 then\n    \treturn color2\n\t\telse \n\t\t\treturn 0\n    end\n  end\n  --## this one I call \"Subtraction + reversal Subtraction\":\n\tif demo_name==\"subtraction_plus_reversal_subtraction\" then return max(-b,a)\u003c=0 and color1 or max(-a,b)\u003c=0 and color2 end\n\t\n\treturn BROWN -- debug color incase our helper goes wrong somehow\nend\n\n--[[\n\t2. Okay, second things second\n\t\n\tWe will setup two variables: \"a=\" and \"b=\"\n\tThese will be our two \"shapes\".\n\t\n\tWe can combine our \"shapes\" in simple ways with\n\ta little bit of math, all thanks to our signed distance function above.\n]]--\n\n-- a, the big box:\n--\n-- Remember: above we have \"sdMengerBox(px, py, pz, size, holeWidth)\"\n-- Note: all sizes are \"half-sizes\", so we divide by 2.\nlocal a = sdMengerBox(x, y, z, 9/2, 3/2)\n\n-- b, little boxes everywhere:\n--\n-- Remember: sdMengerBox(px, py, pz, size, holeWidth)\n-- Note: we use mod() math here with our sdf to make \n--       a bunch of repeating mini menger boxes\nlocal b = sdMengerBox(\n\t((x + 3/2) % 3) - 3/2,\n\t((y + 3/2) % 3) - 3/2,\n\t((z + 3/2) % 3) - 3/2,\n\t3/2, 1/2\n)\n\n-- 3. Time to get really elaborate!\n--\n-- Now we setup a custom colorwheel to be a subset of the 16 colors\n-- with \"counter_part_colors\" chosen for some symmetry\n--\n-- The colors we will end up working with are: 6,7,9,10,11,13,14\n-- starting at purple and ending over in the blues\nlocal original_color_wheel = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16}\nlocal counter_part_color_wheel = {1,2,3,4,5, 8,7,6, 11,10,9, 14,13,12, 16,15}\n\n-- The following periodic number changes with \"y\"\n-- hopefully it stays between 7 and 13\n-- I hope it doesnt run away on us (heh heh)\nlocal our_periodic_number = (y+3)%7+7 \nif t==0 and x==0 and z==0 then print(our_periodic_number) end\n\n-- Using our periodic number and our custom color wheels\n-- we can setup two colors that change with y\nlocal color1 = original_color_wheel[our_periodic_number]\nlocal color2 = counter_part_color_wheel[our_periodic_number]\n\n--[[ \n\t4. Okay! time for the fun part (heh heh)\n\n\tNow we go looking for a fun \"mengerspongey-ishy shape\" \n\tusing Primitive combinations with our \"sdfs\", \"a\" and \"b\"\n\n\tPrimitive combinations for two shapes using signed distance functions:\n  \toperation Union:        min(a,b)\n  \toperation Subtraction:  max(-a,b)\n  \toperation Intersection: max(a,b)\n  \toperation Xor:          max(min(a,b),-max(a,b))\n\n\tFor more visual examples of \"primitive combinations\" using \"a\" and \"b\"\n  Comment and Uncomment the \"return\" statements below to see new shapes!\n\t\n\tNote: make sure to only have one \"return\" statement uncommented\n]]--\n\n--## Our very first example at t==0 is \"basic subtraction\":\n\n--return \n--t==0 and max(-b,a)\u003c=0 and color1 or\n--t==1 and  demoHelper(\"subtraction_2\", a, b, color1, color2) or\n--t==2 and  demoHelper(\"outer_subtraction_2\", a, b, color1, color2) or\n--t==3 and  demoHelper(\"union\", a, b, color1, color2) or\n--t==4 and  demoHelper(\"outer_union\", a, b, color1, color2) or\n--t==5 and  demoHelper(\"intersection\", a, b, color1, color2) or\n--t==6 and  demoHelper(\"outer_intersection\", a, b, color1, color2) or\n--t==7 and  demoHelper(\"wacky_subtraction_1\", a, b, color1, color2) or\n--t==8 and  demoHelper(\"xor_plus_outer_union\", a, b, color1, color2) or\n--t==9 and  demoHelper(\"subtraction_plus_reversal_subtraction\", a, b, color1, color2)\n--\n--[[ \n\tbtw, Did you want to have a look at the shapes \"a\" and \"b\"?\n\t\n\tNote: because we repeated the sdf shape using mod() math above\n\tfor \"b\" we must do more mod() math to \"reveal it\" nicely\n]]-- \n\n--## Have a look at shape \"a\" (one big 9x9x9 mengercube)\n--return a\u003c=0 and PEACH\n\n--## Have a look at shape \"b\" (3x3x3 mengercubes)\n--return b\u003c=0 and (x-2)//3 + (y-2)//3 + (z-2)//3 + 12\n",
         "f1": "-- 310\n-- 152.102\n\nlocal function sdMengerBox(px, py, pz, size, holeWidth)\n  -- Distance to the base Cube\n  local apx = abs(px)\n  local apy = abs(py)\n  local apz = abs(pz)\t\n  local adx = apx - size\n  local ady = apy - size\n  local adz = apz - size\n  local dBox = max(adx, ady, adz)\n\n  -- Define the cross-shaped holes (3 intersecting prisms)\n  -- hole through X-Y (Z-axis opening)\n  local hZ = max(apx - holeWidth, apy - holeWidth)\n  -- hole through Y-Z (X-axis opening)\n  local hX = max(apy - holeWidth, apz - holeWidth)\n  -- hole through Z-X (Y-axis opening)\n  local hY = max(apz - holeWidth, apx - holeWidth)\n\n  -- Union all the holes with min()\n  local crossHoles = min(hZ, hX, hY)\n  -- in SDFs, subtracting is, max(shape, -otherShape)\n  return max(dBox, -crossHoles)\nend\nlocal a = sdMengerBox(x, y, z, 9/2, 3/2)\nlocal b = sdMengerBox(\n\t((x + 3/2) % 3) - 3/2,\n\t((y + 3/2) % 3) - 3/2,\n\t((z + 3/2) % 3) - 3/2,\n\t3/2, 1/2\n)\nlocal original_color_wheel = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16}\nlocal counter_part_color_wheel = {1,2,3,4,5, 8,7,6, 11,10,9, 14,13,12, 16,15}\nlocal our_periodic_number = (y+3)%7+7\nlocal color1 = original_color_wheel[our_periodic_number]\nlocal color2 = counter_part_color_wheel[our_periodic_number]\nreturn \nmax(-b,a)\u003c=0 and color1 or \nmax(-a,b)\u003c=0 and color2 or \nmin(a,b)\u003e=0 and PEACH\n",
         "f2": "-- 247\n-- 116.052\n\nlocal function sdMengerBox(px, py, pz, size, holeWidth)\n  -- Distance to the base Cube\n  local apx = abs(px)\n  local apy = abs(py)\n  local apz = abs(pz)\t\n  local adx = apx - size\n  local ady = apy - size\n  local adz = apz - size\n\tlocal dBox = max(adx, ady, adz)\n\n  -- Define the cross-shaped holes (3 intersecting prisms)\n  -- hole through X-Y (Z-axis opening)\n  local hZ = max(apx - holeWidth, apy - holeWidth)\n  -- hole through Y-Z (X-axis opening)\n  local hX = max(apy - holeWidth, apz - holeWidth)\n  -- hole through Z-X (Y-axis opening)\n  local hY = max(apz - holeWidth, apx - holeWidth)\n\n  -- Union all the holes with min()\n  local crossHoles = min(hZ, hX, hY)\n  -- in SDFs, subtracting is, max(shape, -otherShape)\n  return max(dBox, -crossHoles)\nend\n\nlocal a = sdMengerBox(x, y, z, 9/2, 3/2)\nlocal b = sdMengerBox(\n\t((x + 3/2) % 3) - 3/2,\n\t((y + 3/2) % 3) - 3/2,\n\t((z + 3/2) % 3) - 3/2,\n\t3/2, 1/2\n)\n\nlocal our_periodic_number = (y+3)%7\n\nreturn\nmax(-b,a)\u003c=0 and our_periodic_number+7 or \nmax(-a,b)\u003c=0 and ({[0]=7,6, 11,10,9, 14,13})[our_periodic_number] or\nmin(a,b)\u003e0 and PEACH\n\n--[[\nlocal function sdMengerBox(px, py, pz, size, holeWidth)\n  -- Distance to the base Cube\n  local apx = abs(px)\n  local apy = abs(py)\n  local apz = abs(pz)\t\n  local adx = apx - size\n  local ady = apy - size\n  local adz = apz - size\n  local dBox = max(adx, ady, adz)\n\n  -- Define the cross-shaped holes (3 intersecting prisms)\n  -- hole through X-Y (Z-axis opening)\n  local hZ = max(apx - holeWidth, apy - holeWidth)\n  -- hole through Y-Z (X-axis opening)\n  local hX = max(apy - holeWidth, apz - holeWidth)\n  -- hole through Z-X (Y-axis opening)\n  local hY = max(apz - holeWidth, apx - holeWidth)\n\n  -- Union all the holes with min()\n  local crossHoles = min(hZ, hX, hY)\n  -- in SDFs, subtracting is, max(shape, -otherShape)\n  return max(dBox, -crossHoles)\nend\nlocal a = sdMengerBox(x, y, z, 9/2, 3/2)\nlocal b = sdMengerBox(\n\t((x + 3/2) % 3) - 3/2,\n\t((y + 3/2) % 3) - 3/2,\n\t((z + 3/2) % 3) - 3/2,\n\t3/2, 1/2\n)\nlocal original_color_wheel = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16}\nlocal counter_part_color_wheel = {1,2,3,4,5, 8,7,6, 11,10,9, 14,13,12, 16,15}\nlocal our_periodic_number = (y+3)%7+7\nlocal color1 = original_color_wheel[our_periodic_number]\nlocal color2 = counter_part_color_wheel[our_periodic_number]\nreturn \nmax(-b,a)\u003c=0 and color1 or \nmax(-a,b)\u003c=0 and color2 or \nmin(a,b)\u003e=0 and PEACH\n]]--\n",
         "f3": "-- 247\n-- 116.052\n\n-- My version of making the sdf code \"fast\"\n\n-- btw, if you squint really hard you can notice the demo had it all!\n--return\n--demoHelper(\"subtraction_plus_reversal_subtraction\", a, b, color1, color2) or\n--demoHelper(\"outer_union\", a, b, nil, PEACH)\n\nlocal function sdMengerBox(px, py, pz, size, holeWidth)\n  local apx = abs(px)\n  local apy = abs(py)\n  local apz = abs(pz)\t\n  return max(\n\t\t\t\t\tmax(apx - size, apy - size, apz - size), \n\t\t\t\t\t-min(\n\t\t\t\t\t\tmax(apx - holeWidth, apy - holeWidth), \n\t\t\t\t\t\tmax(apy - holeWidth, apz - holeWidth), \n\t\t\t\t\t\tmax(apz - holeWidth, apx - holeWidth)\n\t\t\t\t\t)\n\t\t\t\t)\nend\n\nlocal a = sdMengerBox(x, y, z, 9/2, 3/2)\nlocal b = sdMengerBox(\n\t((x + 3/2) % 3) - 3/2,\n\t((y + 3/2) % 3) - 3/2,\n\t((z + 3/2) % 3) - 3/2,\n\t3/2, 1/2\n)\n\nreturn\nmax(-b,a)\u003c=0 and y+10 or\nmax(-a,b)\u003c=0 and ({7,6, 11,10,9, 14,13})[y+4] or\nmin(a,b)\u003e0 and PEACH\n\n--[[\n\n-- If we simplify the code from the original as much as we can before refactoring\n-- it looks something like the following:\n\nlocal function sdMengerBox(px, py, pz, size, holeWidth)\n  -- Distance to the base Cube\n  local apx = abs(px)\n  local apy = abs(py)\n  local apz = abs(pz)\t\n  local adx = apx - size\n  local ady = apy - size\n  local adz = apz - size\n  local dBox = max(adx, ady, adz)\n\n  -- Define the cross-shaped holes (3 intersecting prisms)\n  -- hole through X-Y (Z-axis opening)\n  local hZ = max(apx - holeWidth, apy - holeWidth)\n  -- hole through Y-Z (X-axis opening)\n  local hX = max(apy - holeWidth, apz - holeWidth)\n  -- hole through Z-X (Y-axis opening)\n  local hY = max(apz - holeWidth, apx - holeWidth)\n\n  -- Union all the holes with min()\n  local crossHoles = min(hZ, hX, hY)\n  -- in SDFs, subtracting is, max(shape, -otherShape)\n  return max(dBox, -crossHoles)\nend\nlocal a = sdMengerBox(x, y, z, 9/2, 3/2)\nlocal b = sdMengerBox(\n\t((x + 3/2) % 3) - 3/2,\n\t((y + 3/2) % 3) - 3/2,\n\t((z + 3/2) % 3) - 3/2,\n\t3/2, 1/2\n)\n\nlocal original_color_wheel = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16}\nlocal counter_part_color_wheel = {1,2,3,4,5, 8,7,6, 11,10,9, 14,13,12, 16,15}\nlocal our_periodic_number = (y+3)%7+7\nlocal color1 = original_color_wheel[our_periodic_number]\nlocal color2 = counter_part_color_wheel[our_periodic_number]\n\nreturn \nmax(-b,a)\u003c=0 and color1 or \nmax(-a,b)\u003c=0 and color2 or \nmin(a,b)\u003e=0 and PEACH\n\n]]--\n",
@@ -5048,7 +5049,8 @@
         "s2",
         "fast_mainstory",
         "small_mainstory",
-        "large_comment"
+        "large_comment",
+        "code"
       ]
     },
     {
@@ -5622,7 +5624,7 @@
       ]
     },
     {
-      "active_variant": "f7",
+      "active_variant": "first_pass",
       "animated": true,
       "challenge_complete": false,
       "code_instructions": 4.23616,
@@ -5701,12 +5703,13 @@
       ]
     },
     {
-      "active_variant": "f1",
+      "active_variant": "s4",
       "animated": true,
       "challenge_complete": false,
       "code_instructions": 9.7994,
       "code_size": 165,
       "code_variants": {
+        "code": "xi=0.4014257 -- Angle of inclination of Triton's orbit in radians\n\nfunction rot_1(point,phi) --Rotates a point relative to the y-axis by phi\n\n local x1= cos(phi) * point.x + 0    * point.y - sin(phi) * point.z\n local y1= 0        * point.x + 1    * point.y + 0        * point.z\n local z1= sin(phi) * point.x + 0    * point.y + cos(phi) * point.z\n \n return {x=x1,y=y1,z=z1}\n\nend\n\nfunction rot_2(point,theta) --Describe a function that rotates a point relative to the z-axis by theta\n\n local x2 = point.x\n local y2 = point.y\n local z2 = point.z\n \n return {x=x2,y=y2,z=z2}\n\nend\n\n--Centre of Triton\np = rot_2(rot_1({x=8,y=0,z=5},t*pi/12),xi)\n\nif (x-p.x)^2+(y-p.y)^2+(z-p.z)^2\u003c=2 then\n return 2\nend",
         "f1": "-- f1\n-- 6427\n-- 11.328\nif y\u003c-5 or y\u003e5 then return end -- negative space\nlocal X,Z=x*x,z*z\nlocal XZ=X+Z\nif XZ\u003e=110 or XZ\u003e=22 and XZ\u003c=57 then return end -- negative space\nlocal Y=y*y\nlocal origin_sphere=X+Y+Z \n--local in_neptune= origin_sphere \u003c= 24\n--local in_core,inner_neptune= origin_sphere\u003c=1, origin_sphere\u003c=8\nif origin_sphere\u003c=24 then\n\tif origin_sphere\u003c=8 then \n\t\tif origin_sphere\u003c=1 then return BROWN end\n\t\treturn LIGHTBLUE \n\tend\n\tif Y\u003e=5 then return BLUE end\n\tif y==-2 then\n\t\tif x\u003c0 then \n\t\t\tif z\u003e-1 and z\u003c4 then return LIGHTBLUE end\n\t\telse\n\t\t\tif z\u003c0 then return LIGHTBLUE end\n\t\tend\n\tend\n\tif y==1 then\n\t\tif x\u003e=0 then\n\t\t\tif z\u003e=0 and z\u003c4 then return LIGHTBLUE end\n\t\telse\n\t\t\tif z==4 then return LIGHTBLUE end\n\t\tend\n\tend\n\tif y==2 then\n\t\tif x\u003c0 then \n\t\t\tif z\u003c=-1 then return LIGHTBLUE end\n\t\tend\n\tend\n\treturn BLUE\nend\n\nif XZ\u003c=20 then return end -- negative space above and below planet sphere\n\n--local theta= 0.4014257 -- Angle of inclination of Triton's orbit in radians\n--print(\"cos_theta=\".. cos(theta) .. \" sin_theta=\" .. sin(theta))\n--print(\"pi_12=\".. pi/12)\n--phi= t*pi/12\nlocal phi= t*0.26179938779915\n--local cos_theta= 0.92050486437677\n--local sin_theta= 0.39073110275316\n--Rotates point relative to the y-axis by phi\n\nlocal px= 8*cos(phi)-5*sin(phi)\nlocal pxSq= (x-px*0.92050486437677)^2\nif pxSq\u003e2 then return end\nlocal pySq= (y-px*0.39073110275316)^2\nif pySq\u003e2 then return end -- negative space above and below the triton moon\nlocal pzSq= (z-(8*sin(phi)+5*cos(phi)))^2\nif pzSq\u003e2 then return end\n\n--local in_triton= pxSq + pySq + pzSq \u003c= 2\nif pxSq + pySq + pzSq \u003c= 2 then \n\treturn GREY\nend\n",
         "f2": "-- f2\n-- 6434\n-- 10.797\nif y\u003c-5 or y\u003e5 then return end -- negative space\nlocal X,Z=x*x,z*z\nlocal XZ=X+Z\nif XZ\u003e=110 or XZ\u003e=22 and XZ\u003c=57 then return end -- negative space\nif XZ\u003c=21 then\n\tlocal Y=y*y\n\t--local in_neptune= origin_sphere \u003c= 24\n\t--local in_core,inner_neptune= origin_sphere\u003c=1, origin_sphere\u003c=8\n\tlocal origin_sphere=X+Y+Z\n\tif origin_sphere \u003c= 24 then\n\t\tif origin_sphere\u003c=8 then \n\t\t\tif origin_sphere\u003c=1 then return BROWN end\n\t\t\treturn LIGHTBLUE\n\t\tend\n\t\tif Y\u003e4 then return BLUE end -- top and bottom of planet\n\t\tif y==-2 then -- slice1\n\t\t\tif x\u003c0 then \n\t\t\t\tif z\u003e-1 and z\u003c4 then return LIGHTBLUE end\n\t\t\telse\n\t\t\t\tif z\u003c0 then return LIGHTBLUE end\n\t\t\tend\n\t\tend\n\t\tif y==1 then -- slice2\n\t\t\tif x\u003e=0 then\n\t\t\t\tif z\u003e=0 and z\u003c4 then return LIGHTBLUE end\n\t\t\telse\n\t\t\t\tif z==4 then return LIGHTBLUE end\n\t\t\tend\n\t\tend\n\t\tif y==2 then -- slice3\n\t\t\tif x\u003c0 then \n\t\t\t\tif z\u003c=-1 then return LIGHTBLUE end\n\t\t\tend\n\t\tend\n\t\treturn BLUE\n\tend\nend\n\nif XZ\u003c=20 then return end -- negative space above and below planet sphere\n\n--local theta= 0.4014257 -- Angle of inclination of Triton's orbit in radians\n--print(\"cos_theta=\".. cos(theta) .. \" sin_theta=\" .. sin(theta))\n--print(\"pi_12=\".. pi/12)\n--phi= t*pi/12\nlocal phi= t*0.26179938779915\n--local cos_theta= 0.92050486437677\n--local sin_theta= 0.39073110275316\n--Rotates point relative to the y-axis by phi\n\nlocal px= 8*cos(phi)-5*sin(phi)\nlocal pxSq= (x-px*0.92050486437677)^2\nif pxSq\u003e2 then return end\nlocal pySq= (y-px*0.39073110275316)^2\nif pySq\u003e2 then return end -- negative space above and below the triton moon\nlocal pzSq= (z-(8*sin(phi)+5*cos(phi)))^2\nif pzSq\u003e2 then return end\n\n--local in_triton= pxSq + pySq + pzSq \u003c= 2\nif pxSq + pySq + pzSq \u003c= 2 then \n\treturn GREY\nend\n",
         "f3": "-- f3\n-- 8485\n-- 10.547\nif y\u003c-5 or y\u003e5 then return end -- negative space\nlocal X,Z=x*x,z*z\nlocal XZ=X+Z\nif XZ\u003e=110 or XZ\u003e=21 and XZ\u003c=57 then return end -- negative space\nif XZ\u003c=20 then\n\tlocal Y=y*y\n\t--local in_neptune= origin_sphere \u003c= 24\n\t--local in_core,inner_neptune= origin_sphere\u003c=1, origin_sphere\u003c=8\n\tlocal origin_sphere=X+Y+Z\n\tif origin_sphere\u003c=24 then\n\t\tif origin_sphere\u003c=8 then \n\t\t\tif origin_sphere\u003c=1 then return BROWN end\n\t\t\treturn LIGHTBLUE\n\t\tend\n\t\tif Y\u003e4 then return BLUE end -- top and bottom of planet\n\t\tif y==-2 then -- slice1\n\t\t\tif x\u003c0 then \n\t\t\t\tif z\u003e-1 and z\u003c4 then return LIGHTBLUE end\n\t\t\telse\n\t\t\t\tif z\u003c0 then return LIGHTBLUE end\n\t\t\tend\n\t\tend\n\t\tif y==1 then -- slice2\n\t\t\tif x\u003e=0 then\n\t\t\t\tif z\u003e=0 and z\u003c4 then return LIGHTBLUE end\n\t\t\telse\n\t\t\t\tif z==4 then return LIGHTBLUE end\n\t\t\tend\n\t\tend\n\t\tif y==2 then -- slice3\n\t\t\tif x\u003c0 then \n\t\t\t\tif z\u003c=-1 then return LIGHTBLUE end\n\t\t\tend\n\t\tend\n\t\treturn BLUE\n\tend\nend\n\nif XZ\u003c=20 then return end -- negative space above and below planet sphere\n\n--local theta= 0.4014257 -- Angle of inclination of Triton's orbit in radians\n--print(\"tan_theta=\".. tan(theta) .. \"cos_theta=\".. cos(theta) .. \" sin_theta=\" .. sin(theta))\n\nif x*.4245+2\u003cy or x*.4245-2\u003ey then return end -- negative space outside slanted xz plane\n\n--print(\"pi_12=\".. pi/12)\n--phi= t*pi/12\n--local cos_theta= 0.92050486437677\n--local sin_theta= 0.39073110275316\nlocal cos_t_p12= cos(t*0.26179938779915)\nlocal sin_t_p12= sin(t*0.26179938779915)\nlocal px= 8*cos_t_p12-5*sin_t_p12\nlocal pxSq= (x-px*0.92050486437677)^2\nif pxSq\u003e2 then return end\nlocal pySq= (y-px*0.39073110275316)^2\nif pySq\u003e2 then return end -- negative space above and below the triton moon\nlocal pzSq= (z-(8*sin_t_p12+5*cos_t_p12))^2\nif pzSq\u003e2 then return end\n--local in_triton= pxSq + pySq + pzSq \u003c= 2\nif pxSq + pySq + pzSq \u003e 2 then return end\nreturn GREY\n",
@@ -5715,7 +5718,7 @@
         "s1": "X,Y,Z=x*x,y*y,z*z\norigin_sphere=X+Y+Z \n--local in_neptune= origin_sphere \u003c= 24\n--local in_core,inner_neptune= origin_sphere\u003c=1, origin_sphere\u003c=8\nif origin_sphere \u003c= 24 then\n\tif origin_sphere\u003c=8 then \n\t\tif origin_sphere\u003c=1 then return BROWN end\n\t\treturn LIGHTBLUE \n\tend\n\tif Y\u003e4 then return BLUE end\n\tif y==-2 then\n\t\tif x\u003c0 then \n\t\t\tif z\u003e-1 and z\u003c4 then return LIGHTBLUE end\n\t\telse\n\t\t\tif z\u003c0 then return LIGHTBLUE end\n\t\tend\n\tend\n\tif y==1 then\n\t\tif x\u003e=0 then\n\t\t\tif z\u003e=0 and z\u003c4 then return LIGHTBLUE end\n\t\telse\n\t\t\tif z==4 then return LIGHTBLUE end\n\t\tend\n\tend\n\tif y==2 then\n\t\tif x\u003c0 then \n\t\t\tif z\u003c=-1 then return LIGHTBLUE end\n\t\tend\n\tend\n\treturn BLUE\nend\n--theta= 0.4014257 -- Angle of inclination of Triton's orbit in radians\ntheta= 0.401\n--local cos_theta,sin_theta,pi_12= 0.92050486437677, 0.39073110275316, 0.26179938779915\nphi= t*pi/12\n\n--Rotates point relative to the y-axis by phi\npx,py,pz= 8*cos(phi)-5*sin(phi), 0, 8*sin(phi) + 5*cos(phi)\n--px,py,pz= px*cos(theta)-py*sin(theta), px*sin(theta)+py*cos(theta), pz -- z-axis by theta\n--local in_triton= (x-px*cos_theta-py*sin_theta)^2 + (y-px*sin_theta+py*cos_theta)^2 + (z-pz)^2 \u003c= 2\nif (x-px*cos(theta)-py*sin(theta))^2 + (y-px*sin(theta)+py*cos(theta))^2 + (z-pz)^2 \u003c= 2 then \n\treturn GREY\nend\n",
         "s2": "-- s2\n-- 189\norigin_sphere=x*x+y*y+z*z \n--local in_neptune= origin_sphere \u003c= 24\n--local in_core,inner_neptune= origin_sphere\u003c=1, origin_sphere\u003c=8\nif origin_sphere\u003c=24 then\n\tif origin_sphere\u003c=8 then \n\t\tif origin_sphere\u003c=1 then return BROWN end\n\t\treturn LIGHTBLUE \n\tend\n\tif y==-2 then --slice1\n\t\tif x\u003c0 then \n\t\t\tif z\u003e-1 and z\u003c4 then return LIGHTBLUE end\n\t\telse\n\t\t\tif z\u003c0 then return LIGHTBLUE end\n\t\tend\n\tend\n\tif y==1 then --slice2\n\t\tif x\u003e=0 then\n\t\t\tif z\u003e=0 and z\u003c4 then return LIGHTBLUE end\n\t\telse\n\t\t\tif z==4 then return LIGHTBLUE end\n\t\tend\n\tend\n\tif y==2 then --slice3\n\t\tif x\u003c0 then \n\t\t\tif z\u003c=-1 then return LIGHTBLUE end\n\t\tend\n\tend\n\treturn BLUE\nend\n--theta= 0.4014257 -- Angle of inclination of Triton's orbit in radians\n--cos_theta=0.92\n--sin_theta=0.3907\n--local cos_theta,sin_theta,pi_12= 0.92050486437677, 0.39073110275316, 0.26179938779915\nphi= t*pi/12\npx= 8*cos(phi)-5*sin(phi)\nif (x-px*.92)^2 + (y-px*.3907)^2 + (z-8*sin(phi)-5*cos(phi))^2 \u003c= 2 then \n\treturn GREY\nend\n",
         "s3": "-- s3\n-- 169\nphi= t*pi/12\norigin_sphere= x*x+y*y+z*z\npx= 8*cos(phi)+5*cos(phi+pi/2)\nreturn \norigin_sphere\u003c=1 and BROWN\nor origin_sphere\u003c=8 and LIGHTBLUE\nor origin_sphere\u003c=24 and BLUE + btoi(\n\ty==-2 and (x\u003c0 and z\u003e-1 and z\u003c4 or x\u003e=0 and z\u003c0)\n\tor y==1 and (x\u003e=0 and z\u003e=0 and z\u003c4 or x\u003c0 and z==4)\n\tor y==2 and (x\u003c0 and z\u003c=-1)\n)\nor (x-px*9.2e-1)^2 \n\t + (y-px*3.91e-1)^2 \n\t + (z+8*cos(phi+pi/2)-5*cos(phi))^2 \u003c 2 \n\t and GREY\n",
-        "s4": "-- s4\n-- 165\norigin_sphere= x*x+y*y+z*z\npx= 9.43*cos(t*pi/12+atan(5/8))\nreturn\norigin_sphere\u003c=1 and BROWN\nor origin_sphere\u003c=8 and LIGHTBLUE\nor origin_sphere\u003c=24 and BLUE + btoi(\n\ty==-2 and (x\u003c0 and z\u003e-1 and z\u003c4 or x\u003e=0 and z\u003c0)\n\tor y==1 and (x\u003e=0 and z\u003e=0 and z\u003c4 or x\u003c0 and z==4)\n\tor y==2 and (x\u003c0 and z\u003c=-1)\n)\nor (x-px*9.2e-1)^2 \n\t + (y-px*3.91e-1)^2 \n\t + (z-9.43*cos(t*pi/12-atan(1.6)))^2 \u003c= 2 \n\t and GREY"
+        "s4": "-- s4\n-- 165\n--if x==10 and y==10 and z==10 then return BLUE end\norigin_sphere= x*x+y*y+z*z\npx= 9.43*cos(t*pi/12+atan(5/8))\nreturn\norigin_sphere\u003c=1 and BROWN\nor origin_sphere\u003c=8 and LIGHTBLUE\nor origin_sphere\u003c=24 and BLUE + btoi(\n\ty==-2 and (x\u003c0 and z\u003e-1 and z\u003c4 or x\u003e=0 and z\u003c0)\n\tor y==1 and (x\u003e=0 and z\u003e=0 and z\u003c4 or x\u003c0 and z==4)\n\tor y==2 and (x\u003c0 and z\u003c=-1)\n)\nor (x-px*9.2e-1)^2 \n\t + (y-px*3.91e-1)^2 \n\t + (z-9.43*cos(t*pi/12-atan(1.6)))^2 \u003c= 2 \n\t and ORANGE"
       },
       "completed": true,
       "fps": 12,
@@ -5732,7 +5735,8 @@
         "f3",
         "f4",
         "s3",
-        "s4"
+        "s4",
+        "code"
       ]
     },
     {
@@ -6450,7 +6454,7 @@
       ]
     },
     {
-      "active_variant": "f5",
+      "active_variant": "s3",
       "animated": false,
       "challenge_complete": false,
       "code_instructions": 13.0047,
@@ -6568,6 +6572,322 @@
         "s3",
         "f1",
         "f2"
+      ]
+    },
+    {
+      "active_variant": "s3",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 13.0047,
+      "code_size": 55,
+      "code_variants": {
+        "f5": "--f5-inprogress\n--147\n--13.005\n\nlocal X= x*x\nlocal Y= y*y\nlocal Z= z*z\nif X\u003c=16 and (Y\u003c=16 or Z\u003c=16) or Y\u003c=16 and Z\u003c=16 then return end  -- negative space, empty tunnels thru middle\nif X~=49 and Y~=49 and Z~=49 then return end -- negative space, a point on the line always has a 7 or -7\nif x*y\u003e=36 or x*z\u003e=36 or y*z\u003e=36 then return end -- negative space, the tiny cubes in corners\n\nlocal offset= sign(x+y+z)|1\n-- this was slower\n--local d1= x+offset\n--local d2= y+offset\n--local d3= z+offset\n--if d1\u003c0 then d1=-d1 end\n--if d2\u003c0 then d2=-d2 end\n--if d3\u003c0 then d3=-d3 end\n--local data= {d1,d2,d3}\nlocal data= {abs(x+offset),abs(y+offset),abs(z+offset)}\nsort(data)\n\nif data[2]==6 and data[3]==8 then\n\tif data[1]\u003e=5 then\n\t\treturn YELLOW else return BLACK\n\tend\nend\n",
+        "s3": "--s3\n--55\n--36.767\n\noffset= sign(x+y+z)|1\ndata= {abs(x+offset),abs(y+offset),abs(z+offset)}\nsort(data)\n\nreturn \ndata[2]|data[3]==14 -- union of 6 and 8\nand (data[1]\u003e=5 and YELLOW or BLACK)"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "wired-cube.weekly",
+      "size": 7,
+      "source": 400,
+      "variant_order": [
+        "s3",
+        "f5"
+      ]
+    },
+    {
+      "active_variant": "f1",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 20.5019,
+      "code_size": 116,
+      "code_variants": {
+        "f1": "-- f1\n-- 116\n-- 20.502\n\n-- Break the ground!\nlocal shape= 6*exp((-x^2-z^2)/64)\nif y-1\u003e=shape then return end\n\nlocal xyz= x+y+z\nif xyz\u003e0 then\n\tif y+4\u003e=shape then return end\n\tlocal cindex= y//2+5\n\tif cindex\u003e2 then\n\t\treturn GREEN else return ({16,15,11,11,11})[cindex]\n\tend\nend\nlocal cindex= (y+1)//2+5\nif cindex\u003e5 then\n\treturn GREEN else return ({3,2,1,16,15})[cindex]\nend\n",
+        "first_pass": "-- first_pass\n-- 137\n-- 23.927\n\n-- Break the ground!\nlocal xyz= x+y+z\nlocal shape= 6*exp((-x^2-z^2)/64)\n\nif xyz\u003e0 then\n\tlocal mound= y+4 \u003c shape\n\tif mound then\n\t\tlocal cindex= y//2+5\n\t\tif cindex\u003e2 then\n\t\t\treturn GREEN else return ({16,15,11,11,11})[cindex]\n\t\tend\n\tend\nelse\n\tlocal mound= y-1 \u003c shape\n\t\tif mound then\n\t\t\tlocal cindex= (y+1)//2+5\n\t\t\tif cindex\u003e5 then\n\t\t\t\treturn GREEN else return ({3,2,1,16,15})[cindex]\n\t\t\tend\n\tend\nend\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "fault.weekly",
+      "size": 8,
+      "source": 400,
+      "variant_order": [
+        "first_pass",
+        "f1"
+      ]
+    },
+    {
+      "active_variant": "first_pass",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 7.0586,
+      "code_size": 109,
+      "code_variants": {
+        "first_pass": "-- first_pass\nif x\u003e3 or x\u003c-3 then return end\nif z\u003e1 or z\u003c-3 then return end\nif z==-3 then return BROWN end\nif y%5==0 then return BROWN end\nif x==3 or x==-3 then return BROWN end\nif z==1 then return end\nif y==4 or y==-1 then return end\nif y\u003e0 then\n\treturn ({3,1,4,1,5})[x+3]\nelse\n\treturn ({9,2,6,5,3})[x+3]\nend\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "bookshelf.weekly",
+      "size": 5,
+      "source": 400,
+      "variant_order": [
+        "first_pass"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "return abs(x+sin(z))\u003c=2"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "bamboo-path.weekly",
+      "size": 7,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": ""
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "h-fractal.weekly",
+      "size": 13,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": ""
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "chick.weekly",
+      "size": 3,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "return 1"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "compact-02.weekly",
+      "size": 3,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- Make sure you're looking inside the bowl!\n-- I would recommend looking from the top down\n-- instead of inward from the side."
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "ramen.weekly",
+      "size": 6,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- I remember building these towers when I was a child.\n-- The tower in the +Z -X quandrant is more complex because I had to put the pillars in different orientations so that the tower is more robust to constaints in all directions.\n\nif y==-16 then \n\treturn LIGHTBLUE\nend\n\nif x//3==0 and y==-15 and z//10==0 then return PINK end\nif (x+4)//10==0 and y==-15 and (z+4)//3==0 then return PEACH end\nif (x+4)//1==0 and (y+15)//3==0 and (z-1)//10==0 then return GREEN end\nif (x-8)//1==0 and (y+15)//10==0 and (z-8)//3==0 then return YELLOW end\n\npos_x = 6\npos_y = -15\npos_z = 0\n\n-- to have different orientations you can change which axis gets which size in the list [1, 3, 10]\nsize_x = 10\nsize_y = 3\nsize_z = 1\nif (x-pos_x)//size_x==0 \n\t and (y-pos_y)//size_y==0\n\t and (z-pos_z)//size_z==0 then\n\t\n\treturn DARKBLUE\nend"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "wooden-towers.weekly",
+      "size": 16,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- This strange waffle has seen too much\n-- \n-- Waffle: \"Cells Interlinked, Cells Interlinked, Cells Interlinked\"\n-- Interviewer: \"You are wayyy off baseline strange waffle\"\n\nlocal function f(x,y,z)\n\treturn (y==abs(x) or y==abs(z))\nend\n\nreturn f(x/t,y,z/t) and ({7,8,9,10,11})[clamp(y,1,5)]\n"
+      },
+      "completed": false,
+      "fps": 6,
+      "frames": 19,
+      "id": "strange-waffle.weekly",
+      "size": 9,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": true,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "-- Which way is North?\nif y == 0 and x^2 + z^2 \u003c 5^2 then\n\n\tif t == 3 then t = 1 end\n\tif x == t - 1 then return GREY end\n\t\n\treturn WHITE\n\t\nend\n"
+      },
+      "completed": false,
+      "fps": 2,
+      "frames": 4,
+      "id": "compass2.weekly",
+      "size": 5,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": ""
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "tri-triskelion.weekly",
+      "size": 3,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": ""
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "lattice-tower.weekly",
+      "size": 7,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": ""
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "benzene.weekly",
+      "size": 4,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "code",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 0.0,
+      "code_size": 0,
+      "code_variants": {
+        "code": "return round(sqrt(x^2+y^2+z^2))\u003c=8"
+      },
+      "completed": false,
+      "fps": 12,
+      "frames": 1,
+      "id": "stupa.weekly",
+      "size": 14,
+      "source": 400,
+      "variant_order": [
+        "code"
+      ]
+    },
+    {
+      "active_variant": "s1",
+      "animated": false,
+      "challenge_complete": false,
+      "code_instructions": 11.123,
+      "code_size": 53,
+      "code_variants": {
+        "f1": "-- f1 -- manual approach with if statements\n-- 252\n-- 11.123\n\nlocal Y= y/2\nif Y\u003c=-3 then -- L1\n\tif x\u003c7 and z\u003c7 then\n\t\treturn (x+1.5)*(z+1.5)%2+2\n\tend\nelseif Y\u003c=-2 then -- L2\n\tif x\u003c6 and x\u003e-7 and z\u003c6 and z\u003e-7 then\n\t\treturn (x+.5)*(z+.5)%2+2\n\tend\nelseif Y\u003c=-1 then -- L3\n\tif x\u003c5 and x\u003e-6 and z\u003c5 and z\u003e-6 then\n\t\treturn (x+1.5)*(z+1.5)%2+2\n\tend\nelseif Y\u003c=0 then -- L4\n\tif x\u003c4 and x\u003e-5 and z\u003c4 and z\u003e-5 then\n\t\treturn (x+.5)*(z+.5)%2+2\n\tend\nelseif Y\u003c=1 then -- L5\n\tif x\u003c3 and x\u003e-4 and z\u003c3 and z\u003e-4 then\n\t\treturn (x+1.5)*(z+1.5)%2+2\n\tend\nelseif Y\u003c=2 then -- L6\n\tif x\u003c2 and x\u003e-3 and z\u003c2 and z\u003e-3 then\n\t\treturn (x+.5)*(z+.5)%2+2\n\tend\nelseif Y\u003c=3 then -- L7\n\tif x\u003c1 and x\u003e-2 and z\u003c1 and z\u003e-2 then\n\t\treturn 2 \n\tend\nend\n",
+        "f2": "-- f2 -- math with pyramid and offset math for pattern\n-- 57\n-- 16.982\n\nlocal max_xz= max((x+.5)^2, (z+.5)^2)\nif max_xz^.5 + y/2 \u003c 4 then \n\tlocal offset=  floor((y+1)/2)%2\n\treturn \n\t(x+.5+offset)*(z+.5+offset)%2 + 2\nend\n\n\n--local t= {(x+.5)^2, (z+.5)^2} sort(t)\n--if t[2]^.5 + y/2 \u003c 4 then \n--\tlocal offset=  floor((y+1)/2)%2\n--\treturn \n--\t(x+.5+offset)*(z+.5+offset)%2 + 2\n--end\n--",
+        "f3": "-- f3 -- pyramid math + pattern offset math\n-- 59\n-- 15.319\n\nlocal max_xz= max((x+.5)^2, (z+.5)^2)\nif max_xz^.5 + y/2 \u003c 4 then \n\tlocal offset= (y+1)/2//1%2+.5\n\treturn \n\t(x+offset)*(z+offset)%2 + 2\nend\n\n--local t= {(x+.5)^2, (z+.5)^2} sort(t)\n--if t[2]^.5 + y/2 \u003c 4 then \n--\tlocal offset=  floor((y+1)/2)%2\n--\treturn \n--\t(x+.5+offset)*(z+.5+offset)%2 + 2\n--end\n--",
+        "first_pass": "-- first_pass\n-- 214\n-- 17.060\n\nlocal Y= y/2\nlocal X=(x+.5)^2\nlocal Z=(z+.5)^2\nif Y\u003c=-3 and X\u003c49 and Z\u003c49 then\n\treturn (x+1.5)*(z+1.5)%2+2\nelseif Y\u003c=-2 and X\u003c36 and Z\u003c36 then\n\treturn (x+.5)*(z+.5)%2+2\nelseif Y\u003c=-1 and X\u003c25 and Z\u003c25 then\n\treturn (x+1.5)*(z+1.5)%2+2\nelseif Y\u003c=0 and X\u003c16 and Z\u003c16 then\n\treturn (x+.5)*(z+.5)%2+2\nelseif Y\u003c=1 and X\u003c9 and Z\u003c9 then\n\treturn (x+1.5)*(z+1.5)%2+2\nelseif Y\u003c=2 and X\u003c4 and Z\u003c4 then\n\treturn (x+.5)*(z+.5)%2+2\nelseif Y\u003c=3 and X\u003c1 and Z\u003c1 then\n\treturn 2\nend\n",
+        "s1": "-- s1 -- pyramid math + pattern offset math\n-- 53\n-- 19.314\n\nmax_xz= max(abs(x+.5), abs(z+.5))\nif max_xz + y/2 \u003c 4 then \n\toffset= (y+1)/2//1%2+.5\n\treturn \n\t(x+offset)*(z+offset)%2 + 2\nend\n"
+      },
+      "completed": true,
+      "fps": 12,
+      "frames": 1,
+      "id": "checker-pyramid.weekly",
+      "size": 7,
+      "source": 400,
+      "variant_order": [
+        "first_pass",
+        "f1",
+        "f2",
+        "f3",
+        "s1"
       ]
     }
   ]

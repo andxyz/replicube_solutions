@@ -1,0 +1,3 @@
+-- Make sure you're looking inside the bowl!
+-- I would recommend looking from the top down
+-- instead of inward from the side.

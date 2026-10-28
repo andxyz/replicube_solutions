@@ -1,0 +1,1 @@
+return abs(x+sin(z))<=2
